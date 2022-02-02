@@ -1,547 +1,221 @@
-use std::{io::Error, path::Path, collections::{HashMap, HashSet}, hash::Hash, fmt::Write};
-use heck::ToSnakeCase;
+mod condition;
+
+use std::{collections::{HashMap, HashSet}, hash::Hash};
 use rand::prelude::*;
+pub use condition::*;
 
-pub fn allocate(cond_fact: &ConditionFactory, junk: &Item) {
-    let mut assignable = vec![];
-    let mut flags = HashSet::new();
-    let mut locations = HashSet::new();
-    let mut items = HashSet::new();
-    let mut unassigned_items: HashSet<&Item> = cond_fact.items().collect();
-    let mut assignments = HashMap::new();
-    let mut graph = "digraph G {\n".to_string();
-    loop {
-        assignable.clear();
-        for flag in cond_fact.flags() {
-            if flag.requirement.satisfied(&items, &flags, &locations) {
-                flags.insert(flag.id);
-            }
-        }
-        let mut closed_locations = HashSet::new();
-        for location in cond_fact.locations() {
-            if location.requirement.satisfied(&items, &flags, &locations) {
-                if !assignments.contains_key(location) {
-                    assignable.push(location);
-                }
-                locations.insert(location.id);
-            } else {
-                closed_locations.insert(location);
-            }
-        }
-        
-        let mut items_unlock: HashMap<ItemId, Vec<&Location>> = HashMap::new();
-        let mut items_unlock_flags: HashMap<ItemId, Vec<&Flag>> = HashMap::new();
-        for item in &unassigned_items {
-            if items.insert(item.id) {
-                for location in &closed_locations {
-                    if location.requirement.satisfied(&items, &flags, &locations) {
-                        items_unlock.entry(item.id).or_default().push(location);
-                    }
-                }
-                // for flag in cond_fact.flags() {
-                //     if flags.contains(&flag.id) {
-                //         continue;
-                //     }
-                //     if flag.requirement.satisfied(&items, &flags, &locations) {
-                //         items_unlock_flags.entry(item.id).or_default().push(flag);
-                //     }
-                // }
-                items.remove(&item.id);
-            }        
-        }
-        for (item, locs) in &items_unlock {
-            let item = cond_fact.get_item(*item).unwrap();
-            // println!("{}:", item.name);
-            // for loc in locs {
-            //     println!("  {}", loc.name);
-            // }
-            // println!();
 
-        }
-        for (item, locs) in &items_unlock_flags {
-            let item = cond_fact.get_item(*item).unwrap();
-            // println!("{}:", item.name);
-            // for loc in locs {
-            //     println!("  {}", loc.name);
-            // }
-            // println!();
+pub struct Allocator<'a> {
+    logic: &'a Logic,
+    item_pool: Vec<Item<'a>>,
+    open_locations: Vec<&'a Location>,
+    closed_locations: Vec<&'a Location>,
 
-        }
-        // if let Some((next_item, _flags)) = items_unlock_flags.iter().next() {
-            
-        //     items.insert(*next_item);
-        //     let location = assignable.pop().expect("No where left to place critical item!");
-        //     println!("Unlocking flag");
-        //     assignments.insert(location, cond_fact.get_item(*next_item).unwrap());
-        //     let item = cond_fact.get_item(*next_item).unwrap();
-        //     unassigned_items.remove(item);
-        //     continue;
-        // }
-
-        if let Some((next_item, unlocked_locations)) = items_unlock.iter().next() {
-            
-            items.insert(*next_item);
-            let location = assignable.pop().expect("No where left to place critical item!");
-            let item = cond_fact.get_item(*next_item).unwrap();
-            let satisfiers = location.requirement.satisfied_by(cond_fact, &items, &flags, &locations);
-            graph.push_str(&format!(r#"  "{}" [label="{}\n{}"];
-"#, item.name, location.name, item.name));
-            for satisfier in satisfiers {
-                let sat_item = cond_fact.get_item(satisfier).unwrap();
-                graph.push_str(&format!("  \"{}\" -> \"{}\";\n", item.name, sat_item.name));
-            }
-            assignments.insert(location, item);
-            println!(" + {} {} {}", assignable.len() + 1, unlocked_locations.len(), closed_locations.len());
-
-            if closed_locations.len() > unassigned_items.iter().filter(|i| i.category == ItemCategory::Major).count() {
-                for loc in assignable.drain(..) {
-                    assignments.insert(loc, junk);
-                }
-            }
-            
-            // Pick an location to insert the item in
-            for location in unlocked_locations {
-                closed_locations.remove(location);
-                assignable.push(location);
-            }
-            let item = cond_fact.get_item(*next_item).unwrap();
-            unassigned_items.remove(item);
-            continue;
-        }
-        
-        println!(" | {} {}", assignable.len(), unassigned_items.iter().filter(|i| i.category == ItemCategory::Major).count());
-        println!("Closed locations: ");
-        for loc in closed_locations {
-            println!("  {}:", loc.name);
-            print!("    ");
-            let mut reqs = loc.requirement.expand(cond_fact).flatten().simplify();
-            for item in &items {
-                reqs.assume_item(*item);
-            }
-            reqs.simplify();
-            reqs.render(cond_fact);
-            println!();
-        }
-        break;
-        // Pick a random item and place it in a random location
-        if let Some(&item_to_allocate) = unassigned_items.iter().filter(|i| i.category == ItemCategory::Major).choose(&mut thread_rng()) {
-            println!("Trying to find a home for {}", item_to_allocate.name);
-            if let Some(loc) = assignable.choose(&mut thread_rng()) {
-                items.insert(item_to_allocate.id);
-                assignments.insert(loc, item_to_allocate);
-                unassigned_items.remove(item_to_allocate);
-                continue;
-            } else {   
-                panic!("Unallocated items remain, but no spaces are available");
-            }
-            
-        }
-
-        println!();
-        if items_unlock.is_empty() && items_unlock_flags.is_empty() {
-            break;
-        }
-        
-    }
-    graph.push_str(r#"  "Beat Game" [shape="box"];
-    "Beat Game" -> "FourSword";
-    "Beat Game" -> "BombBag";
-    "Beat Game" -> "Bow";
-    "Beat Game" -> "RocsCape";
-    "Beat Game" -> "LanternOff";
-    "Beat Game" -> "GustJar";
-    "Beat Game" -> "PacciCane";
-    "#);
-    graph.push_str("}\n");
-    std::fs::write("graph.dot", graph.as_bytes()).unwrap();
-    for (location, item) in assignments {
-        println!("{} -> {}", location.name, item.name);
-    //     print!("  ");
-    //     location.requirement.expand(cond_fact).render(cond_fact);
-    //     println!();
-    //     print!("  ");
-    //     let loc_cond = location.requirement.expand(cond_fact).flatten();        
-    //     loc_cond.render(cond_fact);
-    //     println!();
-    //     print!("  ");
-    //     let loc_cond = loc_cond.simplify();
-    //     loc_cond.render(cond_fact);
-    //     println!();
-    //     println!();
-    // }
-    // for loc in assignable {
-    //     print!("{}, ", loc.name);
-    }
-    println!();
-    println!("Unassigned: ");
-    for item in unassigned_items {
-        print!("{}, ", item.name);
-    }
-}
-
-pub struct ConditionFactory {
-    last_id: usize,
-    item_map: HashMap<ItemId, Item>,
-    flag_map: HashMap<FlagId, Flag>,
-    location_map: HashMap<LocationId, Location>,
-}
-impl ConditionFactory {
-    pub fn new() -> Self {
-        ConditionFactory { last_id: 0, item_map: HashMap::new(), location_map: HashMap::new(), flag_map: HashMap::new() }
-    }
-    pub fn graph(&self) -> String {
-        unimplemented!()
-    }
-    pub fn flags(&self) -> impl Iterator<Item=&Flag> {
-        self.flag_map.values()
-    }
-    pub fn items(&self) -> impl Iterator<Item=&Item> {
-        self.item_map.values()
-    }
-    pub fn locations(&self) -> impl Iterator<Item=&Location> {
-        self.location_map.values()
-    }
-    pub fn get_location(&self, id: LocationId) -> Option<&Location> {
-        self.location_map.get(&id)
-    }
-    pub fn get_item(&self, id: ItemId) -> Option<&Item> {
-        self.item_map.get(&id)
-    }
-    pub fn get_flag(&self, id: FlagId) -> Option<&Flag> {
-        self.flag_map.get(&id)
-    }
-    pub fn add_item(&mut self, name: impl Into<String>, category: ItemCategory) -> ItemId {
-        self.last_id += 1;
-        let name = name.into();
-        let id = ItemId(self.last_id);
-        let item = Item {
-            name,
-            id,
-            category
-        };
-        self.item_map.insert(id, item);
-        id
-    }
-    pub fn add_location(&mut self, name: impl Into<String>, requirement: impl Into<Condition>) -> LocationId {
-        let name = name.into();
-        let requirement= requirement.into().expand(self).flatten().simplify();
-        self.last_id += 1;
-        let id = LocationId(self.last_id);
-        let location = Location {
-            name,
-            requirement,
-            id
-        };
-        self.location_map.insert(id, location);
-        id
-    }
+    assigned_items: HashMap<ItemId, usize>,
     
-    pub fn add_flag(&mut self, name: impl Into<String>, requirement: impl Into<Condition>) -> FlagId {
-        let name = name.into();
-        let requirement= requirement.into().expand(self).flatten().simplify();
-        self.last_id += 1;
-        let id = FlagId(self.last_id);
-        let flag = Flag {
-            name,
-            requirement,
-            id
+
+    assignments: HashMap<&'a Location, Item<'a>>,
+    graph: String
+}
+
+impl<'a> Allocator<'a> {
+    pub fn new(logic: &'a Logic, item_pool: Vec<Item<'a>>) -> Self {
+        let mut me = Allocator { 
+            logic,
+            item_pool,
+            open_locations: Default::default(),
+            closed_locations: Default::default(), 
+            assigned_items: Default::default(),
+            assignments: Default::default(),
+            graph: Default::default()
         };
-        self.flag_map.insert(id, flag);
-        id
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum Condition {
-    NoRequirements,
-    Flag(FlagId),
-    Item(ItemId),
-    Location(LocationId),
-    And(Vec<Condition>),
-    Or(Vec<Condition>),
-    Not(Box<Condition>)
-}
-
-impl Condition {
-    pub fn expand(&self, cond_fact: &ConditionFactory) -> Condition {
-        match self {
-            Condition::NoRequirements => Condition::NoRequirements,
-            Condition::Flag(id) => {
-                let flag = cond_fact.get_flag(*id).unwrap();
-                flag.requirement.expand(cond_fact)
-            },
-            Condition::Item(_) => self.clone(),
-            Condition::Location(id) => {
-                let location = cond_fact.get_location(*id).unwrap();
-                location.requirement.expand(cond_fact)
-            }
-            Condition::And(conds) => {
-                Condition::And(conds.iter().map(|c| c.expand(cond_fact)).collect())
-            },
-            Condition::Or(conds) => Condition::Or(conds.iter().map(|c| c.expand(cond_fact)).collect()),
-            Condition::Not(_) => todo!(),
-        }
-    }
-    fn top_level_items(&self) -> HashSet<ItemId> {
-        match self {
-            Condition::NoRequirements | Condition::Flag(_) | Condition::Location(_) => HashSet::new(),
-            Condition::Item(id) => {
-                let mut rv = HashSet::with_capacity(1);
-                rv.insert(*id);
-                rv
-            },
-            Condition::And(conds) => conds.iter().filter_map(|c| match c { Condition::Item(id) => Some(*id), _ => None }).collect(),
-            Condition::Or(conds) => conds.iter().filter_map(|c| match c { Condition::Item(id) => Some(*id), _ => None }).collect(),
-            Condition::Not(_) => todo!(),
-        }
-    }
-    pub fn flatten(&self) -> Condition {
-        match self {
-            Condition::NoRequirements => self.clone(),
-            Condition::Flag(_) | Condition::Location(_) => panic!(),
-            Condition::Item(_) => self.clone(),
-            Condition::And(conds) => {
-                let mut new_conds = vec![];
-                for cond in conds {
-                    let new_cond = cond.flatten();
-                    match new_cond {
-                        Condition::And(conds) => new_conds.extend(conds),
-                        _ => new_conds.push(new_cond)
-                    }
-                }
-                new_conds.sort();
-                new_conds.dedup();
-                Condition::And(new_conds)
-            },
-            Condition::Or(conds) => {
-                let mut new_conds = vec![];
-                for cond in conds {
-                    let new_cond = cond.flatten();
-                    match new_cond {
-                        Condition::Or(conds) => new_conds.extend(conds),
-                        _ => new_conds.push(new_cond)
-                    }
-                }
-                new_conds.sort();
-                new_conds.dedup();
-                Condition::Or(new_conds)
-            },
-            Condition::Not(_) => todo!(),
-        }
-    }
-    fn remove_redundant_ors(&mut self, or: &[Condition]) -> bool {
-        let mut changed = false;
-        match self {
-            Condition::And(conds) => {
-                for cond in &mut *conds {
-                    changed |= cond.remove_redundant_ors(or);
-                }
-                if changed {
-                    conds.retain(|c| *c != Condition::NoRequirements);
-                    match conds.len() {
-                        0 => *self = Condition::NoRequirements,
-                        1 => *self = conds.pop().expect("Looked before we lept"),
-                        _ => {}
-                    }
-                }
-            },
-            Condition::Or(conds) => {
-                if or.iter().all(|c| conds.contains(c)) {
-                    *self = Condition::NoRequirements;
-                    changed = true;
-                } else {
-                    for cond in &mut *conds {
-                        changed |= cond.remove_redundant_ors(or);
-                    }
-                    if changed {
-                        conds.retain(|c| *c != Condition::NoRequirements);
-                        match conds.len() {
-                            0 => *self = Condition::NoRequirements,
-                            1 => *self = conds.pop().expect("Looked before we lept"),
-                            _ => {}
-                        }
-                    }
-                }
-            }
-            _ => {}
-        }
-        changed
-    }
-    pub fn simplify(&self) -> Condition {
-        match self {
-            Condition::NoRequirements => self.clone(),
-            Condition::Flag(_) | Condition::Location(_) => panic!(),
-            Condition::Item(_) => self.clone(),
-            Condition::And(conds) => {
-                let mut new_conds = vec![];
-                for cond in conds {
-                    let new_cond = cond.flatten();
-                    match new_cond {
-                        Condition::And(conds) => new_conds.extend(conds),
-                        _ => new_conds.push(new_cond)
-                    }
-                }
-                let items: Vec<_> = new_conds.iter().filter_map(|c| match c { Condition::Item(id) => Some(*id), _ => None }).collect();
-                for item in items {
-                    for cond in &mut new_conds {
-                        if matches!(cond, Condition::Or(_) | Condition::And(_)) {
-                            cond.assume_item(item);
-                        }
-                    }
-                }
-                new_conds.retain(|c| *c != Condition::NoRequirements);
-                new_conds.sort();
-                new_conds.dedup();
-                let disj: Vec<_> = new_conds.iter().filter_map(|c| match c { Condition::Or(conds) => Some(conds.clone()), _ => None }).collect();
-                for cond in &mut new_conds {
-                    if matches!(cond, Condition::And(_) | Condition::Or(_)) {
-                        for or in &disj {
-                            if matches!(cond, Condition::Or(cond) if cond == or) {
-                                continue;
-                            }
-                            cond.remove_redundant_ors(or);
-                        }
-                    }                    
-                }
-                new_conds.retain(|c| *c != Condition::NoRequirements);
-                new_conds.sort();
-                new_conds.dedup();
-                
-                let rv = Condition::And(new_conds);
-                rv
-            },
-            Condition::Or(conds) => {
-                let mut conds = conds.clone();
-                conds.sort();
-                conds.dedup();
-                Condition::Or(conds)
-            },
-            Condition::Not(_) => todo!(),
-        }
-    }
-    pub fn assume_item(&mut self, id: ItemId) {
-        match self {
-            Condition::NoRequirements | Condition::Flag(_) | Condition::Location(_) => {}
-            Condition::Item(my_id) => if id == *my_id {
-                *self = Condition::NoRequirements;
-            },
-            Condition::And(conds) => {
-                for cond in &mut *conds {
-                    cond.assume_item(id);
-                }
-                conds.retain(|c| *c != Condition::NoRequirements);
-                if conds.len() == 0 {
-                    *self = Condition::NoRequirements;
-                } else if conds.len() == 1 {
-                    *self = conds.pop().expect("We just checked that conds is non-empty");
-                }
-            }
-            Condition::Or(conds) => {
-                for cond in &mut *conds {
-                    cond.assume_item(id);
-                }
-                if conds.iter().any(|c| *c == Condition::NoRequirements) {
-                    *self = Condition::NoRequirements;
-                }
-            }
-            Condition::Not(_) => todo!(),
-        }
+        me.find_open_locs();
+        me
     }
 
-    pub fn render(&self, cond_fact: &ConditionFactory) {
-        match self {
-            Condition::NoRequirements => print!("-"),
-            Condition::Flag(id) => {
-                let flag = cond_fact.get_flag(*id).unwrap();
-                // print!("*{}", flag.name);
-                flag.requirement.render(cond_fact);
-            }
-            Condition::Item(id) => {
-                let item = cond_fact.get_item(*id).unwrap();
-                print!("{}", item.name);
-            }
-            Condition::Location(id) => {
-                let location = cond_fact.get_location(*id).unwrap();
-                // print!("!{}", location.name);
-                location.requirement.render(cond_fact);
-            }
-            Condition::And(conds) => {
-                let mut first = true;
-                print!("(");
-                for cond in conds {
-                    if !first {
-                        print!(" & ")
-                    }
-                    first = false;
-                    cond.render(cond_fact);
+    fn find_open_locs(&mut self) {
+        for location in self.logic.locations() {
+            if location.requirement.satisfied(&self.assigned_items) {
+                if !self.assignments.contains_key(location) {
+                    self.open_locations.push(location);
                 }
-                print!(")");
-            }
-            Condition::Or(conds) => {
-                let mut first = true;
-                print!("(");
-                for cond in conds {
-                    if !first {
-                        print!(" | ")
-                    }
-                    first = false;
-                    cond.render(cond_fact);
-                }
-                print!(")");
-            },
-            Condition::Not(_) => todo!(),
-        }
-    }
-    pub fn satisfied(&self, items: &HashSet<ItemId>, flags: &HashSet<FlagId>, locations: &HashSet<LocationId>) -> bool {
-        match self {
-            Condition::NoRequirements => true,
-            Condition::Flag(id) => flags.contains(id),
-            Condition::Location(id) => locations.contains(id),
-            Condition::Item(id) => items.contains(id),
-            Condition::Not(cond) => !cond.satisfied(items, flags, locations),
-            Condition::Or(conds) => conds.iter().any(|cond| cond.satisfied(items, flags, locations)),
-            Condition::And(conds) => conds.iter().all(|cond| cond.satisfied(items, flags, locations)),
-        }
-    }
-
-    pub fn satisfied_by(&self, cond_fact: &ConditionFactory, items: &HashSet<ItemId>, flags: &HashSet<FlagId>, locations: &HashSet<LocationId>) -> HashSet<ItemId> {
-        match self {
-            Condition::NoRequirements => HashSet::new(),
-            Condition::Flag(id) => {
-                if let Some(flag) = cond_fact.get_flag(*id) {
-                    flag.requirement.satisfied_by(cond_fact, items, flags, locations)
-                } else {
-                    panic!();
-                }
-            },
-            Condition::Item(id) => {
-                let mut rv = HashSet::new();
-                if items.contains(id) {
-                    rv.insert(*id);
-                }
-                rv
-            }
-            Condition::Location(id) => if let Some(location) = cond_fact.get_location(*id) {
-                location.requirement.satisfied_by(cond_fact, items, flags, locations)
             } else {
-                panic!();
+                self.closed_locations.push(location);
             }
-            Condition::And(conds) => {
-                let mut rv = HashSet::new();
-                for cond in conds {
-                    rv.extend(cond.satisfied_by(cond_fact, items, flags, locations));
+        }
+    }
+
+    fn single_item_location_unlocks(&self) -> HashMap<Item<'a>, Vec<&'a Location>> {
+        let mut assigned_items = self.assigned_items.clone();
+        let mut things: HashMap<Item, Vec<_>> = HashMap::new();
+        for item in &self.item_pool {
+            *assigned_items.entry(item.def.id).or_default() += 1;
+            for loc in &self.closed_locations {
+                if loc.requirement.satisfied(&assigned_items) {
+                    let entry = things.entry(*item).or_default();
+                    entry.push(*loc);
+                    entry.sort_unstable_by_key(|l| l.id);
+                    entry.dedup();
                 }
-                rv
-            },
-            Condition::Or(conds) => {
-                for cond in conds {
-                    if cond.satisfied(items, flags, locations) {
-                        return cond.satisfied_by(cond_fact, items, flags, locations);
+            }
+            *assigned_items.entry(item.def.id).or_default() -= 1;
+            assigned_items.retain(|_, v| *v > 0);
+        }
+        things
+    }
+
+    fn find_item_home<R: Rng + ?Sized>(&mut self, item: Item<'a>, rng: &mut R) -> Option<&'a Location> {
+        // self.open_locations.shuffle(rng);
+        // Sadistic:
+        for loc in self.open_locations.iter().rev() {
+            if item.def.category == loc.category || !matches!(item.def.category, ItemCategory::Class(_)){
+                return Some(loc);
+            }
+        }
+        None
+        
+    }
+    fn place_item(&mut self, item: Item<'a>, location: &'a Location, opened: &[&'a Location]) {
+        if matches!(location.category, ItemCategory::Class(_)) && !matches!(item.def.category, ItemCategory::Class(_)) {
+            println!("!!! Placing a non-dungeon item ({}) in a dungeon slot ({})", item.def.name, location.name);
+        }
+        self.assignments.insert(location, item);
+        self.open_locations.retain(|l| *l != location);
+        if !opened.is_empty() {
+            self.open_locations.extend(opened.iter().cloned());
+        }
+        self.closed_locations.retain(|l| !opened.contains(l));
+        if let Some((idx, _)) = self.item_pool.iter().enumerate().find(|(_, i)| **i == item) {
+            self.item_pool.swap_remove(idx);
+        }
+        *self.assigned_items.entry(item.def.id).or_default() += item.count;
+    }
+
+    fn allocation_round<R: Rng + ?Sized>(&mut self, rng: &mut R) {
+        let unlocks = self.single_item_location_unlocks();
+        let mut unlock_items: Vec<_> = unlocks.keys().collect();
+        // Try to place restricted items first
+        // Get item with highest class
+        unlock_items.shuffle(rng);
+        unlock_items.sort_by_key(|item| std::cmp::Reverse(item.def.category));
+        
+        for item in unlock_items {
+            if let Some(location) = self.find_item_home(*item, rng) {
+                println!("Placing {} in {} to unlock new locations", item.def.name, location.name);
+                for loc in &unlocks[item] {
+                    println!("  - {}", loc.name);
+                }
+                self.place_item(*item, location, &unlocks[item]);
+                return;
+            }
+        }
+
+        // No single item unlocks a new location; pick one that at least shows up in an unsatisfied goal
+        let mut missing_items = HashMap::new();
+        for loc in &self.closed_locations {
+            loc.requirement.missing(&self.assigned_items, &mut missing_items);
+        }
+        // Nothing missing for locations? Pick a flag instead
+        let mut flag_items = HashMap::new();
+        for flag in self.logic.flags() {
+            flag.requirement.missing(&self.assigned_items, &mut flag_items);
+        }
+        
+        if missing_items.iter().any(|(i, _)| matches!(self.logic.get_item(*i).unwrap().category, ItemCategory::Class(_))) {
+            missing_items = missing_items.into_iter().filter(|(i, _)| matches!(self.logic.get_item(*i).unwrap().category, ItemCategory::Class(_))).collect();
+        } else if flag_items.iter().any(|(i, _)| matches!(self.logic.get_item(*i).unwrap().category, ItemCategory::Class(_))) {
+            missing_items = flag_items.into_iter().filter(|(i, _)| matches!(self.logic.get_item(*i).unwrap().category, ItemCategory::Class(_))).collect();
+        } else if missing_items.is_empty() {
+            missing_items = flag_items;
+        }
+        if let Some(&to_add) = missing_items.keys().choose(rng) {
+            // Find a matching item in the pool
+            if let Some(&item) = self.item_pool.iter().find(|i| i.def.id == to_add) {
+                if let Some(location) = self.find_item_home(item, rng) {
+                    println!("Placing {} in {}, hoping that it frees things up", item.def.name, location.name);
+                    self.place_item(item, location, &[]);
+                    return;
+                } else {
+                    panic!("!! Wanted to place {} but couldn't find space for it!", item.def.name);
+                }
+            } else {
+                panic!("Requirement on an item not found in the item pool: {:?}", self.logic.get_item(to_add).unwrap().name);
+            }
+        }
+
+        // No critical items left; pick one at random
+        // At this point there *should* only be minor items left
+        if let Some(&item) = self.item_pool.get(0) {
+            if let Some(location) = self.find_item_home(item, rng) {
+                println!("Placing {} in {}, to fill up space", item.def.name, location.name);
+                self.place_item(item, location, &[]);
+            } else {
+                println!("Unable to find home for item {}; location pool size: {}", item.def.name, self.open_locations.len());
+                self.item_pool.shuffle(rng);
+                if let ItemCategory::Class(n) = item.def.category {
+                    println!("Open locations with matching class: ");
+                    for loc in &self.open_locations {
+                        if loc.category == ItemCategory::Class(n) {
+                            println!("  * {}", loc.name);
+                        }
+                    }
+                    println!("Closed locations with matching class: ");
+                    for loc in &self.closed_locations {
+                        if loc.category == ItemCategory::Class(n) {
+                            println!("  * {}", loc.name);
+                        }
                     }
                 }
-                HashSet::new()
-            },
-            Condition::Not(_) => todo!(),
+            }
+        }
+    }
+
+    pub fn allocate<R: Rng + ?Sized>(&mut self, rng: &mut R) {
+        println!("Open locations: ");
+        for loc in &self.open_locations {
+            println!("  * {}", loc.name);
+        }
+        println!("Closed locations: ");
+        for loc in &self.closed_locations {
+            println!("  * {}", loc.name);
+        }
+        while !self.item_pool.is_empty() {
+            self.allocation_round(rng);
+            println!("Open: {}; Closed: {}", self.open_locations.len(), self.closed_locations.len());
+        }
+        println!("\n\nAssignments: ");
+        for (loc, item) in &self.assignments {
+            println!("  {} -> {}", loc.name, item.def.name);
+        }
+
+        self.check_assignments(&self.assignments);
+    }
+
+    fn check_assignments(&self, assignments: &HashMap<&Location, Item>) {
+        let mut open_locations = HashSet::new();
+        let mut acquired_items = HashMap::new();
+        let mut new_locations: Vec<_> = self.logic.locations().filter(|l| l.requirement.satisfied(&acquired_items)).collect();
+        let mut generations = vec![];
+        while !new_locations.is_empty() {
+            let mut this_gen = vec![];
+            for loc in new_locations {
+                open_locations.insert(loc);
+                if let Some(item) = assignments.get(loc) {
+                    *acquired_items.entry(item.def.id).or_default() += item.count;
+                    this_gen.push(*item);
+                } else {
+                    eprintln!("Empty location?");
+                }
+            }
+            for item in &this_gen {
+                print!("{}, ", item.def.name);
+            }
+            println!();
+            generations.push(this_gen);
+            
+            new_locations = self.logic.locations()
+                .filter(|l| !open_locations.contains(l))
+                .filter(|l| l.requirement.satisfied(&acquired_items)).collect();
         }
     }
 }
@@ -554,7 +228,7 @@ impl From<FlagId> for Condition {
 
 impl From<ItemId> for Condition {
     fn from(id: ItemId) -> Self {
-        Condition::Item(id)
+        Condition::Item(id, 1)
     }
 }
 impl From<LocationId> for Condition {
@@ -566,23 +240,28 @@ impl From<LocationId> for Condition {
 pub struct Flag {
     name: String,
     id: FlagId,
-    requirement: Condition
+    requirement: ItemCondition
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum ItemCategory {
     Major,
     Minor,
-    DungeonItem
+    Class(u32)
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-pub struct Item {
+pub struct ItemDef {
     name: String,
     id: ItemId,
     category: ItemCategory
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct Item<'a> {
+    pub def: &'a ItemDef,
+    pub count: usize
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FlagId(usize);
@@ -597,5 +276,6 @@ pub struct LocationId(usize);
 pub struct Location {
     name: String,
     id: LocationId,
-    requirement: Condition
+    category: ItemCategory,
+    requirement: ItemCondition
 }

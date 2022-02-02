@@ -11,24 +11,33 @@ pub fn parse_logic(s: &str) {
         if line.starts_with('!') {
             continue;
         }
+        
         let bits: Vec<_> = line.split(';').map(|s| s.trim()).collect();
+        
         if bits.len() < 2 {
             println!("{:?}", bits);
             continue;
 
         }
+        let location: Vec<_> = bits[0].split(':').collect();
+
         if bits[1] == "Helper" {
             let (reqs, _) = parse_reqs(bits[3]);
             get_items(&reqs, &mut items);
             let req_str = gen_reqs(&reqs);
             let var_name = bits[0].split(':').next().expect("Always at least one piece").to_snake_case();
             // println!("let flag_{} = cond_fact.add_flag(\"{}\", {});", var_name, bits[0], req_str);
-        } else if bits[1] == "Major" || bits[1] == "Minor" {
+        } else if bits[1] == "Major" || bits[1] == "Minor"  || bits[1] == "DungeonItem" {
             let (reqs, _) = parse_reqs(bits[3]);
             get_items(&reqs, &mut items);
             let req_str = gen_reqs(&reqs);
-            let var_name = bits[0].split(':').next().expect("Always at least one piece").to_snake_case();
-            println!("let loc_{} = cond_fact.add_location(\"{}\", {});", var_name, bits[0], req_str);
+            let var_name = location[0].to_snake_case();
+            let category = if location.len() > 1 {
+                format!("ItemCategory::Class({})", location[1])
+            } else {
+                format!("ItemCategory::{}", bits[1])
+            };
+            println!("let loc_{} = cond_fact.add_location(\"{}\", {}, {});", var_name, bits[0], req_str, category);
         }
     }
     for item in items {
@@ -48,7 +57,7 @@ fn get_items(terms: &[Term], collected: &mut HashSet<String>) {
     for term in terms {
         match term {
             Term::Lit(s) => if let Some(mut item) = s.strip_prefix("Items.") {
-                item = item.split("::").next().expect("We always have at least *one* string piece");
+                item = item.split(':').next().expect("We always have at least *one* string piece");
                 if !collected.contains(item) {
                     collected.insert(item.to_string());
                 }
@@ -72,8 +81,13 @@ fn gen_req(term: &Term) -> String {
     match term {
         Term::Lit(s) => {
             if let Some(mut item) = s.strip_prefix("Items.") {
-                item = item.split("::").next().expect("We always have at least *one* string piece");
-                item.to_snake_case()
+                let mut bits = item.split(':');
+                item = bits.next().expect("We always have at least *one* string piece");
+                if let Some(count) = bits.next() {
+                    format!("Condition::Item({}, {})", item.to_snake_case(), count)
+                } else {
+                    item.to_snake_case()
+                }
             } else if let Some(helper) = s.strip_prefix("Helpers.") {
                 format!("flag_{}", helper.to_snake_case())
             } else if let Some(location) = s.strip_prefix("Locations.") {
