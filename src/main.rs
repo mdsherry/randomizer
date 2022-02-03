@@ -69,28 +69,34 @@ fn main() {
     let Palace = 5;
     let DHC = 6;
     let Crypt = 7;
+    let Prize = 8;
 
     let mut cond_fact = Logic::new();
     let hyrulean_bestiary = cond_fact.add_item("HyruleanBestiary", ItemCategory::Major);
-    let rupee = cond_fact.add_item("Rupee", ItemCategory::Minor);
+    let rupee1 = cond_fact.add_item("Rupee1", ItemCategory::Minor);
+    let rupee5 = cond_fact.add_item("Rupee5", ItemCategory::Minor);
+    let rupee20 = cond_fact.add_item("Rupee20", ItemCategory::Minor);
+    let rupee50 = cond_fact.add_item("Rupee50", ItemCategory::Minor);
+    let rupee100 = cond_fact.add_item("Rupee100", ItemCategory::Minor);
+    let rupee200 = cond_fact.add_item("Rupee200", ItemCategory::Minor);
     let ocarina = cond_fact.add_item("Ocarina", ItemCategory::Major);
     let grip_ring = cond_fact.add_item("GripRing", ItemCategory::Major);
     let power_bracelets = cond_fact.add_item("PowerBracelets", ItemCategory::Major);
     let spin_attack = cond_fact.add_item("SpinAttack", ItemCategory::Major);
     let dash_attack = cond_fact.add_item("DashAttack", ItemCategory::Major);
-    let small_key_fow_set = cond_fact.add_item("SmallKey`FOW_SET`", ItemCategory::Class(Fortress));
-    let small_key_dhc_set = cond_fact.add_item("SmallKey`DHC_SET`", ItemCategory::Class(DHC));
+    let small_key_fow_set = cond_fact.add_item("SmallKey:Fortress", ItemCategory::Class(Fortress));
+    let small_key_dhc_set = cond_fact.add_item("SmallKey:DHC", ItemCategory::Class(DHC));
     let small_key_rc_set = cond_fact.add_item("SmallKey:Crypt", ItemCategory::Class(Crypt));
-    let small_key_pow_set = cond_fact.add_item("SmallKey`POW_SET`", ItemCategory::Class(Palace));
-    let small_key_dws_set = cond_fact.add_item("SmallKey`DWS_SET`", ItemCategory::Class(Deepwood));
-    let small_key_cof_set = cond_fact.add_item("SmallKey`COF_SET`", ItemCategory::Class(FlameCave));
-    let small_key_tod_set = cond_fact.add_item("SmallKey`TOD_SET`:4", ItemCategory::Class(Droplets));
-    let big_key_cof_set = cond_fact.add_item("BigKey`COF_SET`", ItemCategory::Class(FlameCave));
-    let big_key_dhc_set = cond_fact.add_item("BigKey`DHC_SET`", ItemCategory::Class(DHC));
-    let big_key_dws_set = cond_fact.add_item("BigKey`DWS_SET`", ItemCategory::Class(Deepwood));
-    let big_key_tod_set = cond_fact.add_item("BigKey`TOD_SET`", ItemCategory::Class(Droplets));
-    let big_key_fow_set = cond_fact.add_item("BigKey`FOW_SET`", ItemCategory::Class(Fortress));
-    let big_key_pow_set = cond_fact.add_item("BigKey`POW_SET`", ItemCategory::Class(Palace));
+    let small_key_pow_set = cond_fact.add_item("SmallKey:Palace", ItemCategory::Class(Palace));
+    let small_key_dws_set = cond_fact.add_item("SmallKey:Deepwood", ItemCategory::Class(Deepwood));
+    let small_key_cof_set = cond_fact.add_item("SmallKey:FlameCave", ItemCategory::Class(FlameCave));
+    let small_key_tod_set = cond_fact.add_item("SmallKey:Droplets", ItemCategory::Class(Droplets));
+    let big_key_cof_set = cond_fact.add_item("BigKey:FlameCave", ItemCategory::Class(FlameCave));
+    let big_key_dhc_set = cond_fact.add_item("BigKey:DHC", ItemCategory::Class(DHC));
+    let big_key_dws_set = cond_fact.add_item("BigKey:Deepwood", ItemCategory::Class(Deepwood));
+    let big_key_tod_set = cond_fact.add_item("BigKey:Droplets", ItemCategory::Class(Droplets));
+    let big_key_fow_set = cond_fact.add_item("BigKey:Fortress", ItemCategory::Class(Fortress));
+    let big_key_pow_set = cond_fact.add_item("BigKey:Palace", ItemCategory::Class(Palace));
     let peril_beam = cond_fact.add_item("PerilBeam", ItemCategory::Major);
     let bomb_bag = cond_fact.add_item("BombBag", ItemCategory::Major);
     let long_spin = cond_fact.add_item("LongSpin", ItemCategory::Major);
@@ -99,17 +105,16 @@ fn main() {
     let pacci_cane = cond_fact.add_item("PacciCane", ItemCategory::Major);
     let carlov_medal = cond_fact.add_item("CarlovMedal", ItemCategory::Major);
     let gust_jar = cond_fact.add_item("GustJar", ItemCategory::Major);
-    let magic_boomerang = cond_fact.add_item("MagicBoomerang", ItemCategory::Major);
+    
     let bottle4 = cond_fact.add_item("Bottle4", ItemCategory::Major);
     let kinstone_x_yellow_crown = cond_fact.add_item("KinstoneX.YellowCrown", ItemCategory::Major);
     let rupee50 = cond_fact.add_item("Rupee50", ItemCategory::Minor);
     let rupee100 = cond_fact.add_item("Rupee100", ItemCategory::Minor);
-    let red_sword = cond_fact.add_item("RedSword", ItemCategory::Major);
     let fast_split = cond_fact.add_item("FastSplit", ItemCategory::Major);
     let jabber_nut = cond_fact.add_item("JabberNut", ItemCategory::Major);
     let mole_mitts = cond_fact.add_item("MoleMitts", ItemCategory::Major);
     let light_arrow = cond_fact.add_item("LightArrow", ItemCategory::Major);    
-    let water_element = cond_fact.add_item("WaterElement", ItemCategory::Major);
+    let water_element = cond_fact.add_item("WaterElement", ItemCategory::Class(Prize));
     let kinstone_x_yellow_totem_prong = cond_fact.add_item("KinstoneX.YellowTotemProng", ItemCategory::Major);
     let down_thrust = cond_fact.add_item("DownThrust", ItemCategory::Major);
     let graveyard_key = cond_fact.add_item("GraveyardKey", ItemCategory::Major);
@@ -118,7 +123,6 @@ fn main() {
     let mask_history = cond_fact.add_item("MaskHistory", ItemCategory::Major);
     let wallet = cond_fact.add_item("Wallet", ItemCategory::Major);
     
-    let green_sword = cond_fact.add_item("GreenSword", ItemCategory::Major);
     let fast_spin = cond_fact.add_item("FastSpin", ItemCategory::Major);
     let great_spin = cond_fact.add_item("GreatSpin", ItemCategory::Major);
     let roll_attack = cond_fact.add_item("RollAttack", ItemCategory::Major);
@@ -132,15 +136,15 @@ fn main() {
     let shield = cond_fact.add_item("Shield", ItemCategory::Major);
     let sword_beam = cond_fact.add_item("SwordBeam", ItemCategory::Major);
     
-    let fire_element = cond_fact.add_item("FireElement", ItemCategory::Major);
-    let earth_element = cond_fact.add_item("EarthElement", ItemCategory::Major);
+    let fire_element = cond_fact.add_item("FireElement", ItemCategory::Class(Prize));
+    let earth_element = cond_fact.add_item("EarthElement", ItemCategory::Class(Prize));
     let heart_container = cond_fact.add_item("HeartContainer", ItemCategory::Minor);
     
     let rocs_cape = cond_fact.add_item("RocsCape", ItemCategory::Major);
     let picori_legend = cond_fact.add_item("PicoriLegend", ItemCategory::Major);
     
     
-    let wind_element = cond_fact.add_item("WindElement", ItemCategory::Major);
+    let wind_element = cond_fact.add_item("WindElement", ItemCategory::Class(Prize));
     let tingle_trophy = cond_fact.add_item("TingleTrophy", ItemCategory::Major);
     let rock_breaker = cond_fact.add_item("RockBreaker", ItemCategory::Major);
     let lantern_off = cond_fact.add_item("LanternOff", ItemCategory::Major);
@@ -148,76 +152,57 @@ fn main() {
     let lon_lon_key = cond_fact.add_item("LonLonKey", ItemCategory::Major);
     let pegasus_boots = cond_fact.add_item("PegasusBoots", ItemCategory::Major);
     let wake_up_mushroom = cond_fact.add_item("WakeUpMushroom", ItemCategory::Major);
-    let blue_sword = cond_fact.add_item("BlueSword", ItemCategory::Major);
-    let four_sword = cond_fact.add_item("FourSword", ItemCategory::Major);
+    
+    let flag_has_sword = cond_fact.add_flag("HasSword", cond_or!(smith_sword));
+let flag_has_spin = cond_fact.add_flag("HasSpin", cond_or!(spin_attack, fast_spin, fast_split, great_spin, long_spin));
+let flag_can_split2 = cond_fact.add_flag("CanSplit2", cond_and!(Condition::Item(smith_sword, 3), flag_has_spin));
+let flag_can_split3 = cond_fact.add_flag("CanSplit3", cond_and!(Condition::Item(smith_sword, 4), flag_has_spin));
+let flag_can_split4 = cond_fact.add_flag("CanSplit4", cond_and!(Condition::Item(smith_sword, 5), flag_has_spin));
+let flag_has_bottle = cond_fact.add_flag("HasBottle", cond_or!(bottle1, bottle2, bottle3, bottle4));
+let flag_has_bow = cond_fact.add_flag("HasBow", bow);
+let flag_has_light_bow = cond_fact.add_flag("HasLightBow", Condition::Item(bow, 2));
+let flag_has_boomerang = cond_fact.add_flag("HasBoomerang", boomerang);
+let flag_has_damage_source = cond_fact.add_flag("HasDamageSource", cond_or!(flag_has_sword, flag_has_bow, bomb_bag));
+let flag_has_beam = cond_fact.add_flag("HasBeam", cond_and!(flag_has_sword, cond_or!(sword_beam, peril_beam)));
+let flag_can_down_thrust = cond_fact.add_flag("CanDownThrust", cond_and!(flag_has_sword, down_thrust, rocs_cape));
+let flag_can_destroy_trees = cond_fact.add_flag("CanDestroyTrees", cond_or!(flag_has_sword, flag_has_light_bow, bomb_bag, lantern_off));
+let flag_access_east_field = cond_fact.add_flag("AccessEastField", cond_or!(flag_can_destroy_trees, ocarina));
+let flag_access_west_field = cond_fact.add_flag("AccessWestField", cond_or!(rocs_cape, cond_and!(flag_has_sword, flag_has_spin), flippers, cond_and!(bomb_bag, flag_can_split3)));
+let flag_access_minish_woods = cond_fact.add_flag("AccessMinishWoods", flag_access_east_field);
+let flag_access_crenel = cond_fact.add_flag("AccessCrenel", cond_and!(flag_access_west_field, flag_has_bottle, cond_or!(bomb_bag, grip_ring)));
+let flag_access_lower_crenel = cond_fact.add_flag("AccessLowerCrenel", cond_and!(flag_access_west_field, flag_has_bottle, cond_or!(bomb_bag, cond_and!(rocs_cape, gust_jar))));
+let flag_got_scrolls = cond_fact.add_flag("GotScrolls", Condition::AtLeast(7, vec![(spin_attack, 1), (rock_breaker, 1), (dash_attack, 1), (down_thrust, 1), (roll_attack, 1), (sword_beam, 1), (peril_beam, 1), (great_spin, 1), (fast_spin, 1), (fast_split, 1), (long_spin, 1)]));
+let flag_access_wilds = cond_fact.add_flag("AccessWilds", cond_and!(flag_access_west_field, flag_can_split2, cond_or!(pegasus_boots, rocs_cape)));
+let flag_access_hylia_north = cond_fact.add_flag("AccessHyliaNorth", cond_and!(flag_access_east_field, cond_or!(rocs_cape, lon_lon_key, ocarina, cond_and!(flippers, mole_mitts))));
+let flag_access_hylia_south = cond_fact.add_flag("AccessHyliaSouth", cond_and!(flag_access_hylia_north, cond_or!(flippers, rocs_cape, cond_and!(mole_mitts, pacci_cane))));
+let flag_access_treasure_cave = cond_fact.add_flag("AccessTreasureCave", cond_and!(flag_access_hylia_north, mole_mitts, rocs_cape));
+let flag_access_valley = cond_fact.add_flag("AccessValley", cond_and!(flag_can_split3, cond_or!(bomb_bag, rocs_cape, flippers), lantern_off));
+let flag_access_crypt = cond_fact.add_flag("AccessCrypt", cond_and!(flag_access_valley, graveyard_key, flag_can_split3, pegasus_boots));
+let flag_access_falls_north = cond_fact.add_flag("AccessFallsNorth", cond_and!(bomb_bag, kinstone_x_yellow_crown, lantern_off));
+let flag_access_falls_south = cond_fact.add_flag("AccessFallsSouth", cond_and!(flag_access_east_field, pacci_cane));
+let flag_access_clouds = cond_fact.add_flag("AccessClouds", cond_and!(flag_access_falls_north, grip_ring));
+let flag_access_upper_clouds = cond_fact.add_flag("AccessUpperClouds", cond_and!(flag_access_clouds, cond_or!(rocs_cape, mole_mitts), Condition::Item(kinstone_x_yellow_tornado_prong, 5)));
+let flag_deepwood_access = cond_fact.add_flag("DeepwoodAccess:Deepwood", cond_and!(flag_access_minish_woods, cond_or!(jabber_nut, flippers)));
+let flag_complete_deepwood = cond_fact.add_flag("CompleteDeepwood:Deepwood", cond_and!(flag_deepwood_access, gust_jar, flag_has_sword, big_key_dws_set));
+let flag_co_f_access = cond_fact.add_flag("CoFAccess:FlameCave", cond_and!(flag_access_crenel, cond_or!(pacci_cane, cond_and!(grip_ring, cond_or!(rocs_cape, flag_has_light_bow, cond_and!(gust_jar, cond_or!(bomb_bag, flag_has_bow, flag_has_boomerang, flag_has_beam))))), cond_or!(bomb_bag, shield, pacci_cane, flag_can_down_thrust), flag_has_damage_source));
+let flag_complete_co_f = cond_fact.add_flag("CompleteCoF:FlameCave", cond_and!(flag_co_f_access, pacci_cane, Condition::Item(small_key_cof_set, 2), big_key_cof_set));
+let flag_access_fortress = cond_fact.add_flag("AccessFortress:Fortress", cond_and!(flag_access_wilds, Condition::Item(kinstone_x_yellow_totem_prong, 3), cond_or!(flag_has_bow, rocs_cape, flippers)));
+let flag_complete_fortress = cond_fact.add_flag("CompleteFortress:Fortress", cond_and!(flag_access_fortress, mole_mitts, flag_can_split2, flag_has_bow, big_key_fow_set));
+let flag_access_droplets = cond_fact.add_flag("AccessDroplets:Droplets", cond_and!(flag_access_hylia_south, cond_or!(flippers, rocs_cape)));
+let flag_droplets_bottom_jump = cond_fact.add_flag("DropletsBottomJump:Droplets", cond_and!(lantern_off, rocs_cape, flag_has_damage_source, Condition::Item(small_key_tod_set, 4)));
+let flag_droplets_east_lever = cond_fact.add_flag("DropletsEastLever:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, cond_or!(flag_droplets_bottom_jump, cond_and!(gust_jar, flippers, Condition::Item(small_key_tod_set, 4))), flag_can_split2));
+let flag_droplets_west_lever = cond_fact.add_flag("DropletsWestLever:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, lantern_off, flippers, bomb_bag, Condition::Item(small_key_tod_set, 4), flag_can_split2));
+let flag_complete_droplets = cond_fact.add_flag("CompleteDroplets:Droplets", cond_and!(flag_droplets_east_lever, flag_droplets_west_lever, lantern_off, flag_has_sword));
+let flag_access_palace = cond_fact.add_flag("AccessPalace:Palace", cond_and!(flag_access_upper_clouds, flag_can_split3, cond_or!(rocs_cape, bomb_bag, gust_jar, flag_has_boomerang, flag_has_bow)));
+let flag_complete_palace = cond_fact.add_flag("CompletePalace:Palace", cond_and!(flag_access_palace, rocs_cape, pacci_cane, lantern_off, big_key_pow_set, Condition::Item(small_key_pow_set, 6)));
+let flag_dhc_access = cond_fact.add_flag("DHCAccess:DHC", cond_and!(fire_element, water_element, wind_element, earth_element));
+let flag_beat_vaati = cond_fact.add_flag("BeatVaati", cond_and!(big_key_dhc_set, small_key_dhc_set, flag_can_split4, bomb_bag, flag_has_bow, rocs_cape, lantern_off, gust_jar, pacci_cane));
+let flag_castle_big_doors_open = cond_fact.add_flag("CastleBigDoorsOpen:DHC", cond_and!(flag_dhc_access, Condition::Item(small_key_dhc_set, 1), flag_can_split4, rocs_cape, cond_or!(Condition::Item(boomerang, 2), flag_has_bow), bomb_bag));
 
     
-    // let has_sword = cond_fact.add_flag("HasSword", cond_or!(smith_sword, green_sword, red_sword, blue_sword, four_sword));
-    // let can_split_2 = cond_fact.add_flag("HasSword", cond_and!(smith_sword, green_sword, red_sword));
-    // let can_split_3 = cond_fact.add_flag("HasSword", cond_and!(smith_sword, green_sword, red_sword, blue_sword));
-    // let can_split_4 = cond_fact.add_flag("HasSword", cond_and!(smith_sword, green_sword, red_sword, blue_sword, four_sword));
-    // let has_bottle = cond_fact.add_flag("HasBottle", cond_or!(bottle1, bottle2, bottle3, bottle4));
-    // let has_spin = cond_fact.add_flag("HasBottle", cond_or!(spin_attack, fast_spin, fast_split, great_spin, long_spin));
-    // let has_damage_source = cond_fact.add_flag("HasDamageSource", cond_or!(has_sword, bomb_bag, bow));
-    // let can_destroy_trees = cond_fact.add_flag("CanDestroyTrees", cond_or!(has_sword, light_arrow, bomb_bag, lantern_off));
-    // let access_east_field = cond_fact.add_flag("AccessEastField", cond_or!(can_destroy_trees, ocarina));
-    // let access_west_field = cond_fact.add_flag("AccessWestField", cond_or!(rocs_cape, cond_and!(has_sword, has_spin), flippers, cond_and!(can_split_3, bomb_bag)));
-    // let access_hylia_north = cond_fact.add_flag("AccessHyliaNorth", cond_and!(access_east_field, cond_or!(rocs_cape, lon_lon_key, ocarina, cond_and!(flippers, mole_mitts))));
-    // let access_hylia_south = cond_fact.add_flag("AccessHyliaSouth", cond_and!(access_hylia_north, cond_or!(flippers, rocs_cape, cond_and!(mole_mitts, pacci_cane))));
-    // let access_minish_woods = cond_fact.add_flag("AccessMinishWoods", access_east_field);
-    // let access_crenel = cond_fact.add_flag("AccessCrenel", cond_and!(access_west_field, has_bottle, cond_or!(bomb_bag, grip_ring)));
-    // let access_lower_crenel = cond_fact.add_flag("AccessCrenel", cond_and!(access_west_field, has_bottle, cond_or!(bomb_bag, cond_and!(rocs_cape, gust_jar))));
-    // let deepwood_access = cond_fact.add_flag("DeepwoodAccess", cond_and!(access_minish_woods, cond_or!(jabber_nut, flippers)));
-    // let complete_deepwood = cond_fact.add_flag("DeepwoodAccess", cond_and!(deepwood_access, gust_jar, has_sword));
-
-
-    let flag_has_sword = cond_fact.add_flag("HasSword", cond_or!(smith_sword, green_sword, red_sword, blue_sword, four_sword));
-    let flag_has_spin = cond_fact.add_flag("HasSpin", cond_or!(spin_attack, fast_spin, fast_split, great_spin, long_spin));
-    let flag_can_split2 = cond_fact.add_flag("CanSplit2", cond_and!(cond_or!(smith_sword, red_sword, blue_sword, four_sword), flag_has_spin));
-    let flag_can_split3 = cond_fact.add_flag("CanSplit3", cond_and!(cond_or!(smith_sword, blue_sword, four_sword), flag_has_spin));
-    let flag_can_split4 = cond_fact.add_flag("CanSplit4", cond_and!(cond_or!(smith_sword, four_sword), flag_has_spin));
-    let flag_has_bottle = cond_fact.add_flag("HasBottle", cond_or!(bottle1, bottle2, bottle3, bottle4));
-    let flag_has_bow = cond_fact.add_flag("HasBow", cond_or!(bow, light_arrow));
-    let flag_has_light_bow = cond_fact.add_flag("HasLightBow", cond_or!(bow, light_arrow));
-    let flag_has_boomerang = cond_fact.add_flag("HasBoomerang", cond_or!(boomerang, magic_boomerang));
-    let flag_has_damage_source = cond_fact.add_flag("HasDamageSource", cond_or!(flag_has_sword, flag_has_bow, bomb_bag));
-    let flag_has_beam = cond_fact.add_flag("HasBeam", cond_and!(flag_has_sword, cond_or!(sword_beam, peril_beam)));
-    let flag_can_down_thrust = cond_fact.add_flag("CanDownThrust", cond_and!(flag_has_sword, down_thrust, rocs_cape));
-    let flag_can_destroy_trees = cond_fact.add_flag("CanDestroyTrees", cond_or!(flag_has_sword, flag_has_light_bow, bomb_bag, lantern_off));
-    // let flag_inaccessible = cond_fact.add_flag("Inaccessible", untyped_0x_ff);
-    let flag_access_east_field = cond_fact.add_flag("AccessEastField", cond_or!(flag_can_destroy_trees, ocarina));
-    let flag_access_west_field = cond_fact.add_flag("AccessWestField", cond_or!(rocs_cape, cond_and!(flag_has_sword, flag_has_spin), flippers, cond_and!(bomb_bag, flag_can_split3)));
-    let flag_access_minish_woods = cond_fact.add_flag("AccessMinishWoods", flag_access_east_field);
-    let flag_access_crenel = cond_fact.add_flag("AccessCrenel", cond_and!(flag_access_west_field, flag_has_bottle, cond_or!(bomb_bag, grip_ring)));
-    let flag_access_lower_crenel = cond_fact.add_flag("AccessLowerCrenel", cond_and!(flag_access_west_field, flag_has_bottle, cond_or!(bomb_bag, cond_and!(rocs_cape, gust_jar))));
-    // let flag_got_scrolls = cond_fact.add_flag("GotScrolls", todo!());
-    let flag_access_wilds = cond_fact.add_flag("AccessWilds", cond_and!(flag_access_west_field, flag_can_split2, cond_or!(pegasus_boots, rocs_cape)));
-    let flag_access_hylia_north = cond_fact.add_flag("AccessHyliaNorth", cond_and!(flag_access_east_field, cond_or!(rocs_cape, lon_lon_key, ocarina, cond_and!(flippers, mole_mitts))));
-    let flag_access_hylia_south = cond_fact.add_flag("AccessHyliaSouth", cond_and!(flag_access_hylia_north, cond_or!(flippers, rocs_cape, cond_and!(mole_mitts, pacci_cane))));
-    let flag_access_treasure_cave = cond_fact.add_flag("AccessTreasureCave", cond_and!(flag_access_hylia_north, mole_mitts, rocs_cape));
-    let flag_access_valley = cond_fact.add_flag("AccessValley", cond_and!(flag_can_split3, cond_or!(bomb_bag, rocs_cape, flippers), lantern_off));
-    let flag_access_crypt = cond_fact.add_flag("AccessCrypt", cond_and!(flag_access_valley, graveyard_key, flag_can_split3, pegasus_boots));
-    let flag_access_falls_north = cond_fact.add_flag("AccessFallsNorth", cond_and!(bomb_bag, kinstone_x_yellow_crown, lantern_off));
-    let flag_access_falls_south = cond_fact.add_flag("AccessFallsSouth", cond_and!(flag_access_east_field, pacci_cane));
-    let flag_access_clouds = cond_fact.add_flag("AccessClouds", cond_and!(flag_access_falls_north, grip_ring));
-    let flag_access_upper_clouds = cond_fact.add_flag("AccessUpperClouds", cond_and!(flag_access_clouds, cond_or!(rocs_cape, mole_mitts), kinstone_x_yellow_tornado_prong));
-    let flag_deepwood_access = cond_fact.add_flag("DeepwoodAccess:Deepwood", cond_and!(flag_access_minish_woods, cond_or!(jabber_nut, flippers)));
-    let flag_complete_deepwood = cond_fact.add_flag("CompleteDeepwood:Deepwood", cond_and!(flag_deepwood_access, gust_jar, flag_has_sword, big_key_dws_set));
-    let flag_co_f_access = cond_fact.add_flag("CoFAccess:FlameCave", cond_and!(flag_access_crenel, cond_or!(pacci_cane, cond_and!(grip_ring, cond_or!(rocs_cape, flag_has_light_bow, cond_and!(gust_jar, cond_or!(bomb_bag, flag_has_bow, flag_has_boomerang, flag_has_beam))))), cond_or!(bomb_bag, shield, pacci_cane, flag_can_down_thrust), flag_has_damage_source));
-    let flag_complete_co_f = cond_fact.add_flag("CompleteCoF:FlameCave", cond_and!(flag_co_f_access, pacci_cane, Condition::Item(small_key_cof_set, 2), big_key_cof_set));
-    let flag_access_fortress = cond_fact.add_flag("AccessFortress:Fortress", cond_and!(flag_access_wilds, kinstone_x_yellow_totem_prong, cond_or!(flag_has_bow, rocs_cape, flippers)));
-    let flag_complete_fortress = cond_fact.add_flag("CompleteFortress:Fortress", cond_and!(flag_access_fortress, mole_mitts, flag_can_split2, flag_has_bow, big_key_fow_set));
-    let flag_access_droplets = cond_fact.add_flag("AccessDroplets:Droplets", cond_and!(flag_access_hylia_south, cond_or!(flippers, rocs_cape)));
-    let flag_droplets_bottom_jump = cond_fact.add_flag("DropletsBottomJump:Droplets", cond_and!(lantern_off, rocs_cape, flag_has_damage_source, small_key_tod_set));
-    let flag_droplets_east_lever = cond_fact.add_flag("DropletsEastLever:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, cond_or!(flag_droplets_bottom_jump, cond_and!(gust_jar, flippers, small_key_tod_set)), flag_can_split2));
-    let flag_droplets_west_lever = cond_fact.add_flag("DropletsWestLever:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, lantern_off, flippers, bomb_bag, small_key_tod_set, flag_can_split2));
-    let flag_complete_droplets = cond_fact.add_flag("CompleteDroplets:Droplets", cond_and!(flag_droplets_east_lever, flag_droplets_west_lever, lantern_off, flag_has_sword));
-    let flag_access_palace = cond_fact.add_flag("AccessPalace:Palace", cond_and!(flag_access_upper_clouds, flag_can_split3, cond_or!(rocs_cape, bomb_bag, gust_jar, flag_has_boomerang, flag_has_bow)));
-    let flag_complete_palace = cond_fact.add_flag("CompletePalace:Palace", cond_and!(flag_access_palace, rocs_cape, pacci_cane, lantern_off, Condition::Item(small_key_pow_set, 6), big_key_pow_set));
-    let flag_dhc_access = cond_fact.add_flag("DHCAccess:DHC", Condition::NoRequirements);
-    let flag_beat_vaati = cond_fact.add_flag("BeatVaati", cond_and!(big_key_dhc_set, small_key_dhc_set, flag_can_split4, bomb_bag, flag_has_bow, rocs_cape, lantern_off, gust_jar, pacci_cane));
-    let flag_castle_big_doors_open = cond_fact.add_flag("CastleBigDoorsOpen:DHC", cond_and!(flag_dhc_access, small_key_dhc_set, flag_can_split4, rocs_cape, cond_or!(boomerang, flag_has_bow), bomb_bag));    
-    
+//     let loc_ped_item1 = cond_fact.add_location("PedItem1", Condition::AtLeast(2, vec![(water_element, 1), (fire_element, 1), (wind_element, 1), (earth_element, 1)]), ItemCategory::Major);
+// let loc_ped_item2 = cond_fact.add_location("PedItem2", Condition::AtLeast(3, vec![(water_element, 1), (fire_element, 1), (wind_element, 1), (earth_element, 1)]), ItemCategory::Major);
+// let loc_ped_item3 = cond_fact.add_location("PedItem3", Condition::AtLeast(4, vec![(water_element, 1), (fire_element, 1), (wind_element, 1), (earth_element, 1)]), ItemCategory::Major);
 let loc_smith_house = cond_fact.add_location("SmithHouse", Condition::NoRequirements, ItemCategory::Minor);
 let loc_intro_item1 = cond_fact.add_location("IntroItem1", Condition::NoRequirements, ItemCategory::Major);
 let loc_intro_item2 = cond_fact.add_location("IntroItem2", Condition::NoRequirements, ItemCategory::Major);
@@ -251,9 +236,10 @@ let loc_bakery_attic = cond_fact.add_location("BakeryAttic", cond_or!(pacci_cane
 let loc_stock_well_attic = cond_fact.add_location("StockWellAttic", cond_or!(pacci_cane, flippers, rocs_cape), ItemCategory::Minor);
 let loc_simulation_chest = cond_fact.add_location("SimulationChest", flag_has_sword, ItemCategory::Major);
 let loc_rem_shoe_shop = cond_fact.add_location("RemShoeShop", wake_up_mushroom, ItemCategory::Major);
-// let loc_shop80_item = cond_fact.add_location("Shop80Item", todo!(), ItemCategory::Major);
-// let loc_shop300_item = cond_fact.add_location("Shop300Item", cond_and!(wallet, todo!()), ItemCategory::Major);
-// let loc_shop600_item = cond_fact.add_location("Shop600Item", cond_and!(Condition::Item(wallet, 3), todo!()), ItemCategory::Major);
+let loc_shop80_item = cond_fact.add_location("Shop80Item", Condition::AtLeast(80, vec![(rupee1, 1), (rupee5, 5), (rupee20, 20), (rupee50, 50), (rupee100, 100), (rupee200, 200)]), ItemCategory::Major);
+let loc_shop300_item = cond_fact.add_location("Shop300Item", cond_and!(wallet, Condition::AtLeast(380, vec![(rupee1, 1), (rupee5, 5), (rupee20, 20), (rupee50, 50), (rupee100, 100), (rupee200, 200)])), ItemCategory::Major);
+let loc_shop600_item = cond_fact.add_location("Shop600Item", cond_and!(Condition::Item(wallet, 3), Condition::AtLeast(980, vec![(rupee1, 1), (rupee5, 5), (rupee20, 20), (rupee50, 50), (rupee100, 100), (rupee200, 200)])), ItemCategory::Major);
+
 let loc_shop_dogfood_item = cond_fact.add_location("ShopDogfoodItem", cond_or!(flippers, pacci_cane, rocs_cape), ItemCategory::Major);
 let loc_carlov_reward = cond_fact.add_location("CarlovReward", cond_or!(flippers, pacci_cane, rocs_cape), ItemCategory::Major);
 let loc_figurine_house_left = cond_fact.add_location("FigurineHouseLeft", carlov_medal, ItemCategory::Minor);
@@ -333,7 +319,7 @@ let loc_witch_digging_cave = cond_fact.add_location("WitchDiggingCave", cond_and
 let loc_hylia_sunken_heart_piece = cond_fact.add_location("HyliaSunkenHeartPiece", cond_and!(flag_access_hylia_north, flippers), ItemCategory::Major);
 let loc_hylia_bottom_heart_piece = cond_fact.add_location("HyliaBottomHeartPiece", cond_and!(flag_access_hylia_north, cond_or!(flippers, rocs_cape)), ItemCategory::Major);
 let loc_waveblade_heart_piece = cond_fact.add_location("WavebladeHeartPiece", cond_and!(flag_access_hylia_north, cond_or!(flippers, rocs_cape)), ItemCategory::Major);
-// let loc_waveblade_scroll = cond_fact.add_location("WavebladeScroll", cond_and!(todo!(), flag_has_sword, loc_waveblade_heart_piece), ItemCategory::Major);
+let loc_waveblade_scroll = cond_fact.add_location("WavebladeScroll", cond_and!(Condition::AtLeast(28, vec![(piece_of_heart, 1), (heart_container, 4)]), flag_has_sword, loc_waveblade_heart_piece), ItemCategory::Major);
 let loc_hylia_cape_cave_top_right = cond_fact.add_location("HyliaCapeCaveTopRight", flag_access_treasure_cave, ItemCategory::Minor);
 let loc_hylia_cape_cave_bottom_left = cond_fact.add_location("HyliaCapeCaveBottomLeft", flag_access_treasure_cave, ItemCategory::Minor);
 let loc_hylia_cape_cave_top_left = cond_fact.add_location("HyliaCapeCaveTopLeft", flag_access_treasure_cave, ItemCategory::Minor);
@@ -426,7 +412,7 @@ let loc_fortress_skull_room_left = cond_fact.add_location("FortressSkullRoomLeft
 let loc_fortress_skull_room_right = cond_fact.add_location("FortressSkullRoomRight:Fortress", flag_access_fortress, ItemCategory::Class(Fortress));
 let loc_fortress_wizrobes = cond_fact.add_location("FortressWizrobes:Fortress", cond_and!(flag_access_fortress, mole_mitts), ItemCategory::Class(Fortress));
 let loc_fortress_boss_item = cond_fact.add_location("FortressBossItem:Fortress", flag_complete_fortress, ItemCategory::Class(Fortress));
-// let loc_fortress_prize = cond_fact.add_location("FortressPrize:`ELEMENT_DUNGEON`", flag_complete_fortress, ItemCategory::Class(`ELEMENT_DUNGEON`));
+let loc_fortress_prize = cond_fact.add_location("FortressPrize:`ELEMENT_DUNGEON`", flag_complete_fortress, ItemCategory::Major);
 let loc_droplets_mulldozers = cond_fact.add_location("DropletsMulldozers:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, lantern_off, bomb_bag, flag_has_damage_source), ItemCategory::Class(Droplets));
 let loc_droplets_water_pot = cond_fact.add_location("DropletsWaterPot:Droplets", cond_and!(flag_access_droplets, big_key_tod_set, flippers, cond_or!(rocs_cape, gust_jar)), ItemCategory::Class(Droplets));
 let loc_droplets_second_iceblock = cond_fact.add_location("DropletsSecondIceblock:Droplets", cond_and!(flag_access_droplets, Condition::Item(small_key_tod_set, 4)), ItemCategory::Class(Droplets));
@@ -473,10 +459,14 @@ let loc_castle_lower_left_tower = cond_fact.add_location("CastleLowerLeftTower:D
 let loc_castle_lower_right_tower = cond_fact.add_location("CastleLowerRightTower:DHC", flag_castle_big_doors_open, ItemCategory::Class(DHC));
 let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and!(flag_castle_big_doors_open, Condition::Item(small_key_dhc_set, 5)), ItemCategory::Class(DHC));
 
+let loc_deepwood_prize = cond_fact.add_location("DeepwoodPrize", flag_complete_deepwood, ItemCategory::Class(Prize));
+let loc_flames_prize = cond_fact.add_location("CaveOfFlamesPrize", flag_complete_co_f, ItemCategory::Class(Prize));
+let loc_winds_prize = cond_fact.add_location("PalaceOfWindsPrize", flag_complete_palace, ItemCategory::Class(Prize));
+let loc_droplet_prize = cond_fact.add_location("TempleOfDropletsPrize", flag_complete_droplets, ItemCategory::Class(Prize));
     
     let junk = cond_fact.add_item("Junk", ItemCategory::Minor);
     
-    let item_pool: Vec<Item> = vec![
+    let mut item_pool: Vec<Item> = vec![
         Item { def: cond_fact.get_item(smith_sword).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(smith_sword).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(smith_sword).unwrap(), count: 1 },
@@ -484,11 +474,11 @@ let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and
         Item { def: cond_fact.get_item(bow).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(bow).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(hyrulean_bestiary).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee1).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee1).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee1).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee1).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee1).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(ocarina).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(grip_ring).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(power_bracelets).unwrap(), count: 1 },
@@ -509,16 +499,28 @@ let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and
         Item { def: cond_fact.get_item(long_spin).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(bottle2).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(pacci_cane).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 20 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee20).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(carlov_medal).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(gust_jar).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(magic_boomerang).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(bottle4).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(kinstone_x_yellow_crown).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(big_key_cof_set).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(big_key_dhc_set).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 50 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 100 },
+        Item { def: cond_fact.get_item(rupee50).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee50).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee50).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee50).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee100).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(fast_split).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(jabber_nut).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(small_key_dhc_set).unwrap(), count: 1 },
@@ -526,11 +528,15 @@ let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and
         Item { def: cond_fact.get_item(small_key_dhc_set).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(small_key_dhc_set).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(small_key_dhc_set).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(blue_sword).unwrap(), count: 1 },
-        
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 200 },
+        Item { def: cond_fact.get_item(rupee200).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee200).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(big_key_dws_set).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(rupee).unwrap(), count: 5 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(rupee5).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(mole_mitts).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(light_arrow).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(small_key_dws_set).unwrap(), count: 1 },
@@ -543,7 +549,6 @@ let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and
         Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(bottle1).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(mask_history).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(wallet).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(fast_spin).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(great_spin).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(roll_attack).unwrap(), count: 1 },
@@ -578,17 +583,28 @@ let loc_castle_big_block = cond_fact.add_location("CastleBigBlock:DHC", cond_and
         Item { def: cond_fact.get_item(big_key_fow_set).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(rock_breaker).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(lantern_off).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(big_key_pow_set).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(lon_lon_key).unwrap(), count: 1 },
         Item { def: cond_fact.get_item(pegasus_boots).unwrap(), count: 1 },
-        Item { def: cond_fact.get_item(wake_up_mushroom).unwrap(), count: 1 }
+        Item { def: cond_fact.get_item(wake_up_mushroom).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(heart_container).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(heart_container).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(heart_container).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(heart_container).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(heart_container).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(wallet).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(wallet).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(wallet).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
+        Item { def: cond_fact.get_item(kinstone_x_yellow_tornado_prong).unwrap(), count: 1 },
     ];
 
+    for _ in 0..44 {
+        item_pool.push(Item { def: cond_fact.get_item(piece_of_heart).unwrap(), count: 1 });
+    }
 
     // allocate(&cond_fact, cond_fact.get_item(junk).unwrap());
     let mut allocator = Allocator::new(&cond_fact, item_pool);

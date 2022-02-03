@@ -591,11 +591,7 @@ DropletsMulldozers:Droplets;     DungeonItem; 0x0E55CB;                         
 DropletsWaterPot:Droplets;       DungeonItem; 0x0E5BC7;                                                                   Helpers.AccessDroplets, Items.BigKey`TOD_SET`, Items.Flippers, (|Items.RocsCape, Items.GustJar);                                                   Items.SmallKey`TOD_SET`
 DropletsSecondIceblock:Droplets; DungeonItem; 0x098C3C:FirstByte, 0x098C3E:SecondByte ;                                   Helpers.AccessDroplets, Items.SmallKey`TOD_SET`:4;                                                                                                 Items.SmallKey`TOD_SET`
 
-!ifdef - KEYSANITY
-    DropletsFirstIceblock:Droplets;  DungeonItem; 0x098C1A:FirstByte, 0x098C1C:SecondByte;                                Helpers.AccessDroplets;                                                                                                                            Items.BigKey`TOD_SET`
-!else
-    DropletsFirstIceblock:Droplets;  Unshuffled;        0x098C1A:FirstByte, 0x098C1C:SecondByte;                                Helpers.AccessDroplets;                                                                                                                            Items.BigKey`TOD_SET`
-!endif
+DropletsFirstIceblock:Droplets;  DungeonItem; 0x098C1A:FirstByte, 0x098C1C:SecondByte;                                Helpers.AccessDroplets;                                                                                                                            Items.BigKey`TOD_SET`
 
 DropletsBottomJump:Droplets;     Helper;            ;                                                                       Items.LanternOff, Items.RocsCape, Helpers.HasDamageSource, Items.SmallKey`TOD_SET`:4;
 DropletsEastLever:Droplets;      Helper;            ;                                                                       Helpers.AccessDroplets, Items.BigKey`TOD_SET`, (|Helpers.DropletsBottomJump, (&Items.GustJar, Items.Flippers, Items.SmallKey`TOD_SET`:4)), Helpers.CanSplit2
@@ -613,7 +609,7 @@ DropletsDarkMazeMiddle:Droplets; Minor;             0x60-0x2B-0x03;             
 DropletsPostTwinFrozen:Droplets; Minor;             0x60-0x2D-0x00;                                                         Helpers.AccessDroplets, Items.BigKey`TOD_SET`, Items.GustJar, Items.LanternOff, (|Helpers.DropletsBottomJump,(&Items.SmallKey`TOD_SET`:4,Items.Flippers));
 DropletsPreviewFrozen:Droplets;  Minor;             0x60-0x32-0x00;                                                         Helpers.AccessDroplets, Items.BigKey`TOD_SET`, Items.LanternOff;
 DropletsIceWiggler:Droplets;     DungeonItem; 0x60-0x32-0x01;                                                         Helpers.AccessDroplets, Items.BigKey`TOD_SET`, Items.GustJar, (|Helpers.DropletsBottomJump,(&Items.SmallKey`TOD_SET`:4, Items.Flippers)), Helpers.HasSword;                                           Items.Compass`TOD_SET`
-CompleteDroplets:Droplets;       Helper;            ;                                                                       Locations.DropletsEastLever, Locations.DropletsWestLever, Items.LanternOff, Helpers.HasSword
+CompleteDroplets:Droplets;       Helper;            ;                                                                       Helpers.DropletsEastLever, Helpers.DropletsWestLever, Items.LanternOff, Helpers.HasSword
 DropletsBossItem:Droplets;       Major;             octoContainerItem:Define:FirstByte, octoContainerSub:Define:SecondByte; Helpers.CompleteDroplets;                                                                                                                                                           Items.HeartContainer
 DropletsPrize:`ELEMENT_DUNGEON`; `ELEMENT`;         0x0E40C3;                                                               Helpers.CompleteDroplets
 

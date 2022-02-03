@@ -26,7 +26,7 @@ pub fn parse_logic(s: &str) {
             get_items(&reqs, &mut items);
             let req_str = gen_reqs(&reqs);
             let var_name = bits[0].split(':').next().expect("Always at least one piece").to_snake_case();
-            // println!("let flag_{} = cond_fact.add_flag(\"{}\", {});", var_name, bits[0], req_str);
+            println!("let flag_{} = cond_fact.add_flag(\"{}\", {});", var_name, bits[0], req_str);
         } else if bits[1] == "Major" || bits[1] == "Minor"  || bits[1] == "DungeonItem" {
             let (reqs, _) = parse_reqs(bits[3]);
             get_items(&reqs, &mut items);
@@ -37,7 +37,7 @@ pub fn parse_logic(s: &str) {
             } else {
                 format!("ItemCategory::{}", bits[1])
             };
-            println!("let loc_{} = cond_fact.add_location(\"{}\", {}, {});", var_name, bits[0], req_str, category);
+            // println!("let loc_{} = cond_fact.add_location(\"{}\", {}, {});", var_name, bits[0], req_str, category);
         }
     }
     for item in items {
@@ -124,7 +124,34 @@ fn gen_req(term: &Term) -> String {
             s.push(')');
             s
         },
-        Term::Count(_, _) => "todo!()".to_string(),
+        Term::Count(threshold, terms) => {
+            let mut s = format!("Condition::AtLeast({}, vec![", threshold);
+            let mut first = true;
+            for term in terms {
+                if !first {
+                    s.push_str(", ");
+                }
+                first = false;
+                match term {
+                    Term::Lit(lit) => {
+                        let mut it = lit.split(':');
+                        let name = it.next().unwrap();
+                        s.push('(');
+                        if let Some(item) = name.strip_prefix("Items.") {
+                            s.push_str(&item.to_snake_case());
+                        }
+                        let weight = it.next();
+                        s.push_str(", ");
+                        s.push_str(weight.unwrap_or("1"));
+                        s.push(')');
+
+                    }
+                    _ => panic!("Count terms can only contain item literals")
+                }
+            }
+            s.push_str("])");
+            s
+        }
     }
 }
 
