@@ -1,0 +1,1418 @@
+item_pool:
+  - name: HyruleanBestiary
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: Rupee1
+    category: Minor
+    count: 5
+  - name: Rupee5
+    category: Minor
+    count: 22
+  - name: Rupee20
+    category: Minor
+    count: 32
+  - name: Arrow5
+    category: Minor
+    count: 27
+  - name: Rupee50
+    category: Minor
+    count: 15
+  - name: Rupee100
+    category: Minor
+    count: 5
+  - name: Rupee200
+    category: Minor
+    count: 2
+  - name: Ocarina
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: GripRing
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: PowerBracelets
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: SpinAttack
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: DashAttack
+    category: Major
+    count: 1
+    show_in_graph: true
+  - name: SmallKey:Fortress
+    category: Major
+    restriction: Fortress
+    count: 4
+  - name: SmallKey:DHC
+    restriction: DHC
+    category: Major
+    count: 5
+  - name: SmallKey:Crypt
+    restriction: Crypt
+    category: Major
+    count: 3
+  - name: SmallKey:Palace
+    restriction: Palace
+    category: Major
+    count: 6
+  - name: SmallKey:Deepwood
+    category: Major
+    restriction: Deepwood
+    count: 5
+  - name: SmallKey:FlameCave
+    category: Major
+    restriction: FlameCave
+    count: 2
+  - name: SmallKey:Droplets
+    category: Major
+    restriction: Droplets
+    count: 4
+  - name: BigKey:FlameCave
+    category: Major
+    restriction: FlameCave
+    show_in_graph: true
+    count: 1
+  - name: BigKey:DHC
+    category: Major
+    restriction: DHC
+    show_in_graph: true
+    count: 1
+  - name: BigKey:Deepwood
+    category: Major
+    restriction: DeepwoodBig
+    show_in_graph: true
+    count: 1
+  - name: BigKey:Droplets
+    category: Major
+    restriction: Droplets
+    show_in_graph: true
+    count: 1
+  - name: BigKey:Fortress
+    restriction: Fortress
+    show_in_graph: true
+    category: Major
+    count: 1
+  - name: BigKey:Palace
+    category: Major
+    restriction: PalaceBig
+    show_in_graph: true
+    count: 1
+  - name: PerilBeam
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: BombBag
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: LongSpin
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Bottle2
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Bow
+    category: Major
+    show_in_graph: true
+    count: 2
+  - name: PacciCane
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: CarlovMedal
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: GustJar
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Bottle4
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: KinstoneX.YellowCrown
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Rupee50
+    category: Minor
+    count: 4
+  - name: Rupee100
+    category: Minor
+    count: 6
+  - name: Bomb5
+    category: Minor
+    count: 10
+  - name: FastSplit
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: JabberNut
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: MoleMitts
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: WaterElement
+    restriction: Prize
+    show_in_graph: true
+    category: Major
+    count: 1
+  - name: KinstoneX.YellowTotemProng
+    show_in_graph: true
+    category: Major
+    count: 3
+  - name: DownThrust
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: GraveyardKey
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: KinstoneX.YellowTornadoProng
+    category: Major
+    show_in_graph: true
+    count: 5
+  - name: Bottle1
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: MaskHistory
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Wallet
+    category: Major
+    show_in_graph: true
+    count: 3
+  - name: FastSpin
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: GreatSpin
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: RollAttack
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Bottle3
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Flippers
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: Boomerang
+    category: Major
+    show_in_graph: true
+    count: 2
+  - name: DogFoodBottle
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: SmithSword
+    category: Major
+    show_in_graph: true
+    count: 5
+  - name: Shield
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: SwordBeam
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: FireElement
+    category: Major
+    show_in_graph: true
+    restriction: Prize
+    count: 1
+  - name: EarthElement
+    category: Major
+    show_in_graph: true
+    restriction: Prize
+    count: 1
+  - name: HeartContainer
+    category: Major
+    count: 5
+  - name: RocsCape
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: PicoriLegend
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: WindElement
+    category: Major
+    show_in_graph: true
+    restriction: Prize
+    count: 1
+  - name: TingleTrophy
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: RockBreaker
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: LanternOff
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: PieceOfHeart
+    category: Major
+    show_in_graph: false
+    count: 35
+  - name: LonLonKey
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: PegasusBoots
+    category: Major
+    show_in_graph: true
+    count: 1
+  - name: WakeUpMushroom
+    category: Major
+    show_in_graph: true
+    count: 1
+
+flags:
+  - name: HasSword
+    requirements: Items.SmithSword
+
+  - name: HasSpin
+    requirements: (|Items.SpinAttack, Items.FastSpin, Items.FastSplit, Items.GreatSpin, Items.LongSpin)
+
+  - name: CanSplit2
+    requirements: Items.SmithSword*3, Helpers.HasSpin
+
+  - name: CanSplit3
+    requirements: Items.SmithSword*4, Helpers.HasSpin
+
+  - name: CanSplit4
+    requirements: Items.SmithSword*5, Helpers.HasSpin
+
+  - name: HasBottle
+    requirements: (|Items.Bottle1, Items.Bottle2, Items.Bottle3, Items.Bottle4)
+
+  - name: HasBow
+    requirements: Items.Bow
+
+  - name: HasLightBow
+    requirements: Items.Bow*2
+
+  - name: HasBoomerang
+    requirements: Items.Boomerang
+
+  - name: HasDamageSource
+    requirements: (|Helpers.HasSword, Helpers.HasBow, Items.BombBag)
+
+  - name: HasBeam
+    requirements: Helpers.HasSword, (|Items.SwordBeam, Items.PerilBeam)
+
+  - name: CanDownThrust
+    requirements: Helpers.HasSword, Items.DownThrust, Items.RocsCape
+
+  - name: CanDestroyTrees
+    requirements: (|Helpers.HasSword, Helpers.HasLightBow, Items.BombBag ,Items.LanternOff)
+
+  - name: AccessEastField
+    requirements: (|Helpers.CanDestroyTrees, Items.Ocarina)
+
+  - name: AccessWestField
+    requirements: (|Items.RocsCape, (&Helpers.HasSword, Helpers.HasSpin), Items.Flippers, (&Items.BombBag, Helpers.CanSplit3))
+
+  - name: AccessMinishWoods
+    requirements: Helpers.AccessEastField
+
+  - name: AccessCrenel
+    requirements: Helpers.AccessWestField, Helpers.HasBottle, (|Items.BombBag, Items.GripRing)
+
+  - name: AccessLowerCrenel
+    requirements: Helpers.AccessWestField, Helpers.HasBottle, (|Items.BombBag, (&Items.RocsCape, Items.GustJar))
+
+  - name: GotScrolls
+    requirements: (+7, Items.SpinAttack, Items.RockBreaker, Items.DashAttack, Items.DownThrust, Items.RollAttack, Items.SwordBeam, Items.PerilBeam, Items.GreatSpin, Items.FastSpin, Items.FastSplit, Items.LongSpin)
+
+  - name: AccessWilds
+    requirements: Helpers.AccessWestField, Helpers.CanSplit2, (|Items.PegasusBoots, Items.RocsCape)
+
+  - name: AccessHyliaNorth
+    requirements: Helpers.AccessEastField,(|Items.RocsCape, Items.LonLonKey,Items.Ocarina,(&Items.Flippers, Items.MoleMitts))
+
+  - name: AccessHyliaSouth
+    requirements: Helpers.AccessHyliaNorth,(|Items.Flippers,Items.RocsCape,(&Items.MoleMitts,Items.PacciCane))
+
+  - name: AccessTreasureCave
+    requirements: Helpers.AccessHyliaNorth, Items.MoleMitts, Items.RocsCape
+
+  - name: AccessValley
+    requirements: Helpers.CanSplit3, (|Items.BombBag, Items.RocsCape, Items.Flippers), Items.LanternOff
+
+  - name: AccessCrypt
+    requirements: Helpers.AccessValley, Items.GraveyardKey, Helpers.CanSplit3, Items.PegasusBoots
+
+  - name: AccessFallsNorth
+    requirements: Items.BombBag, Items.KinstoneX.YellowCrown, Items.LanternOff
+
+  - name: AccessFallsSouth
+    requirements: Helpers.AccessEastField, Items.PacciCane
+
+  - name: AccessClouds
+    requirements: Helpers.AccessFallsNorth, Items.GripRing
+
+  - name: AccessUpperClouds
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts), Items.KinstoneX.YellowTornadoProng*5
+
+  - name: DeepwoodAccess
+    requirements: Helpers.AccessMinishWoods, (|Items.JabberNut, Items.Flippers)
+
+  - name: CompleteDeepwood
+    requirements: Helpers.DeepwoodAccess, Items.GustJar, Helpers.HasSword, Items.BigKey:Deepwood
+
+  - name: CoFAccess
+    requirements: Helpers.AccessCrenel,(|Items.PacciCane, (&Items.GripRing, (|Items.RocsCape, Helpers.HasLightBow,(&Items.GustJar, (|Items.BombBag, Helpers.HasBow, Helpers.HasBoomerang, Helpers.HasBeam))))), (|Items.BombBag, Items.Shield, Items.PacciCane, Helpers.CanDownThrust), Helpers.HasDamageSource
+
+  - name: CompleteCoF
+    requirements: Helpers.CoFAccess, Items.PacciCane, Items.SmallKey:FlameCave*2, Items.BigKey:FlameCave
+
+  - name: AccessFortress
+    requirements: Helpers.AccessWilds, Items.KinstoneX.YellowTotemProng*3, (|Helpers.HasBow, Items.RocsCape, Items.Flippers)
+
+  - name: CompleteFortress
+    requirements: Helpers.AccessFortress, Items.MoleMitts, Helpers.CanSplit2, Helpers.HasBow, Items.BigKey:Fortress
+
+  - name: AccessDroplets
+    requirements: Helpers.AccessHyliaSouth, (|Items.Flippers, Items.RocsCape)
+
+  - name: DropletsBottomJump
+    requirements: Items.LanternOff, Items.RocsCape, Helpers.HasDamageSource, Items.SmallKey:Droplets*4
+
+  - name: DropletsEastLever
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Helpers.DropletsBottomJump, (&Items.GustJar, Items.Flippers, Items.SmallKey:Droplets*4)), Helpers.CanSplit2
+
+  - name: DropletsWestLever
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff, Items.Flippers, Items.BombBag, Items.SmallKey:Droplets*4, Helpers.CanSplit2
+
+  - name: CompleteDroplets
+    requirements: Helpers.DropletsEastLever, Helpers.DropletsWestLever, Items.LanternOff, Helpers.HasSword
+
+  - name: AccessPalace
+    requirements: Helpers.AccessUpperClouds, Helpers.CanSplit3, (|Items.RocsCape, Items.BombBag, Items.GustJar, Helpers.HasBoomerang, Helpers.HasBow)
+
+  - name: CompletePalace
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff, Items.BigKey:Palace, Items.SmallKey:Palace*6
+
+  - name: DHCAccess
+    requirements: SmithSword*5, WindElement, FireElement, WaterElement, EarthElement
+
+  - name: BeatVaati
+    requirements: Items.BigKey:DHC,Items.SmallKey:DHC,Helpers.CanSplit4, Items.BombBag, Helpers.HasBow, Items.RocsCape, Items.LanternOff, Items.GustJar, Items.PacciCane
+
+  - name: CastleBigDoorsOpen
+    requirements: Helpers.DHCAccess, Items.SmallKey:DHC*1, Helpers.CanSplit4, Items.RocsCape, (|Items.Boomerang*2, Helpers.HasBow), Items.BombBag
+
+locations:
+  - name: PedItem1
+    category: Major
+    requirements: (+2, Items.WaterElement, Items.FireElement, Items.WindElement, Items.EarthElement)
+  - name: PedItem2
+    category: Major
+    requirements: (+3, Items.WaterElement, Items.FireElement, Items.WindElement, Items.EarthElement)
+  - name: PedItem3
+    category: Major
+    requirements: (+4, Items.WaterElement, Items.FireElement, Items.WindElement, Items.EarthElement)
+  - name: SmithHouse
+    category: Minor
+    requirements: 
+  - name: IntroItem1
+    category: Major
+    requirements: 
+  - name: IntroItem2
+    category: Major
+    requirements: 
+  - name: LinkMinishWaterHoleHeartPiece
+    category: Major
+    requirements: Helpers.CanDestroyTrees ,Items.PegasusBoots, Items.Flippers
+  - name: HyruleWellTop
+    category: Major
+    requirements: Items.BombBag
+  - name: HyruleWellLeft
+    category: Minor
+    requirements: Items.MoleMitts
+  - name: HyruleWellBottom
+    category: Minor
+    requirements: (|Items.Flippers, Items.RocsCape)
+  - name: HyruleWellRight
+    category: Minor
+    requirements: 
+  - name: HyruleWellPillar
+    category: Minor
+    requirements: Locations.HyruleWellLeft, Locations.HyruleWellRight, Locations.HyruleWellBottom, Helpers.CanSplit3
+  - name: PreCastleCaveHeartPiece
+    category: Major
+    requirements: (|Items.Flippers, Items.RocsCape, Items.BombBag)
+  - name: SwiftbladeScroll1
+    category: Major
+    requirements: Helpers.HasSword
+  - name: SwiftbladeScroll2
+    category: Major
+    requirements: Items.SmithSword*2
+  - name: SwiftbladeScroll3
+    category: Major
+    requirements: Helpers.HasSword, Items.PegasusBoots
+  - name: SwiftbladeScroll4
+    category: Major
+    requirements: Helpers.HasSword, Items.RocsCape
+  - name: GrimbladeHeartPiece
+    category: Major
+    requirements: 
+  - name: GrimbladeScroll
+    category: Major
+    requirements: Helpers.HasSword, Items.LanternOff
+  - name: CastleWaterLeft
+    category: Major
+    requirements: Items.Flippers
+  - name: CastleWaterRight
+    category: Minor
+    requirements: Items.Flippers
+  - name: CafeLady
+    category: Minor
+    requirements: 
+  - name: HearthLedge
+    category: Minor
+    requirements: Items.LanternOff
+  - name: HearthBackdoor
+    category: Major
+    requirements: (|Items.Flippers, Items.PacciCane, Items.RocsCape)
+  - name: SchoolTop
+    category: Minor
+    requirements: Items.PacciCane
+  - name: SchoolGardenLeft
+    category: Minor
+    requirements: Items.PacciCane, Helpers.CanSplit4
+  - name: SchoolGardenMiddle
+    category: Minor
+    requirements: Items.PacciCane, Helpers.CanSplit4
+  - name: SchoolGardenRight
+    category: Minor
+    requirements: Items.PacciCane, Helpers.CanSplit4
+  - name: SchoolGardenHeartPiece
+    category: Major
+    requirements: Items.PacciCane, Helpers.CanSplit4
+  - name: TownDiggingTop
+    category: Minor
+    requirements: Items.MoleMitts
+  - name: TownDiggingRight
+    category: Minor
+    requirements: Items.MoleMitts
+  - name: TownDiggingLeft
+    category: Minor
+    requirements: Items.MoleMitts
+  - name: BakeryAttic
+    category: Minor
+    requirements: (|Items.PacciCane, Items.Flippers, Items.RocsCape)
+  - name: StockWellAttic
+    category: Minor
+    requirements: (|Items.PacciCane, Items.Flippers, Items.RocsCape)
+  - name: SimulationChest
+    category: Major
+    requirements: Helpers.HasSword
+  - name: RemShoeShop
+    category: Major
+    requirements: Items.WakeUpMushroom
+  - name: Shop80Item
+    category: Major
+    # requirements: (+80,  Items.Rupee1, Items.Rupee5*5, Items.Rupee20*20, Items.Rupee50*50, Items.Rupee100*100, Items.Rupee200*200)
+    requirements: 
+  - name: Shop300Item
+    category: Major
+    requirements: Items.Wallet,    (+380, Items.Rupee1, Items.Rupee5*5, Items.Rupee20*20, Items.Rupee50*50, Items.Rupee100*100, Items.Rupee200*200)
+  - name: Shop600Item
+    category: Major
+    requirements: Items.Wallet*3, (+980, Items.Rupee1, Items.Rupee5*5, Items.Rupee20*20, Items.Rupee50*50, Items.Rupee100*100, Items.Rupee200*200)
+  - name: ShopDogfoodItem
+    category: Major
+    requirements: (|Items.Flippers, Items.PacciCane, Items.RocsCape)
+  - name: CarlovReward
+    category: Major
+    requirements: (|Items.Flippers, Items.PacciCane, Items.RocsCape)
+  - name: FigurineHouseLeft
+    category: Minor
+    requirements: Items.CarlovMedal
+  - name: FigurineHouseMiddle
+    category: Minor
+    requirements: Items.CarlovMedal
+  - name: FigurineHouseRight
+    category: Minor
+    requirements: Items.CarlovMedal
+  - name: FigurineHouseHeartPiece
+    category: Major
+    requirements: Items.CarlovMedal
+  - name: JullietaBook
+    category: Major
+    requirements: Helpers.HasBottle, (|Items.Flippers, Items.PacciCane, Items.RocsCape)
+  - name: WrightAtticBook
+    category: Major
+    requirements: Items.PowerBracelets, (|Items.Flippers, Items.PacciCane, Items.RocsCape), (|Items.GustJar, Items.BombBag), Helpers.CanSplit2
+  - name: FountainBig
+    category: Major
+    requirements: Helpers.HasBottle, Items.PacciCane, Helpers.HasDamageSource
+  - name: FountainSmall
+    category: Minor
+    requirements: Helpers.HasBottle, (|Items.Flippers, Items.RocsCape)
+  - name: FountainHeartPiece
+    category: Major
+    requirements: Helpers.HasBottle, Items.RocsCape
+  - name: LibraryMinish
+    category: Minor
+    requirements: Items.HyruleanBestiary, Items.PicoriLegend, Items.MaskHistory, Items.Ocarina, Items.PacciCane
+  - name: CuccoMinigame
+    category: Minor
+    requirements: (|Items.RocsCape, Items.Flippers)
+  - name: TownBell
+    category: Minor
+    requirements: Items.RocsCape
+  - name: FlipsCaveBig
+    category: Major
+    requirements: Items.Ocarina, Helpers.HasDamageSource, Items.PacciCane, (|Items.Flippers, (&Items.HyruleanBestiary,Items.PicoriLegend,Items.MaskHistory, Items.GripRing, (|Items.GustJar, Items.RocsCape)))
+  - name: FlipsCaveSmall
+    category: Minor
+    requirements: Items.Flippers, Items.Ocarina, Items.PacciCane, Items.LanternOff
+  - name: TingleTrophyItem
+    category: Major
+    requirements: Helpers.CanDestroyTrees, Items.PacciCane, Items.TingleTrophy
+  - name: HillsKeeseCave
+    category: Minor
+    requirements: Items.BombBag
+  - name: AboveHPHole
+    category: Minor
+    requirements: Helpers.AccessHyliaNorth, (|Items.PacciCane, Items.RocsCape)
+  - name: LonLonPot
+    category: Major
+    requirements: Helpers.AccessEastField
+  - name: LonLonCave
+    category: Minor
+    requirements: Helpers.AccessHyliaNorth, Helpers.CanSplit2
+  - name: LonLonCaveSecret
+    category: Minor
+    requirements: Locations.LonLonCave, Items.BombBag, Items.LanternOff
+  - name: LonLonHeartPiece
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, Items.PegasusBoots
+  - name: MinishRupeeFairy
+    category: Major
+    requirements: Helpers.AccessEastField, Items.PacciCane
+  - name: TrilbyBombCave
+    category: Minor
+    requirements: Helpers.AccessWestField, Helpers.CanSplit2, Items.BombBag
+  - name: TrilbyMoleCaveLeft
+    category: Minor
+    requirements: Helpers.AccessWestField, Items.MoleMitts
+  - name: TrilbyMoleCaveRight
+    category: Minor
+    requirements: Helpers.AccessWestField, Items.MoleMitts
+  - name: BottleScrub
+    category: Major
+    requirements: Items.Shield, Items.BombBag, Helpers.AccessWestField
+  - name: JabberNut
+    category: Major
+    requirements: Helpers.AccessMinishWoods
+  - name: BelariBombs
+    category: Major
+    requirements: Helpers.AccessMinishWoods, (|Helpers.CompleteDeepwood,Items.BombBag)
+  - name: MinishMiddleFlipperHole
+    category: Minor
+    requirements: Helpers.AccessMinishWoods, (|Helpers.CompleteDeepwood,Items.BombBag), Items.Flippers
+  - name: MinishRightFlipperHole
+    category: Minor
+    requirements: Helpers.AccessMinishWoods, (|Helpers.CompleteDeepwood,Items.BombBag), Items.Flippers
+  - name: MinishLeftFlipperHole
+    category: Minor
+    requirements: Helpers.AccessMinishWoods, (|Helpers.CompleteDeepwood,Items.BombBag), Items.Flippers
+  - name: MinishLeftFlipperHoleHeartPiece
+    category: Major
+    requirements: Helpers.AccessMinishWoods, (|Helpers.CompleteDeepwood,Items.BombBag), Items.Flippers
+  - name: MinishLikeLikeDiggingCaveLeft
+    category: Minor
+    requirements: Helpers.AccessMinishWoods, Items.MoleMitts
+  - name: MinishLikeLikeDiggingCaveRight
+    category: Minor
+    requirements: Helpers.AccessMinishWoods, Items.MoleMitts
+  - name: MinishNorthHole
+    category: Minor
+    requirements: Helpers.AccessHyliaSouth, Items.Flippers, Items.PegasusBoots
+  - name: MinishWitchHut
+    category: Major
+    requirements: Helpers.AccessMinishWoods, (|Items.Flippers, Items.RocsCape,(&Items.PacciCane,(|Items.Ocarina, Items.LonLonKey)))
+  - name: MinishHeartPieceTop
+    category: Major
+    requirements: Helpers.AccessMinishWoods, (|Items.Flippers, Items.RocsCape,(&Items.PacciCane,(|Items.Ocarina, Items.LonLonKey)))
+  - name: MinishHeartPieceBottom
+    category: Major
+    requirements: Helpers.AccessMinishWoods
+  - name: MinishVillageHeartPiece
+    category: Major
+    requirements: Helpers.AccessMinishWoods
+  - name: CrenelVineHole
+    category: Minor
+    requirements: Helpers.AccessLowerCrenel
+  - name: CrenelMinishHouse
+    category: Minor
+    requirements: Helpers.AccessLowerCrenel
+  - name: CrenelCaveDownstairs
+    category: Minor
+    requirements: Helpers.AccessCrenel, Items.BombBag
+  - name: CrenelHeartCaveLeft
+    category: Minor
+    requirements: Helpers.AccessLowerCrenel, Items.BombBag
+  - name: CrenelHeartCaveRight
+    category: Minor
+    requirements: Helpers.AccessLowerCrenel, Items.BombBag
+  - name: CrenelHeartCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessLowerCrenel, Items.BombBag
+  - name: CrenelFairyHeartPiece
+    category: Major
+    requirements: Helpers.AccessCrenel, Items.BombBag
+  - name: CrenelGripScrub
+    category: Major
+    requirements: Helpers.AccessCrenel, Items.Shield, Items.BombBag
+  - name: GraybladeLeft
+    category: Minor
+    requirements: Helpers.AccessCrenel, Helpers.CanSplit2, Items.GripRing
+  - name: GraybladeRight
+    category: Minor
+    requirements: Helpers.AccessCrenel, Helpers.CanSplit2, Items.GripRing
+  - name: GraybladeHeartPiece
+    category: Major
+    requirements: Helpers.AccessCrenel, Helpers.CanSplit2, Items.GripRing
+  - name: GraybladeScroll
+    category: Major
+    requirements: Locations.GraybladeHeartPiece, Helpers.HasSword
+  - name: CrenelBombFairy
+    category: Major
+    requirements: Helpers.AccessCrenel, Items.BombBag, Items.GripRing
+  - name: CrenelDigCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessCrenel, Items.GripRing, Items.MoleMitts
+  - name: CrenelBlockChest
+    category: Minor
+    requirements: Helpers.AccessCrenel, (|Items.PacciCane, (&Items.GripRing, (|Items.RocsCape, Helpers.HasLightBow,(&Items.GustJar, (|Items.BombBag, Helpers.HasBow, Helpers.HasBoomerang, Helpers.HasBeam)))))
+  - name: Melari
+    category: Major
+    requirements: Helpers.CompleteCoF
+  - name: WildsSouthCave
+    category: Major
+    requirements: Helpers.AccessWilds, (|Items.Flippers, Items.RocsCape, Helpers.HasBow)
+  - name: WildsDarknutCave
+    category: Major
+    requirements: Helpers.AccessWilds, Helpers.HasSword
+  - name: WildsDekuCaveRight
+    category: Major
+    requirements: Helpers.AccessWilds, Helpers.HasBow
+  - name: WildsMulldozerHole
+    category: Major
+    requirements: Helpers.AccessWilds, (|Items.Flippers, Items.GustJar)
+  - name: WildsDiggingCaveLeft
+    category: Minor
+    requirements: Helpers.AccessWilds, Items.MoleMitts
+  - name: WildsDiggingCaveRight
+    category: Minor
+    requirements: Helpers.AccessWilds, Items.MoleMitts
+  - name: WildsTopChest
+    category: Minor
+    requirements: Helpers.AccessWilds, Helpers.HasBow
+  - name: WildsTopRightCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessWilds, Helpers.HasBow, (|Items.Flippers, Items.RocsCape)
+  - name: SwiftbladeTheFirstHeartPiece
+    category: Major
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers)
+  - name: SwiftbladeTheFirstScroll
+    category: Major
+    requirements: Helpers.HasSword, Locations.SwiftbladeTheFirstHeartPiece, Helpers.GotScrolls
+  - name: RuinsBombCave
+    category: Minor
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers), Items.KinstoneX.YellowTotemProng*3, Items.BombBag
+  - name: RuinsMinishHome
+    category: Minor
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers), Items.KinstoneX.YellowTotemProng*3, Helpers.HasSword
+  - name: RuinsMinishCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers), Items.KinstoneX.YellowTotemProng*3, Helpers.HasSword
+  - name: RuinsArmosKillLeft
+    category: Minor
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers), Items.KinstoneX.YellowTotemProng*3, Helpers.HasSword
+  - name: RuinsArmosKillRight
+    category: Minor
+    requirements: Helpers.AccessWilds, (|Helpers.HasBow, Items.RocsCape, Items.Flippers), Items.KinstoneX.YellowTotemProng*3, Helpers.HasSword
+  - name: StockwellDog
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, Items.DogFoodBottle
+  - name: HyliaNorthMinishHole
+    category: Minor
+    requirements: Helpers.AccessHyliaNorth, Items.Flippers, Items.PegasusBoots
+  - name: HyliaMayorCabin
+    category: Major
+    requirements: Helpers.AccessHyliaSouth, Items.PegasusBoots, Items.PowerBracelets, (|Items.GustJar, Items.Flippers)
+  - name: WitchDiggingCave
+    category: Minor
+    requirements: Helpers.AccessHyliaSouth, Items.MoleMitts
+  - name: HyliaSunkenHeartPiece
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, Items.Flippers
+  - name: HyliaBottomHeartPiece
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, (|Items.Flippers, Items.RocsCape)
+  - name: WavebladeHeartPiece
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, (|Items.Flippers, Items.RocsCape)
+  - name: WavebladeScroll
+    category: Major
+    requirements: (+28, Items.PieceOfHeart, Items.HeartContainer*4), Helpers.HasSword, Locations.WavebladeHeartPiece
+  - name: HyliaCapeCaveTopRight
+    category: Major
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveBottomLeft
+    category: Major
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveTopLeft
+    category: Major
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveTopMiddle
+    category: Major
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveEntrance
+    category: Minor
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveBottomRight
+    category: Minor
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaCapeCaveBottomMiddle
+    category: Minor
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaPostCapeCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessTreasureCave
+  - name: HyliaPreCapeCaveHeartPiece
+    category: Major
+    requirements: Helpers.AccessHyliaNorth, Items.RocsCape
+  - name: ArrowFairy
+    category: Major
+    requirements: Helpers.CanSplit3, Items.BombBag
+  - name: DampeKey
+    category: Major
+    requirements: Helpers.AccessValley
+  - name: RoyalValleyGraveHeartPiece
+    category: Major
+    requirements: Helpers.AccessValley, Items.GraveyardKey, Items.PegasusBoots
+  - name: RoyalValleyLostWoodsChest
+    category: Minor
+    requirements: Helpers.AccessValley
+  - name: CryptGibdoLeft
+    category: Minor
+    requirements: Helpers.AccessCrypt
+    restriction: Crypt
+  - name: CryptGibdoRight
+    category: Major
+    requirements: Helpers.AccessCrypt
+    restriction: Crypt
+  - name: CryptLeft
+    category: Major
+    requirements: Helpers.AccessCrypt, Items.SmallKey:Crypt
+    restriction: Crypt
+  - name: CryptRight
+    category: Major
+    requirements: Helpers.AccessCrypt, Items.SmallKey:Crypt
+    restriction: Crypt
+
+  - name: KingGift
+    category: Major
+    requirements: Helpers.AccessValley, Items.GraveyardKey, Helpers.CanSplit3, Items.PegasusBoots, Items.SmallKey:Crypt*3
+  - name: FallsBehindWall
+    category: Minor
+    requirements: Helpers.AccessFallsNorth, Items.BombBag
+  - name: FallsCliff
+    category: Minor
+    requirements: Helpers.AccessFallsNorth, Items.BombBag, Helpers.CanSplit3
+  - name: FallsTopCaveBomb
+    category: Minor
+    requirements: Helpers.AccessFallsNorth, Items.GripRing, Items.BombBag
+  - name: FallsTopCaveFree
+    category: Minor
+    requirements: Helpers.AccessFallsNorth, Items.GripRing
+  - name: FallsUpperHeartPiece
+    category: Major
+    requirements: Items.BombBag, (|Items.RocsCape, Items.Flippers)
+  - name: FallsLowerCaveLeft
+    category: Minor
+    requirements: Helpers.AccessFallsSouth, (|Items.RocsCape, Items.Flippers), Items.MoleMitts
+  - name: FallsLowerCaveRight
+    category: Minor
+    requirements: Helpers.AccessFallsSouth, (|Items.RocsCape, Items.Flippers), Items.MoleMitts
+  - name: FallsLowerHeartPiece
+    category: Major
+    requirements: Helpers.AccessFallsSouth
+  - name: CloudsFreeChest
+    category: Major
+    requirements: Helpers.AccessClouds
+  - name: CloudsNorthKill
+    category: Major
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts)
+  - name: CloudsSouthKill
+    category: Major
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts)
+  - name: CloudsSouthMiddle
+    category: Major
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts)
+  - name: CloudsWestBottom
+    category: Major
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts)
+  - name: CloudsWestLeft
+    category: Minor
+    requirements: Helpers.AccessClouds, Items.MoleMitts
+  - name: CloudsWestRight
+    category: Minor
+    requirements: Helpers.AccessClouds, Items.MoleMitts
+  - name: CloudsSouthLeft
+    category: Minor
+    requirements: Helpers.AccessClouds, Items.MoleMitts
+  - name: CloudsSouthRight
+    category: Minor
+    requirements: Helpers.AccessClouds, (|Items.RocsCape, Items.MoleMitts)
+  - name: TowerBottomLeft
+    category: Minor
+    requirements: AccessUpperClouds
+  - name: TowerBottomRight
+    category: Minor
+    requirements: AccessUpperClouds
+  - name: TowerF2
+    category: Minor
+    requirements: AccessUpperClouds
+  - name: GregalOne
+    category: Minor
+    requirements: AccessUpperClouds
+  - name: GregalTwo
+    category: Major
+    requirements: Helpers.AccessUpperClouds, Items.GustJar
+  - name: TowerRightBed
+    category: Minor
+    requirements: Helpers.AccessUpperClouds
+  - name: TowerMiddleBed
+    category: Minor
+    requirements: Helpers.AccessUpperClouds
+  - name: TowerLeftBed
+    category: Minor
+    requirements: Helpers.AccessUpperClouds
+  - name: TowerTopLeft
+    category: Minor
+    requirements: Helpers.AccessUpperClouds
+  - name: TowerTopRight
+    category: Minor
+    requirements: Helpers.AccessUpperClouds
+  - name: DeepwoodWiggler
+    category: Major
+    requirements: Helpers.DeepwoodAccess, Helpers.HasSword, (|Items.SmallKey:Deepwood*4,(&Items.SmallKey:Deepwood*2, Items.LanternOff),(&Items.SmallKey:Deepwood, Items.LanternOff, Items.GustJar))
+    restriction: Deepwood
+
+  - name: DeepwoodPostWigglerHeartPiece
+    category: Major
+    requirements: Helpers.DeepwoodAccess, (|Items.GustJar, Items.LanternOff), (|Items.SmallKey:Deepwood*4,(&Items.SmallKey:Deepwood*2, Items.LanternOff),(&Items.SmallKey:Deepwood, Items.LanternOff, Items.GustJar))
+    restriction: Deepwood
+
+  - name: DeepwoodPreWigglerLeft
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|(&Items.GustJar, Items.SmallKey:Deepwood), (&Items.BombBag, Items.SmallKey:Deepwood*2))
+    restriction: Deepwood
+
+  - name: DeepwoodPreWigglerRight
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|(&Items.GustJar, Items.SmallKey:Deepwood), (&Items.BombBag, Items.SmallKey:Deepwood*2))
+    restriction: Deepwood
+
+  - name: DeepwoodPreWigglerHeartPiece
+    category: Major
+    requirements: Helpers.DeepwoodAccess, (|(&Items.GustJar, Items.SmallKey:Deepwood), (&Items.BombBag, Items.SmallKey:Deepwood*2))
+    restriction: Deepwood
+
+  - name: DeepwoodPreCompass
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|(&Items.GustJar, Items.SmallKey:Deepwood), (&Items.BombBag, Items.SmallKey:Deepwood*2))
+    restriction: Deepwood
+
+  - name: DeepwoodMulldozers
+    category: Major
+    requirements: Helpers.DeepwoodAccess, Items.SmallKey:Deepwood*3, Helpers.HasDamageSource
+    restriction: Deepwood
+
+  - name: DeepwoodStatueRoom
+    category: Major
+    requirements: Helpers.DeepwoodAccess, Items.SmallKey:Deepwood
+    restriction: Deepwood
+
+  - name: DeepwoodWestWing
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, Items.SmallKey:Deepwood
+    restriction: Deepwood
+
+  - name: DeepwoodPreBarrel
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|Items.GustJar, Items.BombBag), Items.SmallKey:Deepwood
+    restriction: Deepwood
+
+  - name: DeepwoodSlugTorches
+    category: Major
+    requirements: Helpers.DeepwoodAccess
+    restriction: Deepwood
+
+  - name: DeepwoodBasementNorth
+    category: Major
+    requirements: Helpers.DeepwoodAccess, Items.GustJar, Items.SmallKey:Deepwood*4
+    restriction: DeepwoodBig
+
+  - name: DeepwoodBasementSwitch
+    category: Major
+    requirements: Helpers.DeepwoodAccess,  (|(&Items.GustJar, Items.SmallKey:Deepwood), (&Items.SmallKey:Deepwood*2, Items.RocsCape))
+    restriction: Deepwood
+
+  - name: DeepwoodBasementEast
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|(&Items.GustJar, Items.SmallKey:Deepwood), Items.SmallKey:Deepwood*2)
+    restriction: Deepwood
+
+  - name: DeepwoodUpstairsChest
+    category: Minor
+    requirements: Helpers.DeepwoodAccess, (|Items.GustJar, Items.LanternOff)
+    restriction: Deepwood
+
+  - name: DeepwoodBossItem
+    category: Major
+    requirements: Helpers.CompleteDeepwood
+  - name: DeepwoodPrize
+    category: Major
+    requirements: Helpers.CompleteDeepwood
+    restriction: Prize
+  - name: CoFFlippedCart
+    category: Major
+    requirements: Helpers.CoFAccess, Helpers.HasSword, Items.PacciCane, Items.SmallKey:FlameCave
+    restriction: FlameCave
+
+  - name: CoFHeartPiece
+    category: Major
+    requirements: Helpers.CoFAccess, Items.BombBag, Helpers.HasSword, Items.SmallKey:FlameCave
+    restriction: FlameCave
+
+  - name: CoFChuPit
+    category: Major
+    requirements: Helpers.CoFAccess, Items.SmallKey:FlameCave, Helpers.HasSword
+    restriction: FlameCave
+
+  - name: CoFPillBugsPillarChest
+    category: Major
+    requirements: Helpers.CoFAccess
+    restriction: FlameCave
+
+  - name: CoFPillBugsHoleChest
+    category: Minor
+    requirements: Helpers.CoFAccess
+    restriction: FlameCave
+
+  - name: CoFSoutheastSmall
+    category: Minor
+    requirements: Helpers.CoFAccess
+    restriction: FlameCave
+
+  - name: CoFSoutheastBig
+    category: Minor
+    requirements: Helpers.CoFAccess
+    restriction: FlameCave
+
+  - name: CoFBasementTop
+    category: Minor
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFBasementBottom
+    category: Minor
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFBlades
+    category: Minor
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFSpinies
+    category: Major
+    requirements: Helpers.CoFAccess
+    restriction: FlameCave
+
+  - name: CoFBasementLavaLeft
+    category: Minor
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFBasementLavaRight
+    category: Minor
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFBasementLavaBig
+    category: Major
+    requirements: Helpers.CoFAccess, Items.PacciCane, Helpers.HasSword, Items.SmallKey:FlameCave*2
+    restriction: FlameCave
+
+  - name: CoFBossItem
+    category: Major
+    requirements: Helpers.CompleteCoF
+  - name: CoFPrize
+    category: Major
+    requirements: Helpers.CompleteCoF
+    restriction: Prize
+  - name: FortressEntrance
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressHeartPiece
+    category: Major
+    requirements: Helpers.AccessFortress, Helpers.CanSplit2
+    restriction: Fortress
+
+  - name: FortressOutsideF2Left
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts, Helpers.HasBow
+    restriction: Fortress
+
+  - name: FortressOutsideF2Middle
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressOutsideF2Right
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressOutsideF3Left
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts, Helpers.HasBow
+    restriction: Fortress
+
+  - name: FortressOutsideF3Right
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressOutsideBombWallBigChest
+    category: Major
+    requirements: Helpers.AccessFortress, Items.BombBag, Helpers.HasBow, Helpers.CanSplit2, Items.SmallKey:Fortress*4
+    restriction: Fortress
+
+  - name: FortressOutsideBombWallSmallChest
+    category: Minor
+    requirements: Locations.FortressOutsideBombWallBigChest, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressOutsideMinishHole
+    category: Major
+    requirements: Helpers.AccessFortress, Helpers.HasBow, Items.MoleMitts, Items.SmallKey:Fortress*3
+    restriction: Fortress
+
+  - name: FortressRightDrop
+    category: Major
+    requirements: Helpers.AccessFortress, Helpers.CanSplit2
+    restriction: Fortress
+
+  - name: FortressLeftDrop
+    category: Major
+    requirements: Helpers.AccessFortress, Helpers.HasBow, (|Helpers.CanSplit2, Items.RocsCape)
+    restriction: Fortress
+
+  - name: FortressClonePuzzle
+    category: Major
+    requirements: Helpers.AccessFortress, Helpers.HasBow, Helpers.CanSplit2 ,Items.SmallKey:Fortress*2
+    restriction: Fortress
+
+  - name: FortressEyegoreKill
+    category: Minor
+    requirements: Helpers.AccessFortress, Helpers.HasBow, Helpers.CanSplit2
+    restriction: Fortress
+
+  - name: FortressPedestal
+    category: Minor
+    requirements: Helpers.AccessFortress, Helpers.HasBow
+    restriction: Fortress
+
+  - name: FortressSkullFall
+    category: Major
+    requirements: Helpers.AccessFortress, Items.MoleMitts, Helpers.CanSplit2, Helpers.HasBow, Items.SmallKey:Fortress*4
+    restriction: Fortress
+
+  - name: FortressSkullRoomLeft
+    category: Minor
+    requirements: Helpers.AccessFortress
+    restriction: Fortress
+
+  - name: FortressSkullRoomRight
+    category: Minor
+    requirements: Helpers.AccessFortress
+    restriction: Fortress
+
+  - name: FortressWizrobes
+    category: Minor
+    requirements: Helpers.AccessFortress, Items.MoleMitts
+    restriction: Fortress
+
+  - name: FortressBossItem
+    category: Major
+    requirements: Helpers.CompleteFortress
+
+  - name: FortressPrize
+    category: Major
+    requirements: Helpers.CompleteFortress
+
+  - name: DropletsMulldozers
+    category: Major
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff, Items.BombBag, Helpers.HasDamageSource
+    restriction: Droplets
+
+  - name: DropletsWaterPot
+    category: Major
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.Flippers, (|Items.RocsCape, Items.GustJar)
+    restriction: Droplets
+
+  - name: DropletsSecondIceblock
+    category: Major
+    requirements: Helpers.AccessDroplets
+    restriction: Droplets
+
+  - name: DropletsFirstIceblock
+    category: Major
+    requirements: Helpers.AccessDroplets
+    restriction: Droplets
+
+  - name: DropletsEastFirst
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Items.LanternOff, Helpers.DropletsEastLever)
+    restriction: Droplets
+
+  - name: DropletsIceMaze
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Items.LanternOff, Helpers.DropletsEastLever)
+    restriction: Droplets
+
+  - name: DropletsOverhang
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets
+    restriction: Droplets
+
+  - name: DropletsBluChu
+    category: Major
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Items.LanternOff, Helpers.DropletsEastLever), Items.GustJar, Items.SmallKey:Droplets*4
+    restriction: Droplets
+
+  - name: DropletsBasement
+    category: Major
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Items.LanternOff, Helpers.DropletsEastLever)
+    restriction: Droplets
+
+  - name: DropletsFrozenIcePlain
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Helpers.DropletsBottomJump,(&Items.SmallKey:Droplets*4, Items.GustJar, Items.Flippers, Items.LanternOff))
+    restriction: Droplets
+
+  - name: DropletsFreeIcePlain
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, (|Helpers.DropletsBottomJump,(&Items.SmallKey:Droplets*4, Items.GustJar, Items.Flippers))
+    restriction: Droplets
+
+  - name: DropletsDarkMazeRight
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff, Helpers.HasDamageSource
+    restriction: Droplets
+
+  - name: DropletsDarkMazeLeft
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff, Helpers.HasDamageSource
+    restriction: Droplets
+
+  - name: DropletsDarkMazeMiddle
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff, Helpers.HasDamageSource
+    restriction: Droplets
+
+  - name: DropletsPostTwinFrozen
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.GustJar, Items.LanternOff, (|Helpers.DropletsBottomJump,(&Items.SmallKey:Droplets*4,Items.Flippers))
+    restriction: Droplets
+
+  - name: DropletsPreviewFrozen
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.LanternOff
+    restriction: Droplets
+
+  - name: DropletsIceWiggler
+    category: Minor
+    requirements: Helpers.AccessDroplets, Items.BigKey:Droplets, Items.GustJar, (|Helpers.DropletsBottomJump,(&Items.SmallKey:Droplets*4, Items.Flippers)), Helpers.HasSword
+    restriction: Droplets
+
+  - name: DropletsBossItem
+    category: Major
+    requirements: Helpers.CompleteDroplets
+  - name: DropletsPrize
+    category: Major
+    requirements: Helpers.CompleteDroplets
+    restriction: Prize
+  - name: PalaceWizrobeKill
+    category: Major
+    requirements: Helpers.AccessPalace, (|Items.RocsCape, Items.BombBag, Helpers.HasBoomerang)
+    restriction: Palace
+
+  - name: PalaceFirstGrate
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape
+    restriction: Palace
+
+  - name: PalaceBraceletPuzzleKey
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.PowerBracelets, (|Items.BombBag, Helpers.HasBoomerang, Helpers.HasBow)
+    restriction: Palace
+
+  - name: PalaceWideGap
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.SmallKey:Palace
+    restriction: Palace
+
+  - name: PalaceBallAndChainSoldiers
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.SmallKey:Palace
+    restriction: Palace
+
+  - name: PalaceFanLoop
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.SmallKey:Palace*5
+    restriction: Palace
+
+  - name: PalacePreBigDoor
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.SmallKey:Palace*6
+    restriction: PalaceBig
+
+  - name: PalaceDarkBig
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff, Items.BigKey:Palace, Items.SmallKey:Palace*3
+    restriction: Palace
+
+  - name: PalaceDarkSmall
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff, Items.SmallKey:Palace*3
+    restriction: Palace
+
+  - name: PalaceManyRollers
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff, Items.SmallKey:Palace*3
+    restriction: Palace
+
+  - name: PalaceTwinWizrobes
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff, Items.SmallKey:Palace*4
+    restriction: Palace
+
+  - name: PalaceFirerobeTrio
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*4
+    restriction: Palace
+
+  - name: PalaceHeartPiece
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*4
+    restriction: Palace
+
+  - name: PalaceSwitchHit
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*4
+    restriction: Palace
+
+  - name: PalacePreBoss
+    category: Major
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*5
+    restriction: Palace
+
+  - name: PalaceBlockMaze
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*6
+    restriction: Palace
+
+  - name: PalaceDetour
+    category: Minor
+    requirements: Helpers.AccessPalace, Items.RocsCape, Items.PacciCane, Items.LanternOff,  Items.SmallKey:Palace*6
+    restriction: Palace
+
+  - name: PalaceBossItem
+    category: Major
+    requirements: Helpers.CompletePalace
+  - name: PalacePrize
+    category: Major
+    requirements: Helpers.CompletePalace
+    restriction: Prize
+  - name: CastleKing
+    category: Minor
+    requirements: Helpers.DHCAccess, Helpers.CanSplit4, Items.BombBag
+    restriction: DHC
+
+  - name: CastleBasement
+    category: Minor
+    requirements: Helpers.DHCAccess
+    restriction: DHC
+
+  - name: CastleClones
+    category: Major
+    requirements: Helpers.DHCAccess, Helpers.CanSplit4
+    restriction: DHC
+
+  - name: CastlePostThrone
+    category: Minor
+    requirements: Helpers.DHCAccess, Helpers.CanSplit4, Items.SmallKey:DHC, Items.BombBag
+    restriction: DHC
+
+  - name: CastleTopLeftTower
+    category: Major
+    requirements: Helpers.CastleBigDoorsOpen, Helpers.HasBow
+    restriction: DHC
+
+  - name: CastleTopRightTower
+    category: Major
+    requirements: Helpers.CastleBigDoorsOpen, Items.LanternOff
+    restriction: DHC
+
+  - name: CastleLowerLeftTower
+    category: Major
+    requirements: Helpers.CastleBigDoorsOpen
+    restriction: DHC
+
+  - name: CastleLowerRightTower
+    category: Major
+    requirements: Helpers.CastleBigDoorsOpen
+    restriction: DHC
+
+  - name: CastleBigBlock
+    category: Major
+    requirements: Helpers.CastleBigDoorsOpen, Items.SmallKey:DHC*5
+    restriction: DHC

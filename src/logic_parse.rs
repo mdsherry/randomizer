@@ -1,6 +1,8 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, HashMap};
 
 use heck::ToSnakeCase;
+
+use crate::logic::{Condition, ItemId, FlagId, LocationId};
 
 pub fn parse_logic(s: &str) {
     let lines = s.lines()
@@ -25,8 +27,11 @@ pub fn parse_logic(s: &str) {
             let (reqs, _) = parse_reqs(bits[3]);
             get_items(&reqs, &mut items);
             let req_str = gen_reqs(&reqs);
-            let var_name = bits[0].split(':').next().expect("Always at least one piece").to_snake_case();
-            println!("let flag_{} = cond_fact.add_flag(\"{}\", {});", var_name, bits[0], req_str);
+            let var_name = bits[0].split(':').next().expect("Always at least one piece");
+            // println!("let flag_{} = cond_fact.add_flag(\"{}\", {});", var_name, bits[0], req_str);
+//             println!("
+//   - name: {}
+//     requirements: {}", var_name, bits[3]);
         } else if bits[1] == "Major" || bits[1] == "Minor"  || bits[1] == "DungeonItem" {
             let (reqs, _) = parse_reqs(bits[3]);
             get_items(&reqs, &mut items);
@@ -38,6 +43,14 @@ pub fn parse_logic(s: &str) {
                 format!("ItemCategory::{}", bits[1])
             };
             // println!("let loc_{} = cond_fact.add_location(\"{}\", {}, {});", var_name, bits[0], req_str, category);
+                        print!("
+  - name: {}
+    category: {}
+    requirements: {}", location[0], bits[1], bits[3]);
+            if location.len() > 1 {
+            println!("
+    restriction: {}", location[1]);
+            }
         }
     }
     for item in items {
@@ -46,7 +59,7 @@ pub fn parse_logic(s: &str) {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-enum Term<'a> {
+pub enum Term<'a> {
     Lit(&'a str),
     And(Vec<Term<'a>>),
     Or(Vec<Term<'a>>),
@@ -155,7 +168,7 @@ fn gen_req(term: &Term) -> String {
     }
 }
 
-fn parse_reqs(mut s: &str) -> (Vec<Term>, &str) {
+pub fn parse_reqs(mut s: &str) -> (Vec<Term>, &str) {
     s = s.trim();
     if s.is_empty() {
         return (vec![], s)
@@ -214,4 +227,99 @@ fn parse_palace() {
     assert_eq!(remaining, "");
     use Term::*;
     assert_eq!(terms, vec![Lit("Locations.AccessUpperClouds"), Lit("Helpers.CanSplit3"), Or(vec![Lit("Items.RocsCape"), Lit("Items.BombBag"), Lit("Items.GustJar"), Lit("Helpers.HasBoomerang"), Lit("Helpers.HasBow")])]);
+}
+
+
+pub fn gen_reqs2(terms: &[Term<'_>], items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>) -> Result<Condition, LogicParseError> {
+    match terms {
+        [] => Ok(Condition::NoRequirements),
+        [ref a] => gen_req2(a, items, flags, locations),
+        _ => gen_req2(&Term::And(terms.to_vec()), items, flags, locations)
+    }
+}
+
+use thiserror::Error;
+#[derive(Debug, Error)]
+pub enum LogicParseError {
+    #[error("Unknown item {0}")]
+    UnrecognizedItem(String),
+    #[error("Unknown location {0}")]
+    UnrecognizedLocation(String),
+    #[error("Unknown flag {0}")]
+    UnrecognizedFlag(String),
+    #[error("Name is not an item, flag or location: {0}")]
+    UnrecognizedName(String),
+    #[error("Name was not unique; qualify with Items., Helpers. or Locations.: {0}")]
+    AmbiguousName(String),
+    #[error("Thresholds require item literals, not more complex expressions")]
+    ThresholdRequireItems,
+}
+
+fn add_item(item: &str, items: &HashMap<&str, ItemId>) -> Result<Condition, LogicParseError> {
+    let mut bits = item.split('*');
+    let item = bits.next().expect("We always have at least *one* string piece");
+    let id = items.get(item);
+    let id = id.ok_or_else(|| LogicParseError::UnrecognizedItem(item.to_string()))?;
+    Ok(if let Some(count) = bits.next() {
+        Condition::Item(*id, count.parse::<usize>().unwrap())
+    } else {
+        Condition::Item(*id, 1)
+    })
+}
+fn add_location(loc: &str, locations: &HashMap<&str, LocationId>) -> Result<Condition, LogicParseError> {
+    let id = locations.get(loc);
+    let id = id.ok_or_else(|| LogicParseError::UnrecognizedLocation(loc.to_string()))?;
+    Ok(Condition::Location(*id))
+}
+fn add_flag(flag: &str, flags: &HashMap<&str, FlagId>) -> Result<Condition, LogicParseError> {
+    let id = flags.get(flag);
+    let id = id.ok_or_else(|| LogicParseError::UnrecognizedFlag(flag.to_string()))?;
+    Ok(Condition::Flag(*id))
+}
+
+fn gen_req2(term: &Term, items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>) -> Result<Condition, LogicParseError> {
+    Ok(match term {
+        Term::Lit(s) => {
+            if let Some(item) = s.strip_prefix("Items.") {
+                add_item(item, items)?
+            } else if let Some(helper) = s.strip_prefix("Helpers.") {
+                add_flag(helper, flags)?
+            } else if let Some(location) = s.strip_prefix("Locations.") {
+                add_location(location, locations)?
+            } else {
+                match (add_item(s, items), add_flag(s, flags), add_location(s, locations)) {
+                    (Ok(c), Err(_), Err(_)) => c,
+                    (Err(_), Ok(c), Err(_)) => c,
+                    (Err(_), Err(_), Ok(c)) => c,
+                    (Err(_), Err(_), Err(_)) => return Err(LogicParseError::UnrecognizedName(s.to_string())),
+                    (_, _, _) => return Err(LogicParseError::AmbiguousName(s.to_string()))
+                }
+            }
+        },
+        Term::And(terms) => {
+            Condition::And(terms.iter().map(|term| gen_req2(term, items, flags, locations)).collect::<Result<_, _>>()?)
+        },
+        Term::Or(terms) => 
+        {
+            Condition::Or(terms.iter().map(|term| gen_req2(term, items, flags, locations)).collect::<Result<_, _>>()?)
+        },
+        Term::Count(threshold, terms) => {
+            let items = terms.iter().map(|term| match term {
+                Term::Lit(lit) => {
+                    let mut it = lit.split('*');
+                    let name = it.next().unwrap();
+                    
+                    let id = (if let Some(item) = name.strip_prefix("Items.") {
+                        items.get(item)
+                    } else {
+                        items.get(name)
+                    }).ok_or_else(|| LogicParseError::UnrecognizedItem(name.to_string()))?;
+                    let weight = it.next().map(|s| s.parse::<usize>().unwrap());
+                    Ok((*id, weight.unwrap_or(1)))
+                }
+                _ => Err(LogicParseError::ThresholdRequireItems)
+            }).collect::<Result<Vec<_>, _>>();
+            Condition::AtLeast(*threshold as _, items?)
+        }
+    })
 }

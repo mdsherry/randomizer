@@ -1,79 +1,8 @@
-use std::collections::{HashMap, HashSet};
+use std::{collections::{HashMap, HashSet}, io::Read};
+use serde::Deserialize;
+use crate::logic_parse::{parse_reqs, gen_reqs2};
 
-use super::{ItemId, FlagId, Flag, LocationId, Location, ItemCategory, ItemDef};
-
-pub struct Logic {
-    last_id: usize,
-    item_map: HashMap<ItemId, ItemDef>,
-    flag_map: HashMap<FlagId, Flag>,
-    location_map: HashMap<LocationId, Location>,
-}
-impl Logic {
-    pub fn new() -> Self {
-        Logic { last_id: 0, item_map: HashMap::new(), location_map: HashMap::new(), flag_map: HashMap::new() }
-    }
-    pub fn graph(&self) -> String {
-        unimplemented!()
-    }
-    pub fn flags(&self) -> impl Iterator<Item=&Flag> {
-        self.flag_map.values()
-    }
-    pub fn items(&self) -> impl Iterator<Item=&ItemDef> {
-        self.item_map.values()
-    }
-    pub fn locations(&self) -> impl Iterator<Item=&Location> {
-        self.location_map.values()
-    }
-    pub fn get_location(&self, id: LocationId) -> Option<&Location> {
-        self.location_map.get(&id)
-    }
-    pub fn get_item(&self, id: ItemId) -> Option<&ItemDef> {
-        self.item_map.get(&id)
-    }
-    pub fn get_flag(&self, id: FlagId) -> Option<&Flag> {
-        self.flag_map.get(&id)
-    }
-    pub fn add_item(&mut self, name: impl Into<String>, category: ItemCategory) -> ItemId {
-        self.last_id += 1;
-        let name = name.into();
-        let id = ItemId(self.last_id);
-        let item = ItemDef {
-            name,
-            id,
-            category
-        };
-        self.item_map.insert(id, item);
-        id
-    }
-    pub fn add_location(&mut self, name: impl Into<String>, requirement: impl Into<Condition>, category: ItemCategory) -> LocationId {
-        let name = name.into();
-        let requirement= requirement.into().expand(self).flatten().simplify();
-        self.last_id += 1;
-        let id = LocationId(self.last_id);
-        let location = Location {
-            name,
-            requirement,
-            category,
-            id
-        };
-        self.location_map.insert(id, location);
-        id
-    }
-    
-    pub fn add_flag(&mut self, name: impl Into<String>, requirement: impl Into<Condition>) -> FlagId {
-        let name = name.into();
-        let requirement= requirement.into().expand(self).flatten().simplify();
-        self.last_id += 1;
-        let id = FlagId(self.last_id);
-        let flag = Flag {
-            name,
-            requirement,
-            id
-        };
-        self.flag_map.insert(id, flag);
-        id
-    }
-}
+use super::{ItemId, FlagId, Flag, LocationId, Location, ItemCategory, ItemDef, Restriction, Logic};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Condition {
@@ -151,9 +80,20 @@ impl ItemCondition {
             match self {
                 ItemCondition::NoRequirements => {},
                 ItemCondition::Item(id, count) => {rv.insert(*id, *count);}
-                ItemCondition::AtLeast(_, items) => {
-                    for (id, _) in items {
-                        rv.insert(*id, 1);
+                ItemCondition::AtLeast(threshold, req_items) => {
+                    let mut total = 0;
+                        
+                    for &(id, weight) in req_items {
+                        total += items.get(&id).copied().unwrap_or(0) * weight;
+                    }
+                    if *threshold <= total {
+                        // This should never happen, since we're unsatisfied
+                        return;
+                    }
+                    let required_threshold = threshold - total;
+                    
+                    for &(id, weight) in req_items {
+                        rv.insert(id, (required_threshold + weight - 1) / weight);
                     }                    
                 }
                 ItemCondition::And(conds) => {

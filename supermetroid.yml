@@ -1,0 +1,436 @@
+item_pool:
+    - name: EnergyTank
+      category: Major
+      count: 14
+    - name: ReserveTank
+      category: Major
+      count: 4
+    - name: Varia
+      category: Major
+      weight: 6
+      show_in_graph: true
+    - name: Gravity
+      category: Major
+      weight: 11
+      show_in_graph: true
+    - name: HiJump
+      category: Major
+      weight: 5
+      show_in_graph: true
+    - name: SpaceJump
+      category: Major
+      weight: 12
+      show_in_graph: true
+    - name: Morph
+      category: Major
+      weight: 1
+      show_in_graph: true
+    - name: Bomb
+      category: Major
+      weight: 2
+      show_in_graph: true
+    - name: ScrewAttack
+      category: Major
+      weight: 14
+      show_in_graph: true
+    - name: SpeedBooster
+      category: Major
+      weight: 11
+      show_in_graph: true
+    - name: Wave
+      category: Major
+      weight: 10
+      show_in_graph: true
+    - name: Ice
+      category: Major
+      weight: 7
+      show_in_graph: true
+    - name: Plasma
+      category: Major
+      weight: 13
+      show_in_graph: true
+    - name: Spazer
+      category: Major
+      weight: 4
+      show_in_graph: true
+    - name: Charge
+      category: Major
+      weight: 4
+      show_in_graph: true
+    - name: SpringBall
+      category: Major  
+      weight: 12    
+      show_in_graph: true
+    - name: XRay
+      category: Major
+      weight: 9
+      show_in_graph: true
+    - name: Grapple
+      category: Major
+      weight: 8
+      show_in_graph: true
+
+    - name: Super
+      category: Minor
+      count: 10
+      weight: 3
+    - name: Missile
+      category: Minor
+      count: 46
+    - name: PowerBomb
+      category: Minor
+      count: 10
+      weight: 8
+flags:
+    - name: HeatProof
+      requirements: Varia
+    - name: CanHellRun
+      requirements: HeatProof
+    - name: CanFly
+      requirements: SpaceJump
+    - name: CanUseBombs
+      requirements: Morph, Bomb
+    - name: CanOpenRedDoors
+      requirements: (| Missile, Super)
+    - name: CanOpenGreenDoors
+      requirements: Super
+    - name: CanUsePowerBombs
+      requirements: Morph, PowerBomb
+    - name: CanOpenYellowDoors
+      requirements: CanUsePowerBombs
+    - name: CanDestroyBombWalls
+      requirements: (| (& Morph, (|Bomb, PowerBomb)), ScrewAttack)
+    - name: CanCrystalFlash
+      requirements: Missile*2, Super*2, PowerBomb*3
+    - name: CanEnterAndLeaveGauntlet
+      requirements: (+3, EnergyTank, ReserveTank), (| Bomb, ScrewAttack, (& CanUsePowerBombs, PowerBomb*2 ))
+
+    - name: CanPassBombPassages
+      requirements: (| CanUseBombs, CanUsePowerBombs )
+    - name: CanAccessRedBrinstar
+      requirements: Super, (| (& CanDestroyBombWalls, Morph), CanUsePowerBombs)
+    - name: CanAccessKraid
+      requirements: CanAccessRedBrinstar, CanPassBombPassages
+    - name: CanAccessWs
+      requirements: CanUsePowerBombs, Super
+    - name: CanAccessHeatedNorfair
+      requirements: CanAccessRedBrinstar, CanHellRun, (|CanFly, HiJump)
+    - name: CanAccessCrocomire
+      requirements: CanAccessHeatedNorfair, (| Wave, (& SpeedBooster, CanUsePowerBombs))
+    - name: CanAccessLowerNorfair
+      requirements: CanAccessHeatedNorfair, CanUsePowerBombs, Varia, Gravity
+    - name: CanPassWorstRoom
+      requirements: CanAccessLowerNorfair, (| CanFly, HiJump )
+    - name: CanAccessOuterMaridia
+      requirements: CanAccessRedBrinstar, CanUsePowerBombs, Gravity
+    - name: CanAccessInnerMaridia
+      requirements: CanAccessRedBrinstar, CanUsePowerBombs, Gravity, CanFly
+    - name: CanDefeatBotwoon
+      requirements: CanAccessInnerMaridia, SpeedBooster
+    - name: CanDefeatDraygon
+      requirements: CanDefeatBotwoon, Gravity, CanFly
+
+
+locations:
+  - name: PowerBombCrateriaSurface
+    category: Minor
+    requirements: CanUsePowerBombs, (| SpeedBooster, CanFly )
+  - name: MissileOutsideWreckedShipBottom
+    category: Minor
+    requirements: CanAccessWs
+  - name: MissileOutsideWreckedShipTop
+    category: Minor
+    requirements: CanAccessWs
+  - name: MissileOutsideWreckedShipMiddle
+    category: Minor
+    requirements: CanAccessWs
+  - name: MissileCrateriaMoat
+    category: Minor
+    requirements: CanAccessWs
+  - name: EnergyTankGauntlet
+    category: Major
+    requirements: CanEnterAndLeaveGauntlet
+  - name: MissileCrateriaBottom
+    category: Minor
+    requirements: CanDestroyBombWalls
+  - name: Bomb
+    category: Major
+    requirements: Morph, CanOpenRedDoors
+  - name: EnergyTankTerminator
+    category: Major
+    requirements: CanDestroyBombWalls
+  - name: MissileCrateriaGauntletRight
+    category: Minor
+    requirements: CanEnterAndLeaveGauntlet, CanPassBombPassages
+  - name: MissileCrateriaGauntletLeft
+    category: Minor
+    requirements: CanEnterAndLeaveGauntlet, CanPassBombPassages
+  - name: SuperMissileCrateria
+    category: Minor
+    requirements: CanUsePowerBombs, SpeedBooster, (| EnergyTank, Varia, Gravity )
+  - name: MissileCrateriaMiddle
+    category: Minor
+    requirements: CanPassBombPassages
+  - name: PowerBombGreenBrinstarBottom
+    category: Minor
+    requirements: CanUsePowerBombs
+  - name: SuperMissilePinkBrinstar
+    category: Minor
+    requirements: CanPassBombPassages, Super
+  - name: MissileGreenBrinstarBelowSuperMissile
+    category: Minor
+    requirements: CanPassBombPassages, CanOpenRedDoors
+  - name: SuperMissileGreenBrinstarTop
+    category: Minor
+    requirements: CanDestroyBombWalls, CanOpenRedDoors, (| Morph, SpeedBooster)
+  - name: ReserveTankBrinstar
+    category: Minor
+    requirements: CanDestroyBombWalls, CanOpenRedDoors, (| Morph, SpeedBooster)
+  - name: MissileGreenBrinstarBehindMissile
+    category: Minor
+    requirements: CanPassBombPassages, CanOpenRedDoors
+  - name: MissileGreenBrinstarBehindResrveTank
+    category: Minor
+    requirements: CanPassBombPassages, CanOpenRedDoors, Morph
+  - name: MissilePinkBrinstarTop
+    category: Minor
+    requirements: (| (& CanDestroyBombWalls, CanOpenRedDoors), CanUsePowerBombs)
+  - name: MissilePinkBrinstarBottom
+    category: Minor
+    requirements: (| (& CanDestroyBombWalls, CanOpenRedDoors), CanUsePowerBombs)
+  - name: ChargeBeam
+    category: Major
+    requirements: (| (& CanPassBombPassages, CanOpenRedDoors), CanUsePowerBombs)
+  - name: PowerBombPinkBrinstar
+    category: Minor
+    requirements: CanUsePowerBombs, Super
+
+  - name: MissileGreenBrinstarPipe
+    category: Minor
+    requirements: (| CanUsePowerBombs, (& CanPassBombPassages, CanOpenGreenDoors))
+  - name: MorphingBall
+    category: Major
+    requirements: 
+  - name: PowerBombBlueBrinstar
+    category: Minor
+    requirements: CanUsePowerBombs
+  - name: MissileBlueBrinstarMiddle
+    category: Minor
+    requirements: Morph, CanOpenRedDoors
+  - name: EnergyTankBrinstarCeiling
+    category: Major
+    requirements: (| CanFly, Ice, HiJump, SpeedBooster )
+  - name: EnergyTankEtecoons
+    category: Major
+    requirements: CanUsePowerBombs
+  - name: SuperMissileGreenBrinstarBottom
+    category: Minor
+    requirements: CanUsePowerBombs, CanOpenGreenDoors
+  - name: EnergyTankWaterway
+    category: Major
+    requirements: CanUsePowerBombs, CanOpenRedDoors, SpeedBooster
+  - name: MissileBlueBrinstarBottom
+    category: Minor
+    requirements: Morph
+  - name: EnergyTankBrinstarGate
+    category: Major
+    requirements: CanUsePowerBombs, (|Wave, Super)
+  - name: MissileBlueBrinstarTop
+    category: Minor
+    requirements: CanOpenRedDoors, CanUsePowerBombs
+  - name: MissileBlueBrinstarBehindMissile
+    category: Minor
+    requirements: CanOpenRedDoors, CanUsePowerBombs
+  - name: XrayScope
+    category: Major
+    requirements: CanAccessRedBrinstar, CanUsePowerBombs, (| Grapple, SpaceJump )
+  - name: PowerBombRedBrinstarSidehopperRoom
+    category: Minor
+    requirements: CanAccessRedBrinstar, CanUsePowerBombs
+  - name: PowerBombRedBrinstarSpikeRoom
+    category: Minor
+    requirements: CanAccessRedBrinstar, CanUsePowerBombs
+  - name: MissileRedBrinstarSpikeRoom
+    category: Minor
+    requirements: CanUsePowerBombs, CanAccessRedBrinstar
+  - name: Spazer
+    category: Major
+    requirements: CanAccessRedBrinstar, CanPassBombPassages
+  - name: EnergyTankKraid
+    category: Major
+    requirements: CanAccessKraid
+  - name: MissileKraid
+    category: Minor
+    requirements: CanAccessKraid, CanUsePowerBombs
+  - name: VariaSuit
+    category: Major
+    requirements: CanAccessKraid
+  - name: MissileLavaRoom
+    category: Minor
+    requirements: CanAccessHeatedNorfair
+  - name: IceBeam
+    category: Major
+    requirements: CanAccessKraid, HeatProof, SpeedBooster
+  - name: MissileBelowIceBeam
+    category: Minor
+    requirements: CanAccessKraid, CanUsePowerBombs, CanHellRun
+  - name: EnergyTankCrocomire
+    category: Major
+    requirements: CanAccessCrocomire
+  - name: HiJumpBoots
+    category: Major
+    requirements: CanAccessRedBrinstar
+  - name: MissileAboveCrocomire
+    category: Minor
+    requirements: CanAccessCrocomire, (| CanFly, Grapple, (& HiJump, SpeedBooster))
+  - name: MissileHiJumpBoots
+    category: Minor
+    requirements: CanAccessRedBrinstar
+  - name: EnergyTankHiJumpBoots
+    category: Major
+    requirements: CanAccessRedBrinstar
+  - name: PowerBombCrocomire
+    category: Minor
+    requirements: CanAccessCrocomire
+  - name: MissileBelowCrocomire
+    category: Minor
+    requirements: CanAccessCrocomire
+  - name: MissileGrappleBeam
+    category: Minor
+    requirements: CanAccessCrocomire, (| CanFly, Grapple, SpeedBooster)
+  - name: GrappleBeam
+    category: Major
+    requirements: CanAccessCrocomire, (| CanFly, Ice, SpeedBooster)
+  - name: ReserveTankNorfair
+    category: Major
+    requirements: CanAccessHeatedNorfair, (| CanFly, Grapple, HiJump)
+  - name: MissileNorfairReserveTank
+    category: Minor
+    requirements: CanAccessHeatedNorfair, (| CanFly, (& Grapple, HiJump ))
+  - name: MissileBubbleNorfairGreenDoor
+    category: Minor
+    requirements: CanAccessHeatedNorfair, (| CanFly, (& Grapple, HiJump ))
+
+  - name: MissileBubbleNorfair
+    category: Minor
+    requirements: CanAccessHeatedNorfair
+  - name: MissileSpeedBooster
+    category: Minor
+    requirements: CanAccessHeatedNorfair
+  - name: SpeedBoosterLoc
+    category: Major
+    requirements: CanAccessHeatedNorfair, HiJump
+  - name: MissileWaveBeam
+    category: Minor
+    requirements: CanAccessHeatedNorfair
+  - name: WaveBeam
+    category: Major
+    requirements: CanAccessHeatedNorfair, HiJump
+  - name: MissileGoldTorizo
+    category: Minor
+    requirements: CanAccessLowerNorfair, SpaceJump
+  - name: SuperMissileGoldTorizo
+    category: Minor
+    requirements: CanAccessLowerNorfair
+  - name: MissileMickyMouseRoom
+    category: Minor
+    requirements: CanPassWorstRoom
+  - name: MissileLowerNorfairAboveFireFleaRoom
+    category: Minor
+    requirements: CanPassWorstRoom
+  - name: PowerBombLowerNorfairAboveFireFleaRoom
+    category: Minor
+    requirements: CanPassWorstRoom
+  - name: PowerBombsOfShame
+    category: Minor
+    requirements: CanPassWorstRoom
+  - name: MissileLowerNorfairNearWaveBeam
+    category: Minor
+    requirements: CanPassWorstRoom
+  - name: EnergyTankRidley
+    category: Major
+    requirements: CanPassWorstRoom, (+5, EnergyTank, ReserveTank)
+  - name: ScrewAttackLoc
+    category: Major
+    requirements: CanAccessLowerNorfair
+  - name: EnergyTankFireFleas
+    category: Major
+    requirements: CanPassWorstRoom    
+  - name: MissileWreckedShipMiddle
+    category: Minor
+    requirements: CanAccessWs    
+  - name: ReserveTankWreckedShipMiddle
+    category: Major
+    requirements: CanAccessWs, SpeedBooster, (| (+2, EnergyTank, ReserveTank), (& Varia, (+1, EnergyTank, ReserveTank)))
+  - name: MissileGravitySuit
+    category: Minor
+    requirements: CanAccessWs, (| (+2, EnergyTank, ReserveTank), (& Varia, (+1, EnergyTank, ReserveTank)))
+  - name: MissileWreckedShipTop
+    category: Minor
+    requirements: CanAccessWs
+  - name: EnergyTankWreckedShip
+    category: Major
+    requirements: CanAccessWs, (| Gravity, HiJump, SpaceJump, SpeedBooster)
+  - name: SuperMissileWreckedShipLeft
+    category: Minor
+    requirements: CanAccessWs
+  - name: RightSuperWreckedShip
+    category: Major
+    requirements: CanAccessWs
+  - name: GravitySuit
+    category: Major
+    requirements: CanAccessWs, (| (+2, EnergyTank, ReserveTank), (& Varia, (+1, EnergyTank, ReserveTank)))
+  - name: MissileGreenMaridiaShinespark
+    category: Minor
+    requirements: CanAccessRedBrinstar, CanUsePowerBombs, Gravity, SpeedBooster
+  - name: SuperMissileGreenMaridia
+    category: Minor
+    requirements: CanAccessOuterMaridia
+  - name: EnergyTankMamaTurtle
+    category: Major
+    requirements: CanAccessOuterMaridia, (| CanFly, SpeedBooster, Grapple)
+  - name: MissileGreenMaridiaTatori
+    category: Minor
+    requirements: CanAccessOuterMaridia
+  - name: SuperMissileYellowMaridia
+    category: Minor
+    requirements: CanAccessInnerMaridia
+  - name: MissileYellowMaridiaSuperMissile
+    category: Minor
+    requirements: CanAccessInnerMaridia
+  - name: MissileYellowMaridiaFalseWall
+    category: Minor
+    requirements: CanAccessInnerMaridia
+  - name: PlasmaBeam
+    category: Major
+    requirements: CanDefeatDraygon, (| Plasma, ScrewAttack), SpaceJump
+  - name: MissileLeftMaridiaSandPitRoom
+    category: Minor
+    requirements: CanAccessInnerMaridia
+  - name: ReserveTankMaridia
+    category: Major
+    requirements: CanAccessInnerMaridia
+  - name: MissileRightMaridiaSandPitRoom
+    category: Minor
+    requirements: CanAccessInnerMaridia
+  - name: PowerBombRightMaridiaSandPitRoom
+    category: Minor
+    requirements: CanAccessOuterMaridia, Gravity
+  - name: MissilePinkMaridia
+    category: Minor
+    requirements: CanAccessOuterMaridia, Gravity
+  - name: SuperMissilePinkMaridia
+    category: Minor
+    requirements: CanAccessOuterMaridia, Gravity
+  - name: SpringBall
+    category: Major
+    requirements: CanAccessOuterMaridia, Grapple, SpaceJump
+  - name: MissileDraygon
+    category: Minor
+    requirements: CanDefeatBotwoon
+  - name: EnergyTankBotwoon
+    category: Major
+    requirements: CanDefeatBotwoon
+  - name: SpaceJump
+    category: Major
+    requirements: CanDefeatDraygon
