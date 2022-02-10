@@ -69,18 +69,28 @@ item_pool:
       category: Major
       weight: 8
       show_in_graph: true
-
+    - name: FirstMissile
+      category: Minor
+    - name: FirstSuper
+      category: Minor
+      weight: 3
+    - name: FirstPowerBomb
+      category: Minor
+      weight: 8
+      requirements: FirstMissile, FirstSuper
+            
     - name: Super
       category: Minor
-      count: 10
-      weight: 3
+      count: 9
+      requirements: FirstSuper
     - name: Missile
       category: Minor
-      count: 46
+      count: 45
+      requirements: FirstMissile
     - name: PowerBomb
       category: Minor
-      count: 10
-      weight: 8
+      count: 9
+      requirements: FirstPowerBomb
 flags:
     - name: HeatProof
       requirements: Varia
@@ -90,29 +100,31 @@ flags:
       requirements: SpaceJump
     - name: CanUseBombs
       requirements: Morph, Bomb
+    - name: CanUseSuperMissiles
+      requirements: (| Super, FirstSuper)
     - name: CanOpenRedDoors
-      requirements: (| Missile, Super)
+      requirements: (| Missile, FirstMissile, CanUseSuperMissiles)    
     - name: CanOpenGreenDoors
-      requirements: Super
+      requirements: CanUseSuperMissiles
     - name: CanUsePowerBombs
-      requirements: Morph, PowerBomb
+      requirements: Morph, (| PowerBomb, FirstPowerBomb)    
     - name: CanOpenYellowDoors
       requirements: CanUsePowerBombs
     - name: CanDestroyBombWalls
-      requirements: (| (& Morph, (|Bomb, PowerBomb)), ScrewAttack)
+      requirements: (| (& Morph, (|Bomb, FirstPowerBomb, PowerBomb)), ScrewAttack)
     - name: CanCrystalFlash
-      requirements: Missile*2, Super*2, PowerBomb*3
+      requirements: (+2, Missile, FirstMissile), (+2, Super, FirstSuper), (+3, PowerBomb, FirstPowerBomb)
     - name: CanEnterAndLeaveGauntlet
-      requirements: (+3, EnergyTank, ReserveTank), (| Bomb, ScrewAttack, (& CanUsePowerBombs, PowerBomb*2 ))
+      requirements: (+3, EnergyTank, ReserveTank), (| Bomb, ScrewAttack, (& CanUsePowerBombs, (+2, FirstPowerBomb, PowerBomb)))
 
     - name: CanPassBombPassages
       requirements: (| CanUseBombs, CanUsePowerBombs )
     - name: CanAccessRedBrinstar
-      requirements: Super, (| (& CanDestroyBombWalls, Morph), CanUsePowerBombs)
+      requirements: CanUseSuperMissiles, (| (& CanDestroyBombWalls, Morph), CanUsePowerBombs)
     - name: CanAccessKraid
       requirements: CanAccessRedBrinstar, CanPassBombPassages
     - name: CanAccessWs
-      requirements: CanUsePowerBombs, Super
+      requirements: CanUsePowerBombs, CanUseSuperMissiles
     - name: CanAccessHeatedNorfair
       requirements: CanAccessRedBrinstar, CanHellRun, (|CanFly, HiJump)
     - name: CanAccessCrocomire
@@ -153,7 +165,7 @@ locations:
   - name: MissileCrateriaBottom
     category: Minor
     requirements: CanDestroyBombWalls
-  - name: Bomb
+  - name: BombLoc
     category: Major
     requirements: Morph, CanOpenRedDoors
   - name: EnergyTankTerminator
@@ -176,7 +188,7 @@ locations:
     requirements: CanUsePowerBombs
   - name: SuperMissilePinkBrinstar
     category: Minor
-    requirements: CanPassBombPassages, Super
+    requirements: CanPassBombPassages, CanUseSuperMissiles
   - name: MissileGreenBrinstarBelowSuperMissile
     category: Minor
     requirements: CanPassBombPassages, CanOpenRedDoors
@@ -203,7 +215,7 @@ locations:
     requirements: (| (& CanPassBombPassages, CanOpenRedDoors), CanUsePowerBombs)
   - name: PowerBombPinkBrinstar
     category: Minor
-    requirements: CanUsePowerBombs, Super
+    requirements: CanUsePowerBombs, CanUseSuperMissiles
 
   - name: MissileGreenBrinstarPipe
     category: Minor
@@ -234,7 +246,7 @@ locations:
     requirements: Morph
   - name: EnergyTankBrinstarGate
     category: Major
-    requirements: CanUsePowerBombs, (|Wave, Super)
+    requirements: CanUsePowerBombs, (|Wave, CanUseSuperMissiles)
   - name: MissileBlueBrinstarTop
     category: Minor
     requirements: CanOpenRedDoors, CanUsePowerBombs
@@ -431,6 +443,6 @@ locations:
   - name: EnergyTankBotwoon
     category: Major
     requirements: CanDefeatBotwoon
-  - name: SpaceJump
+  - name: SpaceJumpLoc
     category: Major
     requirements: CanDefeatDraygon

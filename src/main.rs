@@ -65,7 +65,7 @@ struct Args {
     temperature: Option<u32>,
 }
 
-use logic::{Logic, Allocator, Item, LogicLoader};
+use logic::{PreLogic, Allocator, Item, LogicLoader};
 use logic_parse::parse_logic;
 use structopt::StructOpt;
 fn main() {
@@ -73,8 +73,8 @@ fn main() {
     let args = Args::from_args();
     let f = std::fs::File::open(&args.logic_path).unwrap();
     let (logic, item_pool_ids) = LogicLoader::from_reader(f);
-    let item_pool: Vec<_> = item_pool_ids.into_iter().map(|id| Item::new(logic.get_item(id).unwrap())).collect();
-    let mut allocator = Allocator::new(&logic, item_pool, args.sadistic, args.match_category, args.temperature.unwrap_or(5));
+    let (logic, item_pool) = logic.build(&item_pool_ids);
+    let mut allocator = Allocator::new(item_pool, logic.locations, logic.flags, args.sadistic, args.match_category, args.temperature.unwrap_or(5));
     allocator.allocate(&mut rand::thread_rng());
     // parse_logic(include_str!("default.logic.txt"));
     

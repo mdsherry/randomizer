@@ -1,8 +1,8 @@
-use std::{collections::{HashMap, HashSet}, io::Read};
+use std::{collections::{HashMap, HashSet}, rc::Rc};
 use serde::Deserialize;
 use crate::logic_parse::{parse_reqs, gen_reqs2};
 
-use super::{ItemId, FlagId, Flag, LocationId, Location, ItemCategory, ItemDef, Restriction, Logic};
+use super::{ItemId, FlagId, PreFlag, LocationId, PreLocation, ItemCategory, ItemDef, Restriction, PreLogic};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Condition {
@@ -18,31 +18,40 @@ pub enum Condition {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ItemCondition {
     NoRequirements,
-    Item(ItemId, usize),
-    AtLeast(usize, Vec<(ItemId, usize)>),
+    Item(Rc<ItemDef>, usize),
+    AtLeast(usize, Vec<(Rc<ItemDef>, usize)>),
     And(Vec<Self>),
     Or(Vec<Self>),
 }
 
 
 impl Condition {
-    pub fn expand(self, cond_fact: &Logic) -> ItemCondition {
-        match self {
-            Condition::NoRequirements => ItemCondition::NoRequirements,
-            Condition::Flag(id) => {
-                let flag = cond_fact.get_flag(id).unwrap();
-                flag.requirement.clone()
-            },
-            Condition::AtLeast(count, items) => ItemCondition::AtLeast(count, items),
-            Condition::Item(id, count) => ItemCondition::Item(id, count),
-            Condition::Location(id) => {
-                let location = cond_fact.get_location(id).unwrap();
-                location.requirement.clone()
-            }
-            Condition::And(conds) => {
-                ItemCondition::And(conds.into_iter().map(|c| c.expand(cond_fact)).collect())
-            },
-            Condition::Or(conds) => ItemCondition::Or(conds.into_iter().map(|c| c.expand(cond_fact)).collect()),
+    pub fn expand<'a>(&'a self, prelogic: &'a PreLogic, condition_cache: &mut HashMap<&'a Condition, ItemCondition>, item_cache: &HashMap<ItemId, Rc<ItemDef>>) -> ItemCondition {
+        if let Some(condition) = condition_cache.get(self) {
+            condition.clone()
+        } else {
+            let condition = match self {
+                Condition::NoRequirements => ItemCondition::NoRequirements,
+                Condition::Flag(id) => {
+                    let flag = prelogic.get_flag(*id).unwrap();
+                    flag.requirement.expand(prelogic, condition_cache, item_cache)
+                },
+                Condition::AtLeast(count, items) => ItemCondition::AtLeast(
+                    *count,
+                    items.iter().map(|(id, weight)| (item_cache[id].clone(), *weight)).collect()
+                ),
+                Condition::Item(id, count) => ItemCondition::Item(item_cache[id].clone(), count.clone()),
+                Condition::Location(id) => {
+                    let location = prelogic.get_location(*id).unwrap();
+                    location.requirement.expand(prelogic, condition_cache, item_cache)
+                }
+                Condition::And(conds) => {
+                    ItemCondition::And(conds.into_iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect())
+                },
+                Condition::Or(conds) => ItemCondition::Or(conds.into_iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect()),
+            };
+            condition_cache.insert(self, condition.clone());
+            condition
         }
     }
 }
@@ -56,35 +65,16 @@ impl ItemCondition {
             Self::Or(conds) => conds.iter().map(|c| c.complexity()).min().unwrap_or(0) + 1
         }
     }
-    fn top_level_items(&self) -> HashSet<ItemId> {
-        match self {
-            Self::NoRequirements => HashSet::new(),
-            Self::Item(id, _) => {
-                let mut rv = HashSet::with_capacity(1);
-                rv.insert(*id);
-                rv
-            },
-            Self::AtLeast(_, items) => {
-                let mut rv = HashSet::with_capacity(1);
-                for (id, _) in items {
-                    rv.insert(*id);
-                }
-                rv
-            }
-            Self::And(conds) => conds.iter().filter_map(|c| match c { Self::Item(id, _) => Some(*id), _ => None }).collect(),
-            Self::Or(conds) => conds.iter().filter_map(|c| match c { Self::Item(id, _) => Some(*id), _ => None }).collect(),
-        }
-    }
-    pub fn missing(&self, items: &HashMap<ItemId, usize>, rv: &mut HashMap<ItemId, usize>) {
+    pub fn missing(&self, items: &HashMap<Rc<ItemDef>, usize>, rv: &mut HashMap<Rc<ItemDef>, usize>) {
         if !self.satisfied(items) {
             match self {
                 ItemCondition::NoRequirements => {},
-                ItemCondition::Item(id, count) => {rv.insert(*id, *count);}
+                ItemCondition::Item(id, count) => {rv.insert(id.clone(), *count);}
                 ItemCondition::AtLeast(threshold, req_items) => {
                     let mut total = 0;
                         
-                    for &(id, weight) in req_items {
-                        total += items.get(&id).copied().unwrap_or(0) * weight;
+                    for (item, weight) in req_items {
+                        total += items.get(item).copied().unwrap_or(0) * *weight;
                     }
                     if *threshold <= total {
                         // This should never happen, since we're unsatisfied
@@ -92,8 +82,8 @@ impl ItemCondition {
                     }
                     let required_threshold = threshold - total;
                     
-                    for &(id, weight) in req_items {
-                        rv.insert(id, (required_threshold + weight - 1) / weight);
+                    for (id, weight) in req_items {
+                        rv.insert(id.clone(), (required_threshold + weight - 1) / weight);
                     }                    
                 }
                 ItemCondition::And(conds) => {
@@ -195,11 +185,11 @@ impl ItemCondition {
                         _ => new_conds.push(new_cond)
                     }
                 }
-                let items: Vec<_> = new_conds.iter().filter_map(|c| match c { Self::Item(id, count) => Some((*id, *count)), _ => None }).collect();
+                let items: Vec<_> = new_conds.iter().filter_map(|c| match c { Self::Item(id, count) => Some((id.clone(), *count)), _ => None }).collect();
                 for (item, count) in items {
                     for cond in &mut new_conds {
                         if matches!(cond, Self::Or(_) | Self::And(_)) {
-                            cond.assume_item(item, count);
+                            cond.assume_item(&item, count);
                         }
                     }
                 }
@@ -232,10 +222,10 @@ impl ItemCondition {
             }
         }
     }
-    pub fn assume_item(&mut self, id: ItemId, count: usize) {
+    pub fn assume_item(&mut self, id: &Rc<ItemDef>, count: usize) {
         match self {
             Self::NoRequirements => {}
-            Self::Item(my_id, my_count) => if id == *my_id {
+            Self::Item(my_id, my_count) => if id == my_id {
                 if count >= *my_count {
                     *self = Self::NoRequirements;
                 } else {
@@ -243,7 +233,7 @@ impl ItemCondition {
                 }
             },
             Self::AtLeast(threshold, items) => {
-                if let Some((_, weight)) = items.iter().find(|(i, _)| *i == id) {
+                if let Some((_, weight)) = items.iter().find(|(i, _)| i == id) {
                     if *threshold <= count * *weight {
                         *self = Self::NoRequirements;
                     } else {
@@ -273,11 +263,10 @@ impl ItemCondition {
         }
     }
 
-    pub fn render(&self, cond_fact: &Logic) {
+    pub fn render(&self) {
         match self {
             Self::NoRequirements => print!("-"),
-            Self::Item(id, count) => {
-                let item = cond_fact.get_item(*id).unwrap();
+            Self::Item(item, count) => {
                 if *count > 1 {
                     print!("{}:{}", item.name, count);
                 } else {
@@ -287,8 +276,7 @@ impl ItemCondition {
             Self::AtLeast(threshold, items) => {
                 let mut first = true;
                 print!("({} <=", threshold);
-                for (id, weight) in items {
-                    let item = cond_fact.get_item(*id).unwrap();
+                for (item, weight) in items {
                     if !first {
                         print!(" + ")
                     }
@@ -308,7 +296,7 @@ impl ItemCondition {
                         print!(" & ")
                     }
                     first = false;
-                    cond.render(cond_fact);
+                    cond.render();
                 }
                 print!(")");
             }
@@ -320,19 +308,19 @@ impl ItemCondition {
                         print!(" | ")
                     }
                     first = false;
-                    cond.render(cond_fact);
+                    cond.render();
                 }
                 print!(")");
             },
         }
     }
-    pub fn satisfied(&self, items: &HashMap<ItemId, usize>) -> bool {
+    pub fn satisfied(&self, items: &HashMap<Rc<ItemDef>, usize>) -> bool {
         match self {
             Self::NoRequirements => true,
             Self::AtLeast(threshold, req_items) => {
                 let mut total = 0;
-                for &(id, weight) in req_items {
-                    total += items.get(&id).copied().unwrap_or(0) * weight;
+                for (id, weight) in req_items {
+                    total += items.get(id).copied().unwrap_or(0) * *weight;
                 }
 
                 total >= *threshold
@@ -343,26 +331,26 @@ impl ItemCondition {
         }
     }
 
-    pub fn satisfied_by(&self, cond_fact: &Logic, items: &HashMap<ItemId, usize>) -> HashSet<ItemId> {
+    pub fn satisfied_by(&self, items: &HashMap<Rc<ItemDef>, usize>) -> HashSet<Rc<ItemDef>> {
         match self {
             Self::NoRequirements => HashSet::new(),
-            Self::Item(id, count) => {
+            Self::Item(item, count) => {
                 let mut rv = HashSet::new();
-                if items.get(id).copied().unwrap_or(0) >= *count {
-                    rv.insert(*id);
+                if items.get(item).copied().unwrap_or(0) >= *count {
+                    rv.insert(item.clone());
                 }
                 rv
             }
             Self::AtLeast(threshold, req_items) => {
                 let mut total = 0;
-                for &(id, weight) in req_items {
-                    total += items.get(&id).copied().unwrap_or(0) * weight;
+                for (item, weight) in req_items {
+                    total += items.get(item).copied().unwrap_or(0) * *weight;
                 }
                 let mut rv = HashSet::new();
                 if total >= *threshold {
-                    for &(id, _weight) in req_items {
-                        if items.get(&id).copied().unwrap_or(0) > 0 {
-                            rv.insert(id);
+                    for (id, _weight) in req_items {
+                        if items.get(id).copied().unwrap_or(0) > 0 {
+                            rv.insert(id.clone());
                         }
                     }
                 }
@@ -371,14 +359,14 @@ impl ItemCondition {
             Self::And(conds) => {
                 let mut rv = HashSet::new();
                 for cond in conds {
-                    rv.extend(cond.satisfied_by(cond_fact, items));
+                    rv.extend(cond.satisfied_by(items));
                 }
                 rv
             },
             Self::Or(conds) => {
                 for cond in conds {
                     if cond.satisfied(items) {
-                        return cond.satisfied_by(cond_fact, items);
+                        return cond.satisfied_by(items);
                     }
                 }
                 HashSet::new()
