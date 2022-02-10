@@ -233,7 +233,7 @@ impl Allocator {
         }
         None
     }
-    fn place_item(&mut self, item: &Rc<ItemDef>, location: &Rc<Location>, opened: &[Rc<Location>]) {
+    fn place_item(&mut self, item: &Rc<ItemDef>, location: &Rc<Location>) {
         if location.restriction.is_some() && item.restriction.is_none() {
             println!(
                 "!!! Placing a non-dungeon item ({}) in a dungeon slot ({})",
@@ -242,13 +242,23 @@ impl Allocator {
         }
         self.assignments.insert(location.clone(), item.clone());
         self.open_locations.retain(|l| l != location);
+        let mut opened = vec![];
+        for (loc, req) in &mut self.closed_locations {
+            let old_req = req.clone();
+            req.assume_item(item, 1);
+            *req = req.simplify();
+            if *req == ItemCondition::NoRequirements {
+                opened.push(loc.clone());
+                println!("Unlocked location {} {}", loc, old_req);                
+            }
+        }
         if !opened.is_empty() {
-            self.open_locations.extend(opened.iter().cloned());
-            for loc in opened {
+            for loc in &opened {
                 if let Some(n) = loc.restriction {
                     *self.locs_by_restriction.entry(n).or_default() += 1;
                 }
             }
+            self.open_locations.extend(opened);
         }
         if let Some(n) = item.restriction {
             if let Some(entry) = self.items_by_restriction.get_mut(&n) {
@@ -267,11 +277,28 @@ impl Allocator {
         if let Some(n) = location.restriction {
             *self.locs_by_restriction.get_mut(&n).unwrap() -= 1;
         }
-        self.closed_locations.retain(|(l, _)| !opened.contains(l));
+        self.closed_locations.retain(|(_, req)| req != &ItemCondition::NoRequirements);
         if let Some((idx, _)) = self.item_pool.iter().enumerate().find(|(_, (i, _))| i == item) {
             self.item_pool.swap_remove(idx);
         }
         *self.assigned_items.entry(item.clone()).or_default() += 1;
+
+        for (_, req) in &mut self.item_pool {
+            req.assume_item(item, 1);
+            *req = req.simplify();
+        }
+        for (flag, req) in &mut self.flags {
+            let old_req = req.clone();
+            req.assume_item(item, 1);
+            *req = req.simplify();
+            if *req == ItemCondition::NoRequirements && *req != old_req {
+                println!("Unlocked flag {} {}", flag.name, old_req);                
+            }
+        }
+        for (_, req) in &mut self.locations {
+            req.assume_item(item, 1);
+            *req = req.simplify();
+        }
     }
 
     fn probably_safe_to_backfill(
@@ -370,7 +397,7 @@ impl Allocator {
                         {
                             let location = location.clone();
                             println!("Backfilling {} ({}) in {}", item, weight, location);
-                            self.place_item(&item, &location, &[]);
+                            self.place_item(&item, &location);
                         } else {
                             println!(
                                 "(Wanted to backfill {} ({}) but couldn't find a home for it)",
@@ -405,7 +432,8 @@ impl Allocator {
             }
         }
         println!();
-        println!("{:?}", unlock_items);
+        
+        // println!("{:?}", unlock_items);
 
         for (item, weight) in unlock_items {
             if let Some(location) = self.find_item_home(&*item, rng) {
@@ -414,9 +442,9 @@ impl Allocator {
                     item, weight, location
                 );
                 for loc in &unlocks[item] {
-                    println!("  - {}", loc);
+                    println!(" - {}", loc);
                 }
-                self.place_item(item, &location, &unlocks[item]);
+                self.place_item(item, &location);
                 return;
             } else {
                 println!(
@@ -465,7 +493,7 @@ impl Allocator {
                         "Placing {} in {}, hoping that it frees things up",
                         item, location
                     );
-                    self.place_item(&item, &location, &[]);
+                    self.place_item(&item, &location);
                     return;
                 } else {
                     if let Some(n) = item.restriction {
@@ -505,7 +533,7 @@ impl Allocator {
         if let Some(item) = self.item_pool.get(0).map(|(item, _)| item.clone()) {
             if let Some(location) = self.find_item_home(&*item, rng) {
                 println!("Placing {} in {}, to fill up space", item, location);
-                self.place_item(&item, &location, &[]);
+                self.place_item(&item, &location);
                 return;
             } else {
                 println!(
@@ -702,14 +730,14 @@ impl Allocator {
         Ok(s)
     }
 
-    pub fn allocate<R: Rng + ?Sized>(&mut self, rng: &mut R) {
+    pub fn allocate<R: Rng + ?Sized>(&mut self, rng: &mut R) -> HashMap<Rc<Location>, Rc<ItemDef>> {
         println!("Open locations: ");
         for loc in &self.open_locations {
             println!("  * {}", loc);
         }
         println!("Closed locations: ");
-        for (loc, _) in &self.closed_locations {
-            println!("  * {}", loc);
+        for (loc, req) in &self.closed_locations {
+            println!("  * {} {}", loc, req);
         }
         let mut n = 0;
         self.item_pool.shuffle(rng);
@@ -728,8 +756,7 @@ impl Allocator {
                     for (id, count) in &self.assigned_items {
                         req.assume_item(id, *count);
                     }
-                    req.render();
-                    println!();
+                    println!("{}", req);
                 }
                 break;
             }
@@ -739,10 +766,18 @@ impl Allocator {
             println!("  {} -> {}", loc, item);
         }
 
-        self.check_assignments(&self.assignments);
+        self.assignments.clone()
     }
-
-    fn check_assignments(&self, assignments: &HashMap<Rc<Location>, Rc<ItemDef>>) {
+}
+pub struct AssignmentChecker {
+    locations: Conditionals<Location>,
+    flags: Conditionals<Flag>,
+}
+impl AssignmentChecker {
+    pub fn new(locations: Conditionals<Location>, flags: Conditionals<Flag>) -> Self {
+        AssignmentChecker { locations, flags }
+    }
+    pub fn check_assignments(&self, assignments: &HashMap<Rc<Location>, Rc<ItemDef>>) {
         let mut graph = "digraph G {\n".to_string();
         let mut open_locations = HashSet::new();
         let mut acquired_items = HashMap::new();

@@ -40,16 +40,17 @@ impl Condition {
                     *count,
                     items.iter().map(|(id, weight)| (item_cache[id].clone(), *weight)).collect()
                 ),
-                Condition::Item(id, count) => ItemCondition::Item(item_cache[id].clone(), count.clone()),
+                Condition::Item(id, count) => ItemCondition::Item(item_cache[id].clone(), *count),
                 Condition::Location(id) => {
                     let location = prelogic.get_location(*id).unwrap();
                     location.requirement.expand(prelogic, condition_cache, item_cache)
                 }
                 Condition::And(conds) => {
-                    ItemCondition::And(conds.into_iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect())
+                    ItemCondition::And(conds.iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect())
                 },
-                Condition::Or(conds) => ItemCondition::Or(conds.into_iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect()),
+                Condition::Or(conds) => ItemCondition::Or(conds.iter().map(|c| c.expand(prelogic, condition_cache, item_cache)).collect()),
             };
+            let condition = condition.simplify().flatten();
             condition_cache.insert(self, condition.clone());
             condition
         }
@@ -212,13 +213,13 @@ impl ItemCondition {
                 new_conds.dedup();
                 
                 let rv = Self::And(new_conds);
-                rv
+                rv.flatten()
             },
             Self::Or(conds) => {
                 let mut conds = conds.clone();
                 conds.sort();
                 conds.dedup();
-                Self::Or(conds)
+                Self::Or(conds).flatten()
             }
         }
     }
@@ -263,57 +264,6 @@ impl ItemCondition {
         }
     }
 
-    pub fn render(&self) {
-        match self {
-            Self::NoRequirements => print!("-"),
-            Self::Item(item, count) => {
-                if *count > 1 {
-                    print!("{}:{}", item.name, count);
-                } else {
-                    print!("{}", item.name);
-                }
-            }
-            Self::AtLeast(threshold, items) => {
-                let mut first = true;
-                print!("({} <=", threshold);
-                for (item, weight) in items {
-                    if !first {
-                        print!(" + ")
-                    }
-                    first = false;
-                    print!("{}", item.name);
-                    if *weight > 1 {
-                        print!(" * {}", weight)
-                    }
-                }
-                print!(")");
-            }
-            Self::And(conds) => {
-                let mut first = true;
-                print!("(");
-                for cond in conds {
-                    if !first {
-                        print!(" & ")
-                    }
-                    first = false;
-                    cond.render();
-                }
-                print!(")");
-            }
-            Self::Or(conds) => {
-                let mut first = true;
-                print!("(");
-                for cond in conds {
-                    if !first {
-                        print!(" | ")
-                    }
-                    first = false;
-                    cond.render();
-                }
-                print!(")");
-            },
-        }
-    }
     pub fn satisfied(&self, items: &HashMap<Rc<ItemDef>, usize>) -> bool {
         match self {
             Self::NoRequirements => true,
@@ -372,5 +322,60 @@ impl ItemCondition {
                 HashSet::new()
             }
         }
+    }
+}
+
+impl std::fmt::Display for ItemCondition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::NoRequirements => write!(f, "-")?,
+            Self::Item(item, count) => {
+                if *count > 1 {
+                    write!(f, "{}*{}", item.name, count)?;
+                } else {
+                    write!(f, "{}", item.name)?;
+                }
+            }
+            Self::AtLeast(threshold, items) => {
+                let mut first = true;
+                write!(f, "({} <=", threshold)?;
+                for (item, weight) in items {
+                    if !first {
+                        write!(f, " + ")?;
+                    }
+                    first = false;
+                    write!(f, "{}", item.name)?;
+                    if *weight > 1 {
+                        write!(f, " * {}", weight)?
+                    }
+                }
+                write!(f, ")")?;
+            }
+            Self::And(conds) => {
+                let mut first = true;
+                write!(f, "(");
+                for cond in conds {
+                    if !first {
+                        write!(f, " & ")?;
+                    }
+                    first = false;
+                    cond.fmt(f)?;
+                }
+                write!(f, ")");
+            }
+            Self::Or(conds) => {
+                let mut first = true;
+                write!(f, "(");
+                for cond in conds {
+                    if !first {
+                        write!(f, " | ")?;
+                    }
+                    first = false;
+                    cond.fmt(f)?;
+                }
+                write!(f, ")");
+            },
+        }
+        Ok(())
     }
 }
