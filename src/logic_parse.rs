@@ -230,11 +230,11 @@ fn parse_palace() {
 }
 
 
-pub fn gen_reqs2(terms: &[Term<'_>], items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>) -> Result<Condition, LogicParseError> {
+pub fn gen_reqs2(terms: &[Term<'_>], items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>, parameters: &HashSet<&str>) -> Result<Condition, LogicParseError> {
     match terms {
         [] => Ok(Condition::NoRequirements),
-        [ref a] => gen_req2(a, items, flags, locations),
-        _ => gen_req2(&Term::And(terms.to_vec()), items, flags, locations)
+        [ref a] => gen_req2(a, items, flags, locations, parameters),
+        _ => gen_req2(&Term::And(terms.to_vec()), items, flags, locations, parameters)
     }
 }
 
@@ -247,9 +247,11 @@ pub enum LogicParseError {
     UnrecognizedLocation(String),
     #[error("Unknown flag {0}")]
     UnrecognizedFlag(String),
+    #[error("Unknown parameter {0}")]
+    UnrecognizedParameter(String),
     #[error("Name is not an item, flag or location: {0}")]
     UnrecognizedName(String),
-    #[error("Name was not unique; qualify with Items., Helpers. or Locations.: {0}")]
+    #[error("Name was not unique; qualify with Items., Helpers., Locations. or Parameters.: {0}")]
     AmbiguousName(String),
     #[error("Thresholds require item literals, not more complex expressions")]
     ThresholdRequireItems,
@@ -277,7 +279,15 @@ fn add_flag(flag: &str, flags: &HashMap<&str, FlagId>) -> Result<Condition, Logi
     Ok(Condition::Flag(*id))
 }
 
-fn gen_req2(term: &Term, items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>) -> Result<Condition, LogicParseError> {
+fn add_parameter(name: &str, parameters: &HashSet<&str>) -> Result<Condition, LogicParseError> {
+    if parameters.contains(name) {
+        Ok(Condition::Parameter(name.into()))
+    } else {
+        Err(LogicParseError::UnrecognizedParameter(name.into()))
+    }
+}
+
+fn gen_req2(term: &Term, items: &HashMap<&str, ItemId>, flags: &HashMap<&str, FlagId>, locations: &HashMap<&str, LocationId>, parameters: &HashSet<&str>) -> Result<Condition, LogicParseError> {
     Ok(match term {
         Term::Lit(s) => {
             if let Some(item) = s.strip_prefix("Items.") {
@@ -286,22 +296,25 @@ fn gen_req2(term: &Term, items: &HashMap<&str, ItemId>, flags: &HashMap<&str, Fl
                 add_flag(helper, flags)?
             } else if let Some(location) = s.strip_prefix("Locations.") {
                 add_location(location, locations)?
+            } else if let Some(parameter) = s.strip_prefix("Parameter.") {
+                add_parameter(parameter, parameters)?
             } else {
-                match (add_item(s, items), add_flag(s, flags), add_location(s, locations)) {
-                    (Ok(c), Err(_), Err(_)) => c,
-                    (Err(_), Ok(c), Err(_)) => c,
-                    (Err(_), Err(_), Ok(c)) => c,
-                    (Err(_), Err(_), Err(_)) => return Err(LogicParseError::UnrecognizedName(s.to_string())),
-                    (_, _, _) => return Err(LogicParseError::AmbiguousName(s.to_string()))
+                match (add_item(s, items), add_flag(s, flags), add_location(s, locations), add_parameter(s, parameters)) {
+                    (Ok(c), Err(_), Err(_), Err(_)) => c,
+                    (Err(_), Ok(c), Err(_), Err(_)) => c,
+                    (Err(_), Err(_), Ok(c), Err(_)) => c,
+                    (Err(_), Err(_), Err(_), Ok(c)) => c,
+                    (Err(_), Err(_), Err(_), Err(_)) => return Err(LogicParseError::UnrecognizedName(s.to_string())),
+                    (_, _, _, _) => return Err(LogicParseError::AmbiguousName(s.to_string()))
                 }
             }
         },
         Term::And(terms) => {
-            Condition::And(terms.iter().map(|term| gen_req2(term, items, flags, locations)).collect::<Result<_, _>>()?)
+            Condition::And(terms.iter().map(|term| gen_req2(term, items, flags, locations, parameters)).collect::<Result<_, _>>()?)
         },
         Term::Or(terms) => 
         {
-            Condition::Or(terms.iter().map(|term| gen_req2(term, items, flags, locations)).collect::<Result<_, _>>()?)
+            Condition::Or(terms.iter().map(|term| gen_req2(term, items, flags, locations, parameters)).collect::<Result<_, _>>()?)
         },
         Term::Count(threshold, terms) => {
             let items = terms.iter().map(|term| match term {

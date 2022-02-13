@@ -1,0 +1,1243 @@
+parameters:
+  - name: Glitch:BootsClip
+    type: Boolean
+    default: False
+  - name: Glitch:OneFrameClipOW
+    type: Boolean
+    default: False
+  - name: Glitch:SuperSpeed
+    type: Boolean
+    default: False
+  - name: Glitch:OWYBA
+    type: Boolean
+    default: False
+  - name: Glitch:BunnyRevive
+    type: Boolean
+    default: False
+  - name: Glitch:MirrorWarp
+    type: Boolean
+    default: False
+  - name: Glitch:FakeFlipper
+    type: Boolean
+    default: False
+  - name: Glitch:WaterWalk
+    type: Boolean
+    default: False
+
+item_pool:
+  - name: RescueZelda
+    category: Major
+    show_in_graph: true
+    restriction: RescueZelda
+  - name: DefeatAgahnim
+    category: Major
+    show_in_graph: true
+    restriction: AgahnimPrize
+  - name: DefeatAgahnim2
+    category: Major
+    show_in_graph: true
+    restriction: Agahnim2
+  - name: ProgressiveSword
+    category: Major
+    show_in_graph: true
+    count: 4
+  - name: HeartContainer
+    category: Major
+    count: 11
+  - name: Bottle
+    category: Major
+    show_in_graph: true
+    count: 4
+  - name: Bombos
+    category: Major
+    show_in_graph: true
+  - name: BookOfMudora
+    category: Major
+    show_in_graph: true
+  - name: CaneOfSomaria
+    category: Major
+    show_in_graph: true
+  - name: Cape
+    show_in_graph: true
+    category: Major
+  - name: Ether
+    show_in_graph: true
+    category: Major
+  - name: FireRod
+    show_in_graph: true
+    category: Major
+  - name: Flippers
+    show_in_graph: true
+    category: Major
+  - name: Hammer
+    show_in_graph: true
+    category: Major
+  - name: Hookshot
+    show_in_graph: true
+    category: Major
+  - name: IceRod
+    show_in_graph: true
+    category: Major
+  - name: Lamp
+    show_in_graph: true
+    category: Major
+  - name: MagicMirror
+    show_in_graph: true
+    category: Major
+  - name: MoonPearl
+    show_in_graph: true
+    category: Major
+  - name: Mushroom
+    show_in_graph: true
+    category: Major
+  - name: OcarinaInactive
+    show_in_graph: true
+    category: Major
+  - name: PegasusBoots
+    show_in_graph: true
+    category: Major
+  - name: Powder
+    show_in_graph: true
+    category: Major
+  - name: ProgressiveGlove
+    show_in_graph: true
+    category: Major
+    count: 2
+  - name: ProgressiveBow
+    show_in_graph: true
+    category: Major
+    count: 2
+  - name: Quake
+    show_in_graph: true
+    category: Major
+  - name: Shovel
+    show_in_graph: true
+    category: Major
+  - name: BugCatchingNet
+    show_in_graph: true
+    category: Major
+  - name: ProgressiveShield
+    show_in_graph: true
+    category: Major
+    count: 3
+  - name: CaneOfByrna
+    show_in_graph: true
+    category: Major
+  - name: TenBombs
+    category: Major
+  - name: HalfMagic
+    category: Major
+  - name: ProgressiveArmor
+    show_in_graph: true
+    category: Major
+    count: 2
+  - name: Boomerang
+    show_in_graph: true
+    category: Major
+  - name: RedBoomerang
+    show_in_graph: true
+    category: Major
+  - name: PieceOfHeart
+    category: Minor
+    count: 24
+  - name: TenArrows
+    category: Minor
+    count: 12
+  - name: ThreeBombs
+    category: Minor
+    count: 16
+  - name: Rupee:1
+    category: Minor
+    count: 2
+  - name: Rupee:5
+    category: Minor
+    count: 4
+  - name: Rupee:20
+    category: Minor
+    count: 28
+  - name: Rupee:50
+    category: Minor
+    count: 7
+  - name: Rupee:100
+    category: Minor
+    count: 1
+  - name: Rupee:300
+    category: Minor
+    count: 5
+  - name: BigKey:HyruleCastleEscape
+    show_in_graph: true
+    category: Major
+    restriction: HyruleCastleEscape
+    count: 0
+
+  - name: BigKey:EasternPalace
+    show_in_graph: true
+    category: Major
+    restriction: EasternPalace
+  - name: BigKey:DesertPalace
+    show_in_graph: true
+    category: Major
+    restriction: DesertPalace
+    requirements: Key:DesertPalace
+  - name: BigKey:TowerOfHera
+    show_in_graph: true
+    category: Major
+    restriction: TowerOfHera
+    requirements: Key:TowerOfHera
+  - name: BigKey:HyruleCastleTower
+    show_in_graph: true
+    category: Major
+    restriction: HyruleCastleTower
+    count: 0
+  - name: BigKey:PalaceOfDarkness
+    show_in_graph: true
+    category: Major
+    restriction: PalaceOfDarkness
+    count: 1
+  - name: BigKey:SwampPalace
+    show_in_graph: true
+    category: Major
+    restriction: SwampPalace
+    count: 1
+  - name: BigKey:SkullWoods
+    show_in_graph: true
+    category: Major
+    restriction: SkullWoods
+    count: 1
+  - name: BigKey:ThievesTown
+    show_in_graph: true
+    category: Major
+    restriction: ThievesTown
+    count: 1
+  - name: BigKey:IcePalace
+    show_in_graph: true
+    category: Major
+    restriction: IcePalace
+    count: 1
+  - name: BigKey:MiseryMire
+    show_in_graph: true
+    category: Major
+    restriction: MiseryMire
+    count: 1
+  - name: BigKey:TurtleRock
+    show_in_graph: true
+    category: Major
+    restriction: TurtleRock
+    count: 1
+  - name: BigKey:GanonsTower
+    show_in_graph: true
+    category: Major
+    restriction: GanonsTower
+    count: 1
+
+  - name: Key:HyruleCastleEscape
+    category: Major
+    restriction: HyruleCastleEscape
+    count: 1
+  - name: Key:EasternPalace
+    category: Major
+    restriction: EasternPalace
+    count: 0 # Actually, there are two keys, but we don't want to randomize either
+  - name: Key:DesertPalace
+    category: Major
+    restriction: DesertPalace
+  - name: Key:TowerOfHera
+    category: Major
+    restriction: TowerOfHera
+  - name: Key:HyruleCastleTower
+    category: Major
+    restriction: HyruleCastleTower
+    count: 2
+  - name: Key:PalaceOfDarkness
+    category: Major
+    restriction: PalaceOfDarkness
+    count: 6
+  - name: Key:SwampPalace
+    category: Major
+    restriction: SwampPalace
+    count: 1
+  - name: Key:SkullWoods
+    category: Major
+    restriction: SkullWoods
+    count: 3
+  - name: Key:ThievesTown
+    category: Major
+    restriction: ThievesTown
+    count: 1
+  - name: Key:IcePalace
+    category: Major
+    restriction: IcePalace
+    count: 2
+  - name: Key:MiseryMire
+    category: Major
+    restriction: MiseryMire
+    count: 3
+  - name: Key:TurtleRock
+    category: Major
+    restriction: TurtleRock
+    count: 4
+  - name: Key:GanonsTower
+    category: Major
+    restriction: GanonsTower
+    count: 4
+
+  - name: Map:HyruleCastleEscape
+    category: Major
+    restriction: HyruleCastleEscape
+  - name: Map:EasternPalace
+    category: Major
+    restriction: EasternPalace
+  - name: Map:DesertPalace
+    category: Major
+    restriction: DesertPalace
+  - name: Map:TowerOfHera
+    category: Major
+    restriction: TowerOfHera
+  - name: Map:HyruleCastleTower
+    category: Major
+    restriction: HyruleCastleTower
+    count: 0
+  - name: Map:PalaceOfDarkness
+    category: Major
+    restriction: PalaceOfDarkness
+  - name: Map:SwampPalace
+    category: Major
+    restriction: SwampPalace
+  - name: Map:SkullWoods
+    category: Major
+    restriction: SkullWoods
+  - name: Map:ThievesTown
+    category: Major
+    restriction: ThievesTown
+  - name: Map:IcePalace
+    category: Major
+    restriction: IcePalace
+  - name: Map:MiseryMire
+    category: Major
+    restriction: MiseryMire
+  - name: Map:TurtleRock
+    category: Major
+    restriction: TurtleRock
+  - name: Map:GanonsTower
+    category: Major
+    restriction: GanonsTower
+
+  - name: Compass:HyruleCastleEscape
+    category: Major
+    restriction: HyruleCastleEscape
+    count: 0
+  - name: Compass:EasternPalace
+    category: Major
+    restriction: EasternPalace
+  - name: Compass:DesertPalace
+    category: Major
+    restriction: DesertPalace
+  - name: Compass:TowerOfHera
+    category: Major
+    restriction: TowerOfHera
+  - name: Compass:HyruleCastleTower
+    category: Major
+    restriction: HyruleCastleTower
+    count: 0
+  - name: Compass:PalaceOfDarkness
+    category: Major
+    restriction: PalaceOfDarkness
+  - name: Compass:SwampPalace
+    category: Major
+    restriction: SwampPalace
+  - name: Compass:SkullWoods
+    category: Major
+    restriction: SkullWoods
+  - name: Compass:ThievesTown
+    category: Major
+    restriction: ThievesTown
+  - name: Compass:IcePalace
+    category: Major
+    restriction: IcePalace
+  - name: Compass:MiseryMire
+    category: Major
+    restriction: MiseryMire
+  - name: Compass:TurtleRock
+    category: Major
+    restriction: TurtleRock
+  - name: Compass:GanonsTower
+    category: Major
+    restriction: GanonsTower
+
+  - name: PendantOfCourage
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: PendantOfPower
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: PendantOfWisdom
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal1
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal2
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal3
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal4
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal5
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal6
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+  - name: Crystal7
+    show_in_graph: true
+    category: Major
+    restriction: Prize
+
+flags:
+  # Glitches
+  - name: CanBootsClip
+    requirements: Glitch:BootsClip, PegasusBoots
+  - name: CanOWYBA
+    requirements: Glitch:OWYBA, HasABottle
+  - name: CanSuperSpeed
+    requirements: Glitch:SuperSpeed, CanSpinSpeed
+  - name: CanBunnyRevive
+    requirements: Glitch:BunnyRevive, HasABottle
+
+  - name: HasSword
+    requirements: ProgressiveSword
+  - name: HasABottle
+    requirements: Bottle
+  - name: CanBombThings
+    requirements: (| TenBombs, ThreeBombs )
+  - name: CanGetGoodBee
+    requirements: BugCatchingNet, HasABottle, (| PegasusBoots, (& HasSword, Quake))
+  - name: CanKillEscapeThings
+    requirements: (| ProgressiveSword, CaneOfSomaria, (+10, TenBombs*10, ThreeBombs*3), CaneOfByrna, CanShootArrows, Hammer, FireRod )      
+  - name: CanKillMostThings
+    requirements: (| HasSword, CaneOfSomaria, CanBombThings, CaneOfByrna, CanShootArrows, Hammer, FireRod )
+  - name: CanLiftRocks
+    requirements: ProgressiveGlove
+  - name: CanLiftDarkRocks
+    requirements: ProgressiveGlove*2
+  - name: CanLightTorches
+    requirements: (|Lamp, FireRod)
+  - name: CanMeltThings
+    requirements: FireRod
+  - name: CanFly
+    requirements: OcarinaInactive
+  - name: CanSpinSpeed
+    requirements: PegasusBoots, (|HasSword, Hookshot)      
+  - name: CanShootArrows
+    requirements: ProgressiveBow
+    # !!!
+  - name: CanBeatLanmolas
+    requirements: 
+  - name: CanBeatArmos
+    requirements: CanShootArrows
+  - name: CanBeatMoldorm
+    requirements: HasSword
+  - name: CanDefeatAgahnim
+    requirements: ProgressiveSword*2
+  - name: Region:HyruleSouth
+    requirements: RescueZelda    
+  - name: Region:HyruleNorthEast
+    requirements: RescueZelda
+  - name: Region:HyruleNorthWest
+    requirements: RescueZelda
+  - name: Region:DeathMountainWest
+    requirements: RescueZelda, (| CanFly, Glitch:OneFrameClipOW, CanOWYBA, CanBootsClip, CanSuperSpeed, (& CanLiftRocks, Lamp))
+  - name: Region:DeathMountainEast
+    requirements: RescueZelda, (| Glitch:OneFrameClipOW, CanBootsClip, CanSuperSpeed, (& Hookshot, Region:DeathMountainWest), (& Hammer, Region:TowerOfHera)))
+
+  - name: Region:EasternPalace
+    requirements: RescueZelda
+  - name: Region:DesertPalace
+    requirements: RescueZelda, (| BookOfMudora, (& Region:Mire, MagicMirror))
+  - name: Region:TowerOfHera
+    requirements: MagicMirror, Region:DeathMountainWest
+  - name: Region:HyruleCastleTower
+    requirements: CanKillMostThings, RescueZelda, (| Cape, ProgressiveSword*2 )
+
+  - name: Region:DarkWorldSouth
+    requirements: RescueZelda, (| Region:DarkWorldNorthWest, CanOWYBA, (& (| MoonPearl, CanBunnyRevive ), (& Region:DarkWorldNorthEast, (| Hammer, (& CanSuperSpeed, (| Flippers, Glitch:FakeFlipper )) ) )
+  - name: Region:DarkWorldNorthEast
+    requirements: RescueZelda, (| CanOWYBA, Glitch:OneFrameClipOW, (& MoonPearl, CanBootsClip), DefeatAgahnim, (&Hammer, CanLiftRocks, MoonPearl), (& (| CanLiftDarkRocks, CanSuperSpeed), MoonPearl, (| Hammer, Flippers, CanBunnyRevive, (& Glitch:WaterWalk, PegasusBoots))))
+  - name: Region:DarkWorldNorthWest
+    requirements: RescueZelda, MoonPearl, (| (& Region:DarkWorldNorthEast, Hookshot, (| CanLiftRocks, Hammer, Flippers ) ), (& Hammer, CanLiftRocks), CanLiftDarkRocks )
+  - name: Region:Mire
+    requirements: RescueZelda, CanLiftDarkRocks, (| CanFly, CanBootsClip, Glitch:OneFrameClipOW)
+  - name: Region:DarkWorldDeathMountainEast
+    requirements: RescueZelda, (| (& CanLiftDarkRocks, Region:DeathMountainEast), (& CanBootsClip, (| MoonPearl, Hammer, CanOWYBA)), Glitch:OneFrameClipOW )
+  - name: Region:DarkWorldDeathMountainWest
+    requirements: RescueZelda, CanLiftDarkRocks, Region:DeathMountainWest
+
+  - name: Region:PalaceOfDarkness
+    requirements: RescueZelda, Region:DarkWorldNorthEast, MoonPearl, HasSword, (+28, HeartContainer*4, PieceOfHeart), HasABottle
+  - name: Region:SwampPalace
+    requirements: RescueZelda, Flippers, Region:DarkWorldSouth, MoonPearl, MagicMirror, HasSword, (+28, HeartContainer*4, PieceOfHeart), HasABottle
+  - name: Region:SkullWoods
+    requirements: RescueZelda, HasSword, (+16, HeartContainer*4, PieceOfHeart), HasABottle, Region:DarkWorldNorthWest, MoonPearl
+  - name: Region:ThievesTown
+    requirements: RescueZelda, HasSword, (+16, HeartContainer*4, PieceOfHeart), HasABottle, Region:DarkWorldNorthWest, MoonPearl
+  - name: Region:IcePalace
+    requirements: RescueZelda, ProgressiveSword*2, (+36, HeartContainer*4, PieceOfHeart), Bottle*2, ProgressiveArmor, MoonPearl, CanMeltThings, Flippers, CanLiftDarkRocks
+  - name: Region:MiseryMire
+    requirements: RescueZelda, ProgressiveSword*2, (+36, HeartContainer*4, PieceOfHeart), Bottle*2, ProgressiveArmor, MoonPearl, Ether, Hookshot, Region:Mire
+  - name: Region:TurtleRock
+    requirements: >
+      RescueZelda, ProgressiveSword*2, (+36, HeartContainer*4, PieceOfHeart), Bottle*2, ProgressiveArmor, MoonPearl, Quake, MoonPearl, CaneOfSomaria, Hammer, CanLiftDarkRocks, Region:DeathMountainEast
+      
+  - name: Region:GanonsTower
+    requirements: MoonPearl, Crystal1, Crystal2, Crystal3, Crystal4, Crystal5, Crystal6, Crystal7, Region:DarkWorldDeathMountainEast, HaveAllProgressItems
+
+  - name: HaveAllProgressItems
+    requirements: >
+      ProgressiveSword*4, Bombos, BookOfMudora, CaneOfSomaria, Cape,
+      Ether, FireRod, Flippers, Hammer, Hookshot, IceRod, Lamp, MagicMirror,
+      MoonPearl, OcarinaInactive, PegasusBoots, Powder, ProgressiveGlove*2, ProgressiveBow*2,
+      Quake, Shovel, BugCatchingNet, ProgressiveShield*3, CaneOfByrna, ProgressiveArmor,
+      Boomerang, RedBoomerang
+
+locations:
+  # Hyrule Castle Escape
+  - name: Sanctuary
+    category: Major
+    requirements: CanKillEscapeThings, Key:HyruleCastleEscape
+  - name: SewersSecretRoomLeft
+    category: Major
+    requirements: CanKillEscapeThings, Key:HyruleCastleEscape
+  - name: SewersSecretRoomRight
+    category: Major
+    requirements: CanKillEscapeThings, Key:HyruleCastleEscape
+  - name: SewersSecretRoomMiddle
+    category: Major
+    requirements: CanKillEscapeThings, Key:HyruleCastleEscape
+  - name: SewersDarkCross
+    category: Major
+    requirements: CanKillEscapeThings
+    restriction: HyruleCastleEscape
+  - name: HyruleCastleBoomerangChest
+    category: Major
+    requirements: CanKillEscapeThings
+    restriction: HyruleCastleEscape
+  - name: HyruleCastleMapChest
+    category: Major
+    requirements: CanKillEscapeThings
+    restriction: HyruleCastleEscape
+  - name: HyruleCastleZeldasCell
+    category: Major
+    requirements: CanKillEscapeThings
+  - name: LinksUncle
+    category: Major
+    requirements: 
+  - name: SecretPassage
+    category: Major
+    requirements: CanKillEscapeThings
+  - name: Zelda
+    category: Major
+    requirements: HyruleCastleZeldasCell
+    restriction: RescueZelda
+            
+  # Desert Palace
+  - name: DesertPalaceTorch
+    category: Major
+    requirements: Region:DesertPalace, PegasusBoots
+    restriction: DesertPalace
+  - name: DesertPalaceBigChest
+    category: Major
+    requirements: Region:DesertPalace, BigKey:DesertPalace
+  - name: DesertPalaceMapChest
+    category: Major
+    requirements: Region:DesertPalace
+    restriction: DesertPalace
+  - name: DesertPalaceBigKeyChest
+    category: Major
+    requirements: Region:DesertPalace, Key:DesertPalace, CanKillMostThings
+    restriction: DesertPalace
+  - name: DesertPalaceCompassChest
+    category: Major
+    requirements: Region:DesertPalace, Key:DesertPalace
+    restriction: DesertPalace
+  - name: DesertPalaceBoss
+    category: Major
+    requirements: Region:DesertPalace, CanBeatLanmolas, CanLiftRocks, CanLightTorches, BigKey:DesertPalace, Key:DesertPalace
+  - name: DesertPalacePrize
+    category: Major
+    requirements: DesertPalaceBoss
+    restriction: Prize
+  
+  # North-East Lightworld
+  - name: Sahasrahla
+    category: Major
+    requirements: PendantOfCourage, RescueZelda
+  - name: KingZora
+    category: Major
+    requirements: (| CanLiftRocks, Flippers ), RescueZelda
+  - name: PotionShop
+    category: Major
+    requirements: Mushroom, RescueZelda
+  - name: ZorasLedge
+    category: Major
+    requirements: Flippers, RescueZelda
+  - name: WaterfallFairyLeft
+    category: Major
+    requirements: Flippers, RescueZelda
+  - name: WaterfallFairyRight
+    category: Major
+    requirements: Flippers, RescueZelda
+  
+  # North-West Lightworld
+  - name: MasterSwordPedestal
+    category: Major
+    requirements: RescueZelda, BookOfMudora, PendantOfPower, PendantOfWisdom, PendantOfCourage
+  - name: KingsTomb
+    category: Major
+    requirements: RescueZelda, PegasusBoots, (| CanBootsClip, CanLiftDarkRocks, Glitch:OneFrameClipOW, CanSuperSpeed, (& MagicMirror, (| MoonPearl, Glitch:BunnyRevive, CanOWYBA))
+  - name: KakarikoTavern
+    category: Major
+    requirements: RescueZelda
+  - name: ChickenHouse
+    category: Major
+    requirements: RescueZelda
+  - name: KakarikoWellTop
+    category: Major
+    requirements: RescueZelda
+  - name: KakarikoWellLeft
+    category: Major
+    requirements: RescueZelda
+  - name: KakarikoWellMiddle
+    category: Major
+    requirements: RescueZelda
+  - name: KakarikoWellRight
+    category: Major
+    requirements: RescueZelda
+  - name: KakarikoWellBottom
+    category: Major
+    requirements: RescueZelda
+  - name: BlindsHideoutTop
+    category: Major
+    requirements: RescueZelda
+  - name: BlindsHideoutLeft
+    category: Major
+    requirements: RescueZelda
+  - name: BlindsHideoutRight
+    category: Major
+    requirements: RescueZelda
+  - name: BlindsHideoutFarLeft
+    category: Major
+    requirements: RescueZelda
+  - name: BlindsHideoutFarRight
+    category: Major
+    requirements: RescueZelda
+  - name: PegasusRocks
+    category: Major
+    requirements: RescueZelda, PegasusBoots
+  - name: BottleMerchant
+    category: Major
+    requirements: RescueZelda
+  - name: MagicBat
+    category: Major
+    requirements: RescueZelda, Powder, Hammer
+  - name: SickKid
+    category: Major
+    requirements: RescueZelda, HasABottle
+  - name: LostWoodsHideout
+    category: Major
+    requirements: RescueZelda
+  - name: LumberjackTree
+    category: Major
+    requirements: RescueZelda, DefeatAgahnim, PegasusBoots
+  - name: GraveyardLedge
+    category: Major
+    requirements: RescueZelda, (| CanBootsClip, CanSuperSpeed, Glitch:OneFrameClipOW, (& MagicMirror, Region:DarkWorldNorthWest, MoonPearl))
+  - name: MushroomLoc
+    category: Major
+    requirements: RescueZelda
+
+  # South Lightworld
+  - name: FloodgateChest
+    category: Major
+    requirements: RescueZelda
+  - name: LinksHouse
+    category: Major
+    requirements:
+  - name: AginahsCave
+    category: Major
+    requirements: RescueZelda, CanBombThings
+  - name: MiniMoldormCaveFarLeft
+    category: Major
+    requirements: RescueZelda, CanBombThings, CanKillMostThings
+  - name: MiniMoldormCaveFarRight
+    category: Major
+    requirements: RescueZelda, CanBombThings, CanKillMostThings
+  - name: MiniMoldormCaveLeft
+    category: Major
+    requirements: RescueZelda, CanBombThings, CanKillMostThings
+  - name: MiniMoldormCaveRight
+    category: Major
+    requirements: RescueZelda, CanBombThings, CanKillMostThings
+  - name: IceRodCave
+    category: Major
+    requirements: RescueZelda
+  - name: Hobo
+    category: Major
+    requirements: RescueZelda, (| (& Glitch:WaterWalk, PegasusBoots), Glitch:FakeFlipper, Flippers)
+  - name: BombosTablet
+    category: Major
+    requirements: RescueZelda, ###
+  - name: Cave45
+    category: Major
+    requirements: RescueZelda, (| Glitch:OneFrameClipOW, CanBootsClip, (& MagicMirror, ) ###
+  - name: CheckerboardCave
+    category: Major
+    requirements: RescueZelda, CanLiftRocks, (| Glitch:OneFrameClipOW, CanBootsClip, (& MagicMirror, ) ###
+  - name: MiniMoldormCaveNpc
+    category: Major
+    requirements: RescueZelda, CanBombThings, CanKillMostThings
+  - name: Library
+    category: Major
+    requirements: RescueZelda, PegasusBoots
+  - name: MazeRace
+    category: Major
+    requirements: RescueZelda
+  - name: DesertLedge
+    category: Major
+    requirements: RescueZelda, ###
+  - name: LakeHyliaIsland
+    category: Major
+    requirements: RescueZelda, (| Glitch:OneFrameClipOW, CanBootsClip, (& MagicMirror, ) ###
+  - name: SunkenTreasure
+    category: Major
+    requirements: RescueZelda
+  - name: FluteSpot
+    category: Major
+    requirements: RescueZelda, Shovel
+
+  # Death Mountain West
+  - name: OldMan
+    category: Major
+    requirements: Lamp, Region:DeathMountainWest
+  - name: SpectacleRock
+    category: Major
+    requirements: (| MagicMirror, CanBootsClip, Glitch:OneFrameClipOW ), Region:DeathMountainWest
+  - name: EtherTablet
+    category: Major
+    requirements: BookOfMudora, Region:TowerOfHera, ProgressiveSword*2, Region:DeathMountainWest
+  - name: SpectacleRockCave
+    category: Major
+    requirements: Region:DeathMountainWest
+
+  # Death Mountain East
+  - name: SpiralCave
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: MimicCave
+    category: Major
+    requirements: Region:DeathMountainWest, Hammer, MagicMirror, Key:TurtleRock #
+  - name: ParadoxCaveLowerFarLeft
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveLowerLeft
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveLowerRight
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveLowerFarRight
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveLowerMiddle
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveUpperLeft
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: ParadoxCaveUpperRight
+    category: Major
+    requirements: Region:DeathMountainWest
+  - name: FloatingIsland
+    category: Major
+    requirements: Region:DeathMountainWest, (| CanBootsClip, CanOWYBA, Glitch:OneFrameClipOW, (& MagicMirror, MoonPearl, CanBombThings, CanLiftRocks, Region:DarkWorldDeathMountainWest ))
+
+  # Fountains
+  - name: WaterfallBottle
+    requirements: Region:HyruleNorthWest
+  - name: PyramidBottle
+    requirements: Region:DarkWorldNorthWest
+
+  # Eastern Palace
+  - name: EasternPalaceBigChest
+    category: Major
+    requirements: BigKey:EasternPalace, RescueZelda
+    restriction: EasternPalace
+  - name: EasternPalaceBigKeyChest
+    category: Major
+    requirements: Lamp, RescueZelda
+    restriction: EasternPalace
+  - name: EasternPalaceBoss
+    category: Major
+    requirements: CanShootArrows, Lamp, BigKey:EasternPalace, CanBeatArmos, RescueZelda
+  - name: EasternPalaceCannonballChest
+    category: Major
+    requirements: RescueZelda
+    restriction: EasternPalace
+  - name: EasternPalaceMapChest
+    category: Major
+    requirements: Flippers, RescueZelda
+    restriction: EasternPalace
+  - name: EasternPalaceCompassChest
+    category: Major
+    requirements: RescueZelda
+    restriction: EasternPalace
+  - name: EasternPalacePrize
+    category: Major
+    requirements: EasternPalaceBoss
+    restriction: Prize
+
+  # Tower of Hera
+  - name: TowerOfHeraBigKeyChest
+    category: Major
+    requirements: Region:TowerOfHera, CanLightTorches, Key:TowerOfHera
+    restriction: TowerOfHera
+  - name: TowerOfHeraBasementCage
+    category: Major
+    requirements: Region:TowerOfHera
+    restriction: TowerOfHera
+  - name: TowerOfHeraMapChest
+    category: Major
+    requirements: Region:TowerOfHera
+    restriction: TowerOfHera
+  - name: TowerOfHeraCompassChest
+    category: Major
+    requirements: Region:TowerOfHera, BigKey:TowerOfHera
+    restriction: TowerOfHera
+  - name: TowerOfHeraBigChest
+    category: Major
+    requirements: Region:TowerOfHera, BigKey:TowerOfHera
+    restriction: TowerOfHera
+  - name: TowerOfHeraBoss
+    category: Major
+    requirements: Region:TowerOfHera, CanBeatMoldorm, BigKey:TowerOfHera
+  - name: TowerOfHeraPrize
+    category: Major
+    requirements: Region:TowerOfHera, TowerOfHeraBoss
+    restriction: Prize
+
+  # Hyrule Castle Tower
+  - name: CastleTowerRoom3
+    category: Major
+    requirements: Region:HyruleCastleTower
+    restriction: HyruleCastleTower
+  - name: CastleTowerDarkMaze
+    category: Major
+    requirements: Region:HyruleCastleTower, Lamp, Key:HyruleCastleTower
+    restriction: HyruleCastleTower
+  - name: Agahnim
+    category: Major
+    requirements: Region:HyruleCastleTower, Key:HyruleCastleTower*2, ProgressiveSword, Lamp
+    restriction: AgahnimPrize
+
+  # Dark World North East
+  - name: Catfish
+    requirements: Region:DarkWorldNorthEast, MoonPearl, CanLiftRocks
+  - name: Pyramid
+    requirements: Region:DarkWorldNorthEast
+  - name: PyramidFairyLeft
+    requirements: Region:DarkWorldNorthEast, MoonPearl, Hammer, Region:DarkWorldSouth, Crystal5, Crystal6, ProgressiveSword
+  - name: PyramidFairyRight
+    requirements: Region:DarkWorldNorthEast, MoonPearl, Hammer, Region:DarkWorldSouth, Crystal5, Crystal6, ProgressiveSword
+  - name: PyramidFairySword
+    requirements: Region:DarkWorldNorthEast, MoonPearl, Hammer, Region:DarkWorldSouth, Crystal5, Crystal6, ProgressiveSword
+  - name: PyramidFairyBow
+    requirements: Region:DarkWorldNorthEast, MoonPearl, Hammer, Region:DarkWorldSouth, Crystal5, Crystal6, ProgressiveBow
+
+  # Dark World North West
+  - name: Brewery
+    requirements: Region:DarkWorldNorthWest, MoonPearl, CanBombThings
+  - name: C-ShapedHouse
+    requirements: Region:DarkWorldNorthWest, MoonPearl
+  - name: ChestGame
+    requirements: Region:DarkWorldNorthWest, MoonPearl
+  - name: HammerPegs
+    requirements: Region:DarkWorldNorthWest, (| (& MoonPearl, Hammer ), CanLiftDarkRocks )
+  - name: BumperCave
+    requirements: Region:DarkWorldNorthWest, MoonPearl, (| Hookshot, (& CanLiftRocks, Cape ))
+  - name: Blacksmith
+    requirements: Region:DarkWorldNorthWest, MoonPearl, MagicMirror, CanLiftDarkRocks
+  - name: PurpleChest
+    requirements: Region:DarkWorldNorthWest, Blacksmith, MoonPearl, CanLiftDarkRocks
+
+  # Dark World South
+  - name: HypeCaveTop
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: HypeCaveMiddleRight
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: HypeCaveMiddleLeft
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: HypeCaveBottom
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: Stumpy
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: HypeCaveNPC
+    requirements: Region:DarkWorldSouth, MoonPearl
+  - name: DiggingGame
+    requirements: Region:DarkWorldSouth, MoonPearl
+
+  # Mire
+  - name: MireShedLeft
+    requirements: Region:Mire, MoonPearl
+  - name: MireShedRight
+    requirements: Region:Mire, MoonPearl
+
+  # Dark World Death Mountain East
+  - name: SuperBunnyCaveTop
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl
+  - name: SuperBunnyCaveBottom
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl
+  - name: HookshotCaveTopRight
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl, Hookshot
+  - name: HookshotCaveTopLeft
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl, Hookshot
+  - name: HookshotCaveBottomRight
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl, Hookshot
+  - name: HookshotCaveBottomLeft
+    requirements: Region:DarkWorldDeathMountainEast, MoonPearl, Hookshot
+
+  # Dark World Death Mountain West
+  - name: SpikeCave
+    requirements: Region:DarkWorldDeathMountainWest, MoonPearl, Hammer, CanLiftRocks, Cape #, CanExtendMagic
+  
+  # Palace of Darkness
+  - name: PalaceOfDarknessShooterRoom
+    requirements: Region:PalaceOfDarkness
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessBigChestKey
+    requirements: Region:PalaceOfDarkness, Hammer, CanShootArrows, Lamp, Key:PalaceOfDarkness*5
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessTheArenaLedge
+    requirements: Region:PalaceOfDarkness, CanShootArrows
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessTheArenaBridge
+    requirements: Region:PalaceOfDarkness, (|Key:PalaceOfDarkness, (& CanShootArrows, Hammer ) )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessStalfosBasement
+    requirements: Region:PalaceOfDarkness
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessMapChest
+    requirements: Region:PalaceOfDarkness, CanShootArrows
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessBigChest
+    requirements: Region:PalaceOfDarkness, Lamp, BigKey:PalaceOfDarkness, (| (& Hammer, CanShootArrows), Key:PalaceOfDarkness*5 )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessCompassChest
+    requirements: Region:PalaceOfDarkness, (| (& Hammer, CanShootArrows), Key:PalaceOfDarkness*3 )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessHarmlessHellway
+    requirements: Region:PalaceOfDarkness, (| (& Hammer, CanShootArrows, Lamp), Key:PalaceOfDarkness*5 )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessDarkBasementLeft
+    requirements: Region:PalaceOfDarkness
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessDarkBasementRight
+    requirements: Region:PalaceOfDarkness
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessDarkMazeTop
+    requirements: Region:PalaceOfDarkness, (| (& Lamp, Hammer, CanShootArrows ), Key:PalaceOfDarkness*5 )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessDarkMazeBottom
+    requirements: Region:PalaceOfDarkness, (| (& Lamp, Hammer, CanShootArrows ), Key:PalaceOfDarkness*5 )
+    restriction: PalaceOfDarkness
+  - name: PalaceOfDarknessBoss
+    requirements: Region:PalaceOfDarkness
+  - name: PalaceOfDarknessPrize
+    requirements: Region:PalaceOfDarkness, PalaceOfDarknessBoss
+    restriction: Prize
+
+  # Swamp Palace
+  - name: SwampPalaceEntrance
+    requirements: Region:SwampPalace
+    restriction: SwampPalace
+  - name: SwampPalaceBigChest
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer, BigKey:SwampPalace
+    restriction: SwampPalace
+  - name: SwampPalaceBigKeyChest
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer
+    restriction: SwampPalace
+  - name: SwampPalaceMapChest
+    requirements: Region:SwampPalace, CanBombThings, Key:SwampPalace
+    restriction: SwampPalace
+  - name: SwampPalaceWestChest
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer
+    restriction: SwampPalace
+  - name: SwampPalaceCompassChest
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer
+    restriction: SwampPalace
+  - name: SwampPalaceFloodedRoomLeft
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer, Hookshot
+    restriction: SwampPalace
+  - name: SwampPalaceFloodedRoomRight
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer, Hookshot
+    restriction: SwampPalace
+  - name: SwampPalaceWaterfallRoom
+    requirements: Region:SwampPalace, Key:SwampPalace, Hammer, Hookshot
+    restriction: SwampPalace
+  - name: SwampPalaceBoss
+    requirements: Region:SwampPalace, Hookshot, Key:SwampPalace, Hammer
+  - name: SwampPalacePrize
+    requirements: Region:SwampPalace, SwampPalaceBoss
+    restriction: Prize
+
+  # Skull Woods
+  - name: SkullWoodsBigChest
+    requirements: Region:SkullWoods, BigKey:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsBigKeyChest
+    requirements: Region:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsCompassChest
+    requirements: Region:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsMapChest
+    requirements: Region:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsBridgeRoom
+    requirements: Region:SkullWoods, MoonPearl, FireRod
+    restriction: SkullWoods
+  - name: SkullWoodsPotPrison
+    requirements: Region:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsPinballRoom
+    requirements: Region:SkullWoods
+    restriction: SkullWoods
+  - name: SkullWoodsBoss
+    requirements: Region:SkullWoods, MoonPearl, FireRod, ProgressiveSword, Key:SkullWoods*3, BigKey:SkullWoods
+  - name: SkullWoodsPrize
+    requirements: Region:SkullWoods, SkullWoodsBoss
+    restriction: Prize
+
+  # Thieves Town
+  - name: ThievesTownAttic
+    requirements: Region:ThievesTown, Key:ThievesTown, BigKey:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownBigKeyChest
+    requirements: Region:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownBigChest
+    requirements: Region:ThievesTown, BigKey:ThievesTown, Hammer, Key:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownMapChest
+    requirements: Region:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownCompassChest
+    requirements: Region:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownAmbushChest
+    requirements: Region:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownBlindssCell
+    requirements: Region:ThievesTown, BigKey:ThievesTown
+    restriction: ThievesTown
+  - name: ThievesTownBoss
+    requirements: Region:ThievesTown, Key:ThievesTown, BigKey:ThievesTown
+  - name: ThievesTownPrize
+    requirements: Region:ThievesTown, ThievesTownBoss
+    restriction: Prize
+
+  # Ice Palace
+  - name: IcePalaceBigKeyChest
+    requirements: Region:IcePalace, Hammer, CanLiftRocks
+    restriction: IcePalace
+  - name: IcePalaceCompassChest
+    requirements: Region:IcePalace, Hammer, CanLiftRocks
+    restriction: IcePalace
+  - name: IcePalaceMapChest
+    requirements: Region:IcePalace, Hammer, CanLiftRocks
+    restriction: IcePalace
+  - name: IcePalaceSpikeRoom
+    requirements: Region:IcePalace
+    restriction: IcePalace
+  - name: IcePalaceFreezorChest
+    requirements: Region:IcePalace, CanMeltThings
+    restriction: IcePalace
+  - name: IcePalaceIcedTRoom
+    requirements: Region:IcePalace
+    restriction: IcePalace
+  - name: IcePalaceBigChest
+    requirements: Region:IcePalace, BigKey:IcePalace
+    restriction: IcePalace
+  - name: IcePalaceBoss
+    requirements: Region:IcePalace, BigKey:IcePalace, Hammer, CanLiftRocks, (| (& CaneOfSomaria, Key:IcePalace), Key:IcePalace*2 )
+  - name: IcePalacePrize
+    requirements: Region:IcePalace, IcePalaceBoss
+    restriction: Prize
+
+  # Misery Mire
+  - name: MiseryMireBigChest
+    requirements: Region:MiseryMire, BigKey:MiseryMire
+    restriction: MiseryMire
+  - name: MiseryMireMainLobby
+    requirements: Region:MiseryMire, (| Key:MiseryMire, BigKey:MiseryMire )
+    restriction: MiseryMire
+  - name: MiseryMireBigKeyChest
+    requirements: Region:MiseryMire, CanLightTorches, Key:MiseryMire*3
+    restriction: MiseryMire
+  - name: MiseryMireCompassChest
+    requirements: Region:MiseryMire, CanLightTorches, Key:MiseryMire*3
+    restriction: MiseryMire
+  - name: MiseryMireBridgeChest
+    requirements: Region:MiseryMire
+    restriction: MiseryMire
+  - name: MiseryMireMapChest
+    requirements: Region:MiseryMire, (| Key:MiseryMire, BigKey:MiseryMire )
+    restriction: MiseryMire
+  - name: MiseryMireSpikeChest
+    requirements: Region:MiseryMire
+    restriction: MiseryMire
+  - name: MiseryMireBoss
+    requirements: Region:MiseryMire, BigKey:MiseryMire, CaneOfSomaria, Lamp
+  - name: MiseryMirePrize
+    requirements: Region:MiseryMire, MiseryMireBoss
+    restriction: Prize
+
+
+  # Turtle Rock
+  - name: TurtleRockBigChest
+    requirements: Region:TurtleRock, BigKey:TurtleRock, Key:TurtleRock*2
+    restriction: TurtleRock
+  - name: TurtleRockChainChomps
+    requirements: Region:TurtleRock, Key:TurtleRock
+    restriction: TurtleRock
+  - name: TurtleRockCompassChest
+    requirements: Region:TurtleRock, CaneOfSomaria
+    restriction: TurtleRock
+  - name: TurtleRockRollerRoomLeft
+    requirements: Region:TurtleRock, FireRod, CaneOfSomaria
+    restriction: TurtleRock
+  - name: TurtleRockRollerRoomRight
+    requirements: Region:TurtleRock, FireRod, CaneOfSomaria
+    restriction: TurtleRock
+  - name: TurtleRockBigKeyChest
+    requirements: Region:TurtleRock, Key:TurtleRock*2
+    restriction: TurtleRock
+  - name: TurtleRockCrystarollerRoom
+    requirements: Region:TurtleRock, BigKey:TurtleRock, Key:TurtleRock*2
+    restriction: TurtleRock
+  - name: TurtleRockEyeBridgeBottomLeft
+    requirements: Region:TurtleRock, Lamp, CaneOfSomaria, BigKey:TurtleRock, Key:TurtleRock*3
+    restriction: TurtleRock
+  - name: TurtleRockEyeBridgeBottomRight
+    requirements: Region:TurtleRock, Lamp, CaneOfSomaria, BigKey:TurtleRock, Key:TurtleRock*3
+    restriction: TurtleRock
+  - name: TurtleRockEyeBridgeTopLeft
+    requirements: Region:TurtleRock, Lamp, CaneOfSomaria, BigKey:TurtleRock, Key:TurtleRock*3
+    restriction: TurtleRock
+  - name: TurtleRockEyeBridgeTopRight
+    requirements: Region:TurtleRock, Lamp, CaneOfSomaria, BigKey:TurtleRock, Key:TurtleRock*3
+    restriction: TurtleRock
+
+
+  - name: TurtleRockBoss
+    requirements: Region:TurtleRock, BigKey:TurtleRock, Key:TurtleRock*4, MoonPearl, CaneOfSomaria
+  - name: TurtleRockPrize
+    requirements: Region:TurtleRock, TurtleRockBoss
+    restriction: Prize
+
+  # Ganon's Tower
+  - name: GanonsTowerBobsTorch
+    requirements: Region:GanonsTower, PegasusBoots
+    restriction: GanonsTower
+  - name: GanonsTowerDMsRoomTopLeft
+    requirements: Region:GanonsTower, Hammer, Hookshot
+    restriction: GanonsTower
+  - name: GanonsTowerDMsRoomTopRight
+    requirements: Region:GanonsTower, Hammer, Hookshot
+    restriction: GanonsTower
+  - name: GanonsTowerDMsRoomBottomLeft
+    requirements: Region:GanonsTower, Hammer, Hookshot
+    restriction: GanonsTower
+  - name: GanonsTowerDMsRoomBottomRight
+    requirements: Region:GanonsTower, Hammer, Hookshot
+    restriction: GanonsTower
+  - name: GanonsTowerRandomizerRoomTopLeft
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerRandomizerRoomTopRight
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerRandomizerRoomBottomLeft
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerRandomizerRoomBottomRight
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerFiresnakeRoom
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerMapChest
+    requirements: Region:GanonsTower, Hammer, Hookshot, Key:GanonsTower*4
+    restriction: GanonsTower
+  - name: GanonsTowerBigChest
+    requirements: Region:GanonsTower, BigKey:GanonsTower, Key:GanonsTower*3, (| (& Hammer, Hookshot), (& FireRod, CaneOfSomaria ))
+    restriction: GanonsTower
+  - name: GanonsTowerHopeRoomLeft
+    requirements: Region:GanonsTower
+    restriction: GanonsTower
+  - name: GanonsTowerHopeRoomRight
+    requirements: Region:GanonsTower
+    restriction: GanonsTower
+  - name: GanonsTowerBobsChest
+    requirements: Region:GanonsTower, Key:GanonsTower*3, (| (& Hammer, Hookshot), (& FireRod, CaneOfSomaria ))
+    restriction: GanonsTower
+  - name: GanonsTowerTileRoom
+    requirements: Region:GanonsTower, CaneOfSomaria
+    restriction: GanonsTower
+  - name: GanonsTowerCompassRoomTopLeft
+    requirements: Region:GanonsTower, CaneOfSomaria, FireRod, Key:GanonsTower*4
+    restriction: GanonsTower
+  - name: GanonsTowerCompassRoomTopRight
+    requirements: Region:GanonsTower, CaneOfSomaria, FireRod, Key:GanonsTower*4
+    restriction: GanonsTower
+  - name: GanonsTowerCompassRoomBottomLeft
+    requirements: Region:GanonsTower, CaneOfSomaria, FireRod, Key:GanonsTower*4
+    restriction: GanonsTower
+  - name: GanonsTowerCompassRoomBottomRight
+    requirements: Region:GanonsTower, CaneOfSomaria, FireRod, Key:GanonsTower*4
+    restriction: GanonsTower
+  - name: GanonsTowerBigKeyChest
+    requirements: Region:GanonsTower, Key:GanonsTower*3, (| (& Hammer, Hookshot), (& FireRod, CaneOfSomaria ))
+    restriction: GanonsTower
+  - name: GanonsTowerBigKeyRoomLeft
+    requirements: Region:GanonsTower, Key:GanonsTower*3, (| (& Hammer, Hookshot), (& FireRod, CaneOfSomaria ))
+    restriction: GanonsTower
+  - name: GanonsTowerBigKeyRoomRight
+    requirements: Region:GanonsTower, Key:GanonsTower*3, (| (& Hammer, Hookshot), (& FireRod, CaneOfSomaria ))
+    restriction: GanonsTower
+  - name: GanonsTowerMiniHelmasaurRoomLeft
+    requirements: Region:GanonsTower, CanShootArrows, CanLightTorches, BigKey:GanonsTower, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerMiniHelmasaurRoomRight
+    requirements: Region:GanonsTower, CanShootArrows, CanLightTorches, BigKey:GanonsTower, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerPreMoldormChest
+    requirements: Region:GanonsTower, CanShootArrows, CanLightTorches, BigKey:GanonsTower, Key:GanonsTower*3
+    restriction: GanonsTower
+  - name: GanonsTowerMoldormChest
+    requirements: Region:GanonsTower, CanShootArrows, CanLightTorches, BigKey:GanonsTower, Key:GanonsTower*4
+    restriction: GanonsTower
+
+  - name: GanonsTowerPrize
+    requirements: Region:GanonsTower, GanonsTowerMoldormChest
+    restriction: Agahnim2

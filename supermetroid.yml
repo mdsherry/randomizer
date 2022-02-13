@@ -7,76 +7,83 @@ item_pool:
       count: 4
     - name: Varia
       category: Major
-      weight: 6
+      # weight: 6
       show_in_graph: true
     - name: Gravity
       category: Major
-      weight: 11
+      # weight: 11
       show_in_graph: true
+      requirements: Varia
     - name: HiJump
       category: Major
-      weight: 5
+      # weight: 5
       show_in_graph: true
     - name: SpaceJump
       category: Major
-      weight: 12
+      # weight: 12
       show_in_graph: true
+      requirements: Varia
     - name: Morph
       category: Major
-      weight: 1
+      # weight: 1
       show_in_graph: true
     - name: Bomb
       category: Major
-      weight: 2
+      # weight: 2
       show_in_graph: true
     - name: ScrewAttack
       category: Major
-      weight: 14
+      # weight: 14
       show_in_graph: true
+      requirements: Gravity
     - name: SpeedBooster
       category: Major
-      weight: 11
+      # weight: 11
       show_in_graph: true
     - name: Wave
       category: Major
-      weight: 10
+      # weight: 10
       show_in_graph: true
     - name: Ice
       category: Major
-      weight: 7
+      # weight: 7
       show_in_graph: true
     - name: Plasma
       category: Major
-      weight: 13
+      # weight: 13
       show_in_graph: true
+      requirements: Wave
     - name: Spazer
       category: Major
-      weight: 4
+      # weight: 4
       show_in_graph: true
     - name: Charge
       category: Major
-      weight: 4
+      # weight: 4
       show_in_graph: true
     - name: SpringBall
       category: Major  
-      weight: 12    
+      # weight: 12    
       show_in_graph: true
     - name: XRay
       category: Major
-      weight: 9
+      # weight: 9
       show_in_graph: true
     - name: Grapple
       category: Major
-      weight: 8
+      # weight: 8
       show_in_graph: true
     - name: FirstMissile
+      show_in_graph: true
       category: Minor
     - name: FirstSuper
       category: Minor
-      weight: 3
+      # weight: 3
+      show_in_graph: true
     - name: FirstPowerBomb
       category: Minor
-      weight: 8
+      # weight: 8
+      show_in_graph: true
       requirements: FirstMissile, FirstSuper
             
     - name: Super

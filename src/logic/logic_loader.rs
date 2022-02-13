@@ -1,4 +1,4 @@
-use std::{io::Read, collections::HashMap};
+use std::{io::Read, collections::{HashMap, HashSet}};
 
 use serde::Deserialize;
 
@@ -11,14 +11,28 @@ pub struct LogicLoader;
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all="snake_case")]
 struct LogicData {
+    parameters: Option<Vec<ParameterData>>,
     flags: Vec<FlagData>,
     item_pool: Vec<ItemData>,
     locations: Vec<LocationData>
 }
 #[derive(Debug, Clone, Deserialize)]
+struct ParameterData {
+    name: String,
+    #[serde(rename="type")]
+    typ: ParameterType,
+    default: Option<String>
+}
+
+#[derive(Debug, Clone, Deserialize)]
+enum ParameterType {
+    Boolean
+}
+
+#[derive(Debug, Clone, Deserialize)]
 struct ItemData {
     name: String,
-    category: ItemCategory,
+    category: Option<ItemCategory>,
     restriction: Option<String>,
     count: Option<u32>,
     weight: Option<u32>,
@@ -33,7 +47,7 @@ struct FlagData {
 #[derive(Debug, Clone, Deserialize)]
 struct LocationData {
     name: String,
-    category: ItemCategory,
+    category: Option<ItemCategory>,
     requirements: Option<String>,
     restriction: Option<String>,    
 }
@@ -45,6 +59,7 @@ impl LogicLoader {
         let mut items = HashMap::new();
         let mut flags = HashMap::new();
         let mut locations = HashMap::new();
+        let mut parameters = HashSet::new();
         let mut restrictions = HashMap::new();
         let mut restriction_id = 0;
         let mut get_restriction = |name: &str| {
@@ -53,9 +68,15 @@ impl LogicLoader {
                 Restriction(restriction_id)
             })
         };
+
+        let params = data.parameters.unwrap_or_default();
+        for param in &params {
+            logic.set_parameter(&param.name, param.default.as_deref() == Some("True"));
+            parameters.insert(param.name.as_str());
+        }
         for item in &data.item_pool {
             let restriction = item.restriction.as_deref().map(&mut get_restriction);
-            let id = logic.add_item(&item.name, item.category, restriction, item.weight, item.show_in_graph.unwrap_or(false));
+            let id = logic.add_item(&item.name, item.category.unwrap_or(ItemCategory::Major), restriction, item.weight, item.show_in_graph.unwrap_or(false));
             items.insert(item.name.as_str(), id);
         }
         for flag in &data.flags {
@@ -64,13 +85,13 @@ impl LogicLoader {
         }
         for location in &data.locations {
             let restriction = location.restriction.as_deref().map(&mut get_restriction);
-            let id = logic.add_location(location.name.as_str(), location.category, restriction);
+            let id = logic.add_location(location.name.as_str(), location.category.unwrap_or(ItemCategory::Major), restriction);
             locations.insert(location.name.as_str(), id);
         }
         for item in &data.item_pool {
             let id = items[item.name.as_str()];
             let (reqs, _) = parse_reqs(item.requirements.as_deref().unwrap_or(""));
-            let conditions = gen_reqs2(&reqs, &items, &flags, &locations).map_err(|e| {
+            let conditions = gen_reqs2(&reqs, &items, &flags, &locations, &parameters).map_err(|e| {
                 eprintln!("Error parsing item {}", item.name);
                 panic!("{}", e);
             }).unwrap();
@@ -79,7 +100,7 @@ impl LogicLoader {
         for flag in &data.flags {
             let id = flags[flag.name.as_str()];
             let (reqs, _) = parse_reqs(flag.requirements.as_deref().unwrap_or(""));
-            let conditions = gen_reqs2(&reqs, &items, &flags, &locations).map_err(|e| {
+            let conditions = gen_reqs2(&reqs, &items, &flags, &locations, &parameters).map_err(|e| {
                 eprintln!("Error parsing flag {}", flag.name);
                 panic!("{}", e);
             }).unwrap();
@@ -88,7 +109,7 @@ impl LogicLoader {
         for location in &data.locations {
             let id = locations[location.name.as_str()];
             let (reqs, _) = parse_reqs(location.requirements.as_deref().unwrap_or(""));
-            let conditions = gen_reqs2(&reqs, &items, &flags, &locations).map_err(|e| {
+            let conditions = gen_reqs2(&reqs, &items, &flags, &locations, &parameters).map_err(|e| {
                 eprintln!("Error parsing location {}", location.name);
                 panic!("{}", e);
             }).unwrap();

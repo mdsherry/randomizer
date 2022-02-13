@@ -3,9 +3,6 @@ use super::*;
 use rand::prelude::*;
 use std::collections::{HashMap, HashSet};
 
-type Conditional<T> = (Rc<T>, ItemCondition);
-type Conditionals<T> = Vec<Conditional<T>>;
-
 pub struct Allocator {
     item_pool: Conditionals<ItemDef>,
     open_locations: Vec<Rc<Location>>,
@@ -16,8 +13,6 @@ pub struct Allocator {
     match_category: bool,
     temperature: u32,
     assigned_items: HashMap<Rc<ItemDef>, usize>,
-    items_by_restriction: HashMap<Restriction, usize>,
-    locs_by_restriction: HashMap<Restriction, usize>,
 
     assignments: HashMap<Rc<Location>, Rc<ItemDef>>,
 }
@@ -41,30 +36,34 @@ impl Allocator {
             open_locations: Default::default(),
             closed_locations: Default::default(),
             assigned_items: Default::default(),
-            items_by_restriction: Default::default(),
-            locs_by_restriction: Default::default(),
             assignments: Default::default(),
         };
         me.find_open_locs();
-        me.compute_locs_by_class();
-        me.preflight_check();
+        // me.preflight_check();
         me
     }
 
     fn preflight_check(&self) {
-        let mut all_items = HashMap::new();
-
-        for (item, _) in &self.item_pool {
-            *all_items.entry(item.clone()).or_default() += 1;
-        }
         for (_, req) in &self.locations {
-            assert!(req.satisfied(&all_items));
+            let mut req = req.clone();
+            for (item, _) in &self.item_pool {
+                req.assume_item(item, 1)
+            }
+            assert!(req == ItemCondition::NoRequirements);
         }
         for (_, req) in &self.flags {
-            assert!(req.satisfied(&all_items));
+            let mut req = req.clone();
+            for (item, _) in &self.item_pool {
+                req.assume_item(item, 1)
+            }
+            assert!(req == ItemCondition::NoRequirements);
         }
         for (_, req) in &self.item_pool {
-            assert!(req.satisfied(&all_items));
+            let mut req = req.clone();
+            for (item, _) in &self.item_pool {
+                req.assume_item(item, 1)
+            }
+            assert!(req == ItemCondition::NoRequirements);
         }
         if self.match_category {
             for cat in [
@@ -75,13 +74,12 @@ impl Allocator {
                 assert_eq!(
                     self.item_pool
                         .iter()
-                        .filter_map(|(i, _)| if i.category == cat {
-                            Some(1)
-                        } else {
-                            None
-                        })
+                        .filter_map(|(i, _)| if i.category == cat { Some(1) } else { None })
                         .count(),
-                    self.locations.iter().filter(|(l, _)| l.category == cat).count(),
+                    self.locations
+                        .iter()
+                        .filter(|(l, _)| l.category == cat)
+                        .count(),
                     "Category count mismatch: {:?}",
                     cat
                 );
@@ -136,22 +134,10 @@ impl Allocator {
             }
         }
     }
-    fn compute_locs_by_class(&mut self) {
-        for (item, _) in &self.item_pool {
-            if let Some(n) = item.restriction {
-                *self.items_by_restriction.entry(n).or_insert(0) += 1;
-            }
-        }
-        for loc in &self.open_locations {
-            if let Some(n) = loc.restriction {
-                *self.locs_by_restriction.entry(n).or_insert(0) += 1;
-            }
-        }
-    }
 
     fn find_open_locs(&mut self) {
         for (location, req) in self.locations.iter() {
-            if req.satisfied(&self.assigned_items) {
+            if req.satisfied() {
                 if !self.assignments.contains_key(location) {
                     self.open_locations.push(location.clone());
                 }
@@ -162,20 +148,16 @@ impl Allocator {
     }
 
     fn single_item_location_unlocks(&self) -> HashMap<Rc<ItemDef>, Vec<Rc<Location>>> {
-        let mut assigned_items = self.assigned_items.clone();
         let mut things: HashMap<Rc<ItemDef>, Vec<_>> = HashMap::new();
         for item in self.placeable_items() {
-            *assigned_items.entry(item.clone()).or_default() += 1;
             for (loc, req) in &self.closed_locations {
-                if req.satisfied(&assigned_items) {
+                if req.would_be_satisfied_by(&item) {
                     let entry = things.entry(item.clone()).or_default();
                     entry.push(loc.clone());
                     entry.sort_unstable();
                     entry.dedup();
                 }
             }
-            *assigned_items.entry(item).or_default() -= 1;
-            assigned_items.retain(|_, v| *v > 0);
         }
         things
     }
@@ -196,9 +178,7 @@ impl Allocator {
             > self
                 .item_pool
                 .iter()
-                .filter(|(item, _)| {
-                    item.category == cat && item.restriction == Some(restriction)
-                })
+                .filter(|(item, _)| item.category == cat && item.restriction == Some(restriction))
                 .count()
     }
 
@@ -216,11 +196,7 @@ impl Allocator {
         }
     }
 
-    fn find_item_home<R: Rng + ?Sized>(
-        &self,
-        item: &ItemDef,
-        rng: &mut R,
-    ) -> Option<Rc<Location>> {
+    fn find_item_home<R: Rng + ?Sized>(&self, item: &ItemDef, rng: &mut R) -> Option<Rc<Location>> {
         let mut locations = self.open_locations.clone();
         if !self.prefer_new_locations || item.category == ItemCategory::Minor {
             locations.shuffle(rng);
@@ -247,38 +223,22 @@ impl Allocator {
             let old_req = req.clone();
             req.assume_item(item, 1);
             *req = req.simplify();
-            if *req == ItemCondition::NoRequirements {
+            if req.satisfied() {
                 opened.push(loc.clone());
-                println!("Unlocked location {} {}", loc, old_req);                
+                println!("  Unlocked location {}: {}", loc, old_req);
             }
         }
         if !opened.is_empty() {
-            for loc in &opened {
-                if let Some(n) = loc.restriction {
-                    *self.locs_by_restriction.entry(n).or_default() += 1;
-                }
-            }
             self.open_locations.extend(opened);
         }
-        if let Some(n) = item.restriction {
-            if let Some(entry) = self.items_by_restriction.get_mut(&n) {
-                println!(
-                    "Reducing restricted item count by 1 for {:?} from {}",
-                    n, entry
-                );
-                *entry -= 1;
-            } else {
-                eprintln!(
-                    "Item {} ({:?}) not in items_by_class?",
-                    item, item.category
-                );
-            }
-        }
-        if let Some(n) = location.restriction {
-            *self.locs_by_restriction.get_mut(&n).unwrap() -= 1;
-        }
-        self.closed_locations.retain(|(_, req)| req != &ItemCondition::NoRequirements);
-        if let Some((idx, _)) = self.item_pool.iter().enumerate().find(|(_, (i, _))| i == item) {
+
+        self.closed_locations.retain(|(_, req)| !req.satisfied());
+        if let Some((idx, _)) = self
+            .item_pool
+            .iter()
+            .enumerate()
+            .find(|(_, (i, _))| i == item)
+        {
             self.item_pool.swap_remove(idx);
         }
         *self.assigned_items.entry(item.clone()).or_default() += 1;
@@ -292,7 +252,7 @@ impl Allocator {
             req.assume_item(item, 1);
             *req = req.simplify();
             if *req == ItemCondition::NoRequirements && *req != old_req {
-                println!("Unlocked flag {} {}", flag.name, old_req);                
+                println!("  Unlocked flag {}: {}", flag.name, old_req);
             }
         }
         for (_, req) in &mut self.locations {
@@ -309,9 +269,7 @@ impl Allocator {
         if self.match_category {
             progress_items
                 .iter()
-                .filter(|item| {
-                    item.category == cat && item.restriction.is_none()
-                })
+                .filter(|item| item.category == cat && item.restriction.is_none())
                 .count()
                 * 2
                 < self
@@ -322,9 +280,7 @@ impl Allocator {
         } else {
             progress_items
                 .iter()
-                .filter(|item| {
-                    item.restriction.is_none()
-                })
+                .filter(|item| item.restriction.is_none())
                 .count()
                 * 2
                 < self
@@ -338,15 +294,25 @@ impl Allocator {
     fn progression_affecting_items(&self) -> HashMap<Rc<ItemDef>, usize> {
         let mut rv = HashMap::new();
         for (_, req) in &self.closed_locations {
-            req.missing(&self.assigned_items, &mut rv)
+            req.missing(&mut rv)
         }
         rv.into_iter().filter(|&(_, count)| count == 1).collect()
     }
 
-    fn placeable_items(&self) -> impl Iterator<Item=Rc<ItemDef>> + '_ {
+    fn placeable_items(&self) -> impl Iterator<Item = Rc<ItemDef>> + '_ {
+        let open_restrictions: HashSet<_> = self
+            .open_locations
+            .iter()
+            .filter_map(|loc| loc.restriction)
+            .collect();
         self.item_pool
             .iter()
-            .filter(|(_, req)| req.satisfied(&self.assigned_items))
+            .filter(move |(item, req)| {
+                item.restriction
+                    .map(|res| open_restrictions.contains(&res))
+                    .unwrap_or(true)
+                    && req.satisfied()
+            })
             .map(|(item, _)| item.clone())
     }
 
@@ -376,25 +342,23 @@ impl Allocator {
                     continue;
                 }
 
-                // Only place half (rounding down) available items on any given pass
-                placeable.truncate(
-                    self.open_locations
-                        .iter()
-                        .filter(|l| l.category == cat)
-                        .count()
-                        / 2,
-                );
+                // // Only place half (rounding down) available items on any given pass
+                // placeable.truncate(
+                //     self.open_locations
+                //         .iter()
+                //         .filter(|l| l.category == cat)
+                //         .count()
+                //         / 2,
+                // );
                 // We pop from the end, so reverse the list
                 placeable.reverse();
 
                 while self.probably_safe_to_backfill(&progress_items, cat) {
                     if let Some((item, weight)) = placeable.pop() {
                         // Locations are sorted by when they were opened, so we'll try to fill earlier locations first
-                        if let Some(location) = self
-                            .open_locations
-                            .iter()
-                            .find(|&loc| self.can_place_in(&*item, &**loc) && loc.restriction.is_none())
-                        {
+                        if let Some(location) = self.open_locations.iter().find(|&loc| {
+                            self.can_place_in(&*item, &**loc) && loc.restriction.is_none()
+                        }) {
                             let location = location.clone();
                             println!("Backfilling {} ({}) in {}", item, weight, location);
                             self.place_item(&item, &location);
@@ -412,27 +376,35 @@ impl Allocator {
         }
     }
     fn allocation_round<R: Rng + ?Sized>(&mut self, rng: &mut R) {
+        // Check that closed locations are still actually closed
+        for (loc, req) in &self.closed_locations {
+            if req.satisfied() {
+                println!("!!! Closed location {} should be open! {}", loc, req);
+            }
+        }
+
         self.backfill(rng);
+        // And again
+        for (loc, req) in &self.closed_locations {
+            if req.satisfied() {
+                println!("!!!2 Closed location {} should be open! {}", loc, req);
+            }
+        }
         let unlocks = self.single_item_location_unlocks();
         let mut unlock_items: Vec<_> = unlocks
             .iter()
-            .map(|(item, _)| {
-                (
-                    item,
-                    item.weight + rng.gen_range(0..self.temperature)
-                )
-            })
+            .map(|(item, _)| (item, item.weight + rng.gen_range(0..self.temperature)))
             .collect();
         unlock_items.sort_unstable_by_key(|(_, weight)| *weight);
 
         print!("Capabilities: ");
         for (flag, req) in self.flags.iter() {
-            if req.satisfied(&self.assigned_items) {
+            if req.satisfied() {
                 print!("{} ", flag.name);
             }
         }
         println!();
-        
+
         // println!("{:?}", unlock_items);
 
         for (item, weight) in unlock_items {
@@ -441,9 +413,9 @@ impl Allocator {
                     "Placing {} ({}) in {} to unlock new locations",
                     item, weight, location
                 );
-                for loc in &unlocks[item] {
-                    println!(" - {}", loc);
-                }
+                // for loc in &unlocks[item] {
+                //     println!(" - {}", loc);
+                // }
                 self.place_item(item, &location);
                 return;
             } else {
@@ -457,7 +429,7 @@ impl Allocator {
         // No single item unlocks a new location; pick one that at least shows up in an unsatisfied goal
         let mut missing_items = HashMap::new();
         for (_, req) in &self.closed_locations {
-            req.missing(&self.assigned_items, &mut missing_items);
+            req.missing(&mut missing_items);
         }
         let (mut restricted_missing_items, mut general_missing_items): (Vec<_>, Vec<_>) =
             missing_items
@@ -467,8 +439,7 @@ impl Allocator {
         // Nothing missing for locations? Pick a flag instead
         let mut flag_items = HashMap::new();
         for (_flag, req) in self.flags.iter() {
-            req
-                .missing(&self.assigned_items, &mut flag_items);
+            req.missing(&mut flag_items);
         }
         let (mut restricted_flag_items, mut general_flag_items): (Vec<_>, Vec<_>) = flag_items
             .into_iter()
@@ -486,7 +457,7 @@ impl Allocator {
             .chain(general_flag_items)
         {
             // Find a matching item in the pool
-            let possible_match  = self.placeable_items().find(|i| i == &to_add);
+            let possible_match = self.placeable_items().find(|i| i == &to_add);
             if let Some(item) = possible_match {
                 if let Some(location) = self.find_item_home(&*item, rng) {
                     println!(
@@ -520,17 +491,13 @@ impl Allocator {
                         item
                     );
                 }
-            } else {
-                eprintln!(
-                    "Requirement on an item not found in the item pool: {:?}",
-                    to_add.name
-                );
             }
         }
 
         // No critical items left; pick one at random
         // At this point there *should* only be minor items left
-        if let Some(item) = self.item_pool.get(0).map(|(item, _)| item.clone()) {
+        let placeable_items: Vec<_> = self.placeable_items().collect();
+        for item in placeable_items {
             if let Some(location) = self.find_item_home(&*item, rng) {
                 println!("Placing {} in {}, to fill up space", item, location);
                 self.place_item(&item, &location);
@@ -550,9 +517,9 @@ impl Allocator {
                         }
                     }
                     println!("Closed locations with matching class: ");
-                    for (loc, _) in &self.closed_locations {
+                    for (loc, req) in &self.closed_locations {
                         if loc.restriction == Some(n) {
-                            println!("  * {}", loc);
+                            println!("  * {}: {}", loc, req);
                         }
                     }
                 }
@@ -570,7 +537,11 @@ impl Allocator {
 
     fn alloc_progress(&self) -> Result<String, std::fmt::Error> {
         use std::fmt::Write;
-        let mut restrictions: Vec<_> = self.locations.iter().filter_map(|(l, _)| l.restriction).collect();
+        let mut restrictions: Vec<_> = self
+            .locations
+            .iter()
+            .filter_map(|(l, _)| l.restriction)
+            .collect();
         restrictions.sort_unstable();
         restrictions.dedup();
         let mut s = "Open: ".to_string();
@@ -746,7 +717,7 @@ impl Allocator {
             println!("{}", self.alloc_progress().unwrap());
 
             n += 1;
-            if n > 300 {
+            if n > 150 {
                 eprintln!("Not making progress; giving up");
                 println!("Closed locations:");
                 for (loc, req) in &self.closed_locations {
@@ -767,121 +738,5 @@ impl Allocator {
         }
 
         self.assignments.clone()
-    }
-}
-pub struct AssignmentChecker {
-    locations: Conditionals<Location>,
-    flags: Conditionals<Flag>,
-}
-impl AssignmentChecker {
-    pub fn new(locations: Conditionals<Location>, flags: Conditionals<Flag>) -> Self {
-        AssignmentChecker { locations, flags }
-    }
-    pub fn check_assignments(&self, assignments: &HashMap<Rc<Location>, Rc<ItemDef>>) {
-        let mut graph = "digraph G {\n".to_string();
-        let mut open_locations = HashSet::new();
-        let mut acquired_items = HashMap::new();
-        let mut new_locations: Vec<_> = self
-            .locations
-            .iter()
-            .filter(|(_l, req)| req.satisfied(&acquired_items))
-            .collect();
-        let mut generations = vec![];
-        let mut item_indices: HashMap<&Rc<ItemDef>, usize> = HashMap::new();
-        let mut completed_flags: HashSet<Rc<Flag>> = HashSet::new();
-        let mut new_flags: Conditionals<Flag> = vec![];
-        while !new_locations.is_empty() || !new_flags.is_empty() {
-            let mut this_gen = vec![];
-            for (flag, req) in &new_flags {
-                completed_flags.insert(flag.clone());
-                graph.push_str(&format!(
-                    r#"  "flag{}" [label="{}", shape="octagon"];"#,
-                    flag.name, flag.name
-                ));
-                graph.push('\n');
-                for sat in req.satisfied_by(&acquired_items) {
-                    if !sat.show_in_graph {
-                        continue;
-                    }
-                    let max_idx = *item_indices.get(&sat).unwrap();
-                    for i in 1..=max_idx {
-                        graph
-                            .push_str(&format!(r#"  "flag{}" -> "{}{}";"#, flag.name, sat.name, i));
-                        graph.push('\n');
-                    }
-                }
-            }
-
-            for (loc, req) in &new_locations {
-                if let Some(item) = assignments.get(loc) {
-                    if !item.show_in_graph {
-                        continue;
-                    }
-                    let idx = item_indices.entry(item).or_default();
-                    *idx += 1;
-                    let idx = *idx;
-                    graph.push_str(&format!(
-                        r#"  "{}{}" [label="{}\n{}", shape="box"];"#,
-                        item.name, idx, loc, item.name
-                    ));
-                    graph.push('\n');
-                    for sat in req.satisfied_by(&acquired_items) {
-                        if !sat.show_in_graph {
-                            continue;
-                        }
-                        let max_idx = *item_indices.get(&sat).unwrap();
-                        for i in 1..=max_idx {
-                            if i == idx && &sat == item {
-                                // Don't link an item to itself
-                                continue;
-                            }
-                            graph.push_str(&format!(
-                                r#"  "{}{}" -> "{}{}";"#,
-                                item.name, idx, sat.name, i
-                            ));
-                            graph.push('\n');
-                        }
-                    }
-                } else {
-                    // graph.push_str(&format!(r#"  "{}" [label="{}\n{}", shape="box"];"#, item, loc.name, item));
-                }
-            }
-            for (loc, _req) in new_locations {
-                open_locations.insert(loc);
-                if let Some(item) = assignments.get(loc) {
-                    *acquired_items.entry(item.clone()).or_default() += 1;
-                    this_gen.push((item.clone(), loc));
-                } else {
-                    eprintln!("Empty location?");
-                }
-            }
-            for (flag, _) in new_flags {
-                print!("{{{}}}, ", flag.name);
-            }
-            for (item, loc) in &this_gen {
-                print!("{} ({}), ", item, loc);
-            }
-            println!();
-            generations.push(this_gen);
-
-            new_locations = self
-                .locations
-                .iter()
-                .filter(|(l, _)| !open_locations.contains(l))
-                .filter(|(_, req)| req.satisfied(&acquired_items))
-                .collect();
-            new_flags = self
-                .flags
-                .iter()
-                .filter(|(f, _)| !completed_flags.contains(&**f))
-                .filter(|(_, req)| req.satisfied(&acquired_items))
-                .cloned()
-                .collect();
-        }
-        graph.push('}');
-        std::fs::write("graph.dot", graph.as_bytes());
-        for (flag, _) in self.flags.iter().filter(|(f, _)| !completed_flags.contains(&**f)) {
-            println!("Unsatisfied flag: {}", flag.name);
-        }
     }
 }
